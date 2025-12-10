@@ -1,42 +1,32 @@
-import { ThemeToggle } from "@/components/ThemeToggle";
+import Link from "next/link";
 
 export default function MainHeader() {
   return (
-    <header className="w-full border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur">
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-2">
-                <h1>
-                    <a href="/" className="hover:opacity-70 transition-opacity">
-                    DANIKRAVAFIT
-                    </a>
-                </h1>
-                <span className="text-sm font-medium tracking-wide">
+    <header className="flex items-center justify-between text-xs text-white/70">
+        <div className="flex items-center gap-2">
+            <Link href="/" className="text-lg font-bold text-white hover:text-white">
+                <span className="font-semibold tracking-[0.2em] text-white/90">
+                    DK
                 </span>
-            </div>
-
-            <nav className="hidden md:flex items-center gap-6 text-sm">
-                {/* Navigation for main pages */}
-                <a href="/achievements" className="hover:opacity-70 transition-opacity">
-                    Achievements
-                </a>
-                <a href="/programs" className="hover:opacity-70 transition-opacity">
-                    Programs
-                </a>
-                <a href="/recipes" className="hover:opacity-70 transition-opacity">
-                    Recipes
-                </a>
-                <a href="/contact" className="hover:opacity-70 transition-opacity">
-                    Contact
-                </a>
-                <a href="/about" className="hover:opacity-70 transition-opacity">
-                    About
-                </a>
-            </nav>
-
-            <div className="flex items-center gap-2">
-                <ThemeToggle />
-            </div>
+                <span className="hidden rounded-full bg-white/5 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white/50 sm:inline">
+                    Hybrid Hub
+                </span>
+            </Link>
         </div>
+        <nav className="flex items-center gap-4">
+            <Link href="/recipes" className="hover:text-white">
+              Recipes
+            </Link>
+            <Link href="/training-logs" className="hover:text-white">
+              Training Logs
+            </Link>
+            <Link href="/drills" className="hover:text-white">
+              Drills
+            </Link>
+            <Link href="/tools" className="hover:text-white">
+              Tools
+            </Link>
+        </nav>
     </header>
   );
 }

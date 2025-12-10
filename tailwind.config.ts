@@ -7,7 +7,14 @@ const config: Config = {
     "./components/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brand: {
+          bg: "#0f1418",
+          accent: "#d2a852",
+        },
+      },
+    },
   },
   plugins: [],
 };

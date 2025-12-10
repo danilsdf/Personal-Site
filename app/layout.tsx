@@ -16,14 +16,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 transition-colors">
+      <body className="min-h-screen bg-[#0f1418] text-white transition-colors">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
         >
-          <MainHeader></MainHeader>
-          {children}
+          <div className="min-h-screen bg-[#0f1418] text-white">
+            <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-4 pb-16 pt-6 md:px-6 lg:px-8">
+              <MainHeader />
+              {children}
+              <footer className="mt-12 border-t border-white/10 pt-4 text-[10px] text-white/40">
+                Hybrid Athlete Hub · Built for strength & endurance.
+              </footer>
+            </div>
+          </div>
         </ThemeProvider>
       </body>
     </html>
