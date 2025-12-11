@@ -88,7 +88,7 @@ export default function HomePage() {
             <InfoCard
               title="Weekly calendars"
               description="See the full hybrid week: runs, boxing, gym & recovery scheduled around a 9–5."
-              href="/calendar"
+              href="/weekly-calendar"
               linkLabel="View calendar"
             />
             <InfoCard

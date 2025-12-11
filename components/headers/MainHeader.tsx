@@ -26,6 +26,9 @@ export default function MainHeader() {
             <Link href="/tools" className="hover:text-white">
               Tools
             </Link>
+            <Link href="/about-me" className="hover:text-white">
+              About me
+            </Link>
         </nav>
     </header>
   );
