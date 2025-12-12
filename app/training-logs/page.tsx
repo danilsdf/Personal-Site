@@ -3,47 +3,7 @@
 import { useEffect, useState } from "react";
 import { isToday, isYesterday, isThisWeek, parseISO, startOfWeek, endOfWeek, subWeeks, isWithinInterval } from "date-fns";
 import type { Day } from "date-fns";
-
-
-function getSportTypeLabel(sportType: string): string {
-  if (!sportType) return "Other";
-  return sportType
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, (s) => s.toUpperCase())
-    .trim();
-}
-
-function LogLine({ activity }: { activity: any }) {
-  const sportLabel = getSportTypeLabel(activity.sport_type);
-  return (
-    <a
-      href={`https://www.strava.com/activities/${activity.id}`}
-      className="block group"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <div className="flex items-center justify-between border-b border-white/10 py-3 px-2 hover:bg-[#18181b] bg-white/2 transition rounded-xl shadow-sm group-hover:shadow-lg group-hover:border-[#d2a852]">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 flex-1 min-w-0">
-          <span className="truncate font-semibold text-white text-base min-w-0 max-w-xs group-hover:text-[#d2a852]">
-            {activity.name}
-          </span>
-          <span className="truncate text-xs text-white/60 max-w-xs">{sportLabel}</span>
-          <span className="text-xs text-[#d2a852] font-semibold whitespace-nowrap bg-[#d2a852]/10 rounded px-2 py-0.5">
-            {activity.distance > 0 ? (activity.distance / 1000).toFixed(2) + ' km' : ''}
-          </span>
-          <span className="text-xs text-white/60 whitespace-nowrap">
-            {activity.moving_time ? Math.round(activity.moving_time / 60) + ' min' : ''}
-          </span>
-          <span className="text-xs text-white/40 whitespace-nowrap">
-            {activity.start_date ? new Date(activity.start_date).toLocaleString() : ''}
-          </span>
-        </div>
-        <span className="text-xs text-[#d2a852] ml-2 group-hover:scale-125 transition-transform">↗</span>
-      </div>
-    </a>
-  );
-}
-
+import LogLine from "@/components/LogRow";
 
 export default function TrainingLogsPage() {
   const [logs, setLogs] = useState<any[]>([]);
@@ -89,24 +49,24 @@ export default function TrainingLogsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-white">
+    <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-neutral-900 dark:text-neutral-100">
       {/* PAGE TITLE */}
       <section className="mb-10">
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-white">
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-neutral-900 dark:text-neutral-100">
           Training Logs
         </h1>
-        <p className="mt-1 text-sm text-white/60">
+        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
           All Danil's workouts, sorted by category. See progress by date.
         </p>
         {updated && (
-          <p className="mt-1 text-xs text-white/40">Last updated: {new Date(updated).toLocaleString()}</p>
+          <p className="mt-1 text-xs text-neutral-400 dark:text-neutral-500">Last updated: {new Date(updated).toLocaleString()}</p>
         )}
       </section>
 
       {loading ? (
-        <div className="text-white/60">Loading...</div>
+        <div className="text-neutral-400 dark:text-neutral-500">Loading...</div>
       ) : logs.length === 0 ? (
-        <div className="text-white/60">No logs found.</div>
+        <div className="text-neutral-400 dark:text-neutral-500">No logs found.</div>
       ) : (
         (() => {
           const groups = groupActivities(logs);
@@ -114,7 +74,7 @@ export default function TrainingLogsPage() {
             <div className="flex flex-col gap-8">
               {groups.today.length > 0 && (
                 <div>
-                  <h2 className="mb-2 text-lg font-bold text-[#d2a852]">Today</h2>
+                  <h2 className="mb-2 text-lg font-bold text-yellow-600 dark:text-yellow-400">Today</h2>
                   <ul className="flex flex-col gap-4">
                     {groups.today.map((activity) => (
                       <li key={activity.id}><LogLine activity={activity} /></li>
@@ -124,7 +84,7 @@ export default function TrainingLogsPage() {
               )}
               {groups.yesterday.length > 0 && (
                 <div>
-                  <h2 className="mb-2 text-lg font-bold text-[#d2a852]">Yesterday</h2>
+                  <h2 className="mb-2 text-lg font-bold text-yellow-600 dark:text-yellow-400">Yesterday</h2>
                   <ul className="flex flex-col gap-4">
                     {groups.yesterday.map((activity) => (
                       <li key={activity.id}><LogLine activity={activity} /></li>
@@ -134,7 +94,7 @@ export default function TrainingLogsPage() {
               )}
               {groups.thisWeek.length > 0 && (
                 <div>
-                  <h2 className="mb-2 text-lg font-bold text-[#d2a852]">This Week</h2>
+                  <h2 className="mb-2 text-lg font-bold text-yellow-600 dark:text-yellow-400">This Week</h2>
                   <ul className="flex flex-col gap-4">
                     {groups.thisWeek.map((activity) => (
                       <li key={activity.id}><LogLine activity={activity} /></li>
@@ -144,7 +104,7 @@ export default function TrainingLogsPage() {
               )}
               {groups.lastWeek.length > 0 && (
                 <div>
-                  <h2 className="mb-2 text-lg font-bold text-[#d2a852]">Last Week</h2>
+                  <h2 className="mb-2 text-lg font-bold text-yellow-600 dark:text-yellow-400">Last Week</h2>
                   <ul className="flex flex-col gap-4">
                     {groups.lastWeek.map((activity) => (
                       <li key={activity.id}><LogLine activity={activity} /></li>
@@ -154,7 +114,7 @@ export default function TrainingLogsPage() {
               )}
               {groups.rest.length > 0 && (
                 <div>
-                  <h2 className="mb-2 text-lg font-bold text-[#d2a852]">Earlier</h2>
+                  <h2 className="mb-2 text-lg font-bold text-yellow-600 dark:text-yellow-400">Earlier</h2>
                   <ul className="flex flex-col gap-4">
                     {groups.rest.map((activity) => (
                       <li key={activity.id}><LogLine activity={activity} /></li>
@@ -172,7 +132,7 @@ export default function TrainingLogsPage() {
           href="https://www.strava.com/athletes/66921238"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block px-6 py-2 rounded-lg bg-[#fc4c02] text-white font-semibold shadow hover:bg-[#d2a852] transition-colors text-lg"
+          className="inline-block px-6 py-2 rounded-lg bg-orange-600 text-white font-semibold shadow hover:bg-yellow-600 dark:hover:bg-yellow-400 transition-colors text-lg"
         >
           View my Strava profile ↗
         </a>

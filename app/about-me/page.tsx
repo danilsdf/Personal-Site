@@ -1,21 +1,21 @@
 export default function AboutPage() {
     return (
-    <div className="mx-auto max-w-2xl px-4 pb-20 pt-12 text-white">
+    <div className="mx-auto max-w-2xl px-4 pb-20 pt-12 text-black dark:text-white">
       {/* Content block */}
       <section className="w-full">
 
         {/* Name + role */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[#d2a852] sm:text-3xl">
+          <h1 className="text-2xl font-bold text-[#d2a852] dark:text-[#f0c46a] sm:text-3xl">
             Danil Kravchenko
           </h1>
-          <p className="mt-1 text-base font-semibold text-neutral-400">
+          <p className="mt-1 text-base font-semibold text-neutral-500 dark:text-neutral-400">
             Hybrid-Athlete
           </p>
         </div>
 
         {/* Bio paragraphs */}
-        <div className="space-y-4 text-base leading-relaxed text-neutral-200">
+        <div className="space-y-4 text-base leading-relaxed text-neutral-700 dark:text-neutral-200">
           <p>
             Driven by a passion for progress, I&apos;m dedicated to the
             hybrid-athlete lifestyle—balancing strength, speed, and endurance.
@@ -35,7 +35,7 @@ export default function AboutPage() {
 
         {/* Connect section */}
         <div className="mt-10">
-          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-neutral-400">
+          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
             Connect
           </p>
           <div className="flex flex-wrap gap-3 text-xs">
@@ -43,7 +43,7 @@ export default function AboutPage() {
               href="https://instagram.com/danilkravafit"
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-[#d2a852] bg-[#23232a] px-4 py-1 font-medium text-[#d2a852] hover:bg-[#d2a852] hover:text-[#18181b] transition-colors"
+              className="rounded-full border border-[#d2a852] dark:border-[#f0c46a] bg-[#f7f7f7] dark:bg-[#23232a] px-4 py-1 font-medium text-[#d2a852] dark:text-[#f0c46a] hover:bg-[#d2a852] hover:text-[#18181b] dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] transition-colors"
             >
               Instagram
             </a>
@@ -51,13 +51,13 @@ export default function AboutPage() {
               href="https://www.strava.com/athletes/66921238"
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-[#d2a852] bg-[#23232a] px-4 py-1 font-medium text-[#d2a852] hover:bg-[#d2a852] hover:text-[#18181b] transition-colors"
+              className="rounded-full border border-[#d2a852] dark:border-[#f0c46a] bg-[#f7f7f7] dark:bg-[#23232a] px-4 py-1 font-medium text-[#d2a852] dark:text-[#f0c46a] hover:bg-[#d2a852] hover:text-[#18181b] dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] transition-colors"
             >
               Strava
             </a>
             <a
               href="mailto:danil.kravchenko.dev@gmail.com"
-              className="rounded-full border border-[#d2a852] bg-[#23232a] px-4 py-1 font-medium text-[#d2a852] hover:bg-[#d2a852] hover:text-[#18181b] transition-colors"
+              className="rounded-full border border-[#d2a852] dark:border-[#f0c46a] bg-[#f7f7f7] dark:bg-[#23232a] px-4 py-1 font-medium text-[#d2a852] dark:text-[#f0c46a] hover:bg-[#d2a852] hover:text-[#18181b] dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] transition-colors"
             >
               Email
             </a>
@@ -65,7 +65,7 @@ export default function AboutPage() {
         </div>
 
         {/* Signature placeholder */}
-        <div className="mt-12 h-8 w-24 rounded bg-[#23232a]" />
+        <div className="mt-12 h-8 w-24 rounded bg-[#f7f7f7] dark:bg-[#23232a]" />
       </section>
     </div>
   );

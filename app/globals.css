@@ -1,3 +1,34 @@
+/* Custom scrollbar styling for Chrome, Edge, and Safari */
+html {
+  --scrollbar-bg: #e5e7eb;
+  --scrollbar-thumb: #bdbdbd;
+  --scrollbar-thumb-hover: #a3a3a3;
+}
+
+html.dark {
+  --scrollbar-bg: #181c20;
+  --scrollbar-thumb: #23272e;
+  --scrollbar-thumb-hover: #374151;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-bg);
+}
 @import "tailwindcss";
 
 :root {

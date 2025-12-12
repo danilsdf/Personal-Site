@@ -3,6 +3,7 @@ import MainHeader from "@/components/headers/MainHeader";
 import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "Danil Kravchenko | Athlete & Coder",
@@ -16,17 +17,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-[#0f1418] text-white transition-colors">
+      <body className="min-h-screen bg-white text-black dark:bg-[#0f1418] dark:text-white transition-colors">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
         >
-          <div className="min-h-screen bg-[#0f1418] text-white">
+          <div className="min-h-screen bg-white text-black dark:bg-[#0f1418] dark:text-white transition-colors">
             <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-4 pb-16 pt-6 md:px-6 lg:px-8">
               <MainHeader />
               {children}
-              <footer className="mt-12 border-t border-white/10 pt-4 text-[10px] text-white/40">
+              <footer className="mt-12 border-t border-black/10 dark:border-white/10 pt-4 text-[10px] text-black/40 dark:text-white/40">
                 Hybrid Athlete Hub · Built for strength & endurance.
               </footer>
             </div>

@@ -38,20 +38,20 @@ export default function DrillsHubPage() {
   const filteredDrills = drills.filter((d) => d.category === activeCategory);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-white">
+    <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-black dark:text-white">
       {/* TITLE */}
       <section className="mb-8 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-white">
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-black dark:text-white">
           Drills Hub
         </h1>
-        <p className="mt-1 text-sm text-white/60">
+        <p className="mt-1 text-sm text-black/60 dark:text-white/60">
           Explore running, boxing, and mobility drills.
         </p>
       </section>
 
       {/* CATEGORY TABS */}
       <section className="mb-10 flex justify-center">
-        <div className="inline-flex rounded-full border border-white/10 bg-white/5 p-1 text-xs">
+        <div className="inline-flex rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-1 text-xs">
           {categories.map((cat) => {
             const active = cat.id === activeCategory;
             return (
@@ -61,8 +61,8 @@ export default function DrillsHubPage() {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`rounded-full px-4 py-1 font-medium transition ${
                   active
-                    ? "bg-[#d2a852] text-black"
-                    : "text-white/70 hover:bg-white/10"
+                    ? "bg-[#d2a852] text-black dark:bg-[#f0c46a] dark:text-[#23232a]"
+                    : "text-black/70 dark:text-white/70 hover:bg-black/10 dark:hover:bg-white/10"
                 }`}
               >
                 {cat.label}
@@ -111,10 +111,10 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-      <div className="mb-4 h-28 w-full rounded-xl bg-white/10" />
-      <h3 className="text-sm font-semibold text-white">{title}</h3>
-      <p className="mt-1 text-xs text-white/60">{description}</p>
+    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-4 sm:p-5">
+      <div className="mb-4 h-28 w-full rounded-xl bg-black/10 dark:bg-white/10" />
+      <h3 className="text-sm font-semibold text-black dark:text-white">{title}</h3>
+      <p className="mt-1 text-xs text-black/60 dark:text-white/60">{description}</p>
     </div>
   );
 }
@@ -129,21 +129,21 @@ function DrillListItem({
   slug: string;
 }) {
   return (
-    <div className="flex items-center justify-between border-b border-white/10 py-3 text-sm">
+    <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 py-3 text-sm">
       <div className="flex items-center gap-3">
         <Link
           href={`/drills/${slug}`}
-          className="text-xs font-medium text-white/60 hover:text-[#d2a852]"
+          className="text-xs font-medium text-black/60 dark:text-white/60 hover:text-[#d2a852] dark:hover:text-[#f0c46a]"
         >
-          <span className="text-white">{title}</span>
+          <span className="text-black dark:text-white">{title}</span>
         </Link>
-        <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium text-white/70">
+        <span className="rounded-full bg-black/10 dark:bg-white/10 px-2 py-0.5 text-[11px] font-medium text-black/70 dark:text-white/70">
           {difficulty}
         </span>
       </div>
       <Link
         href={`/drills/${slug}`}
-        className="text-xs font-medium text-white/60 hover:text-[#d2a852]"
+        className="text-xs font-medium text-black/60 dark:text-white/60 hover:text-[#d2a852] dark:hover:text-[#f0c46a]"
       >
         Steps + Video →
       </Link>

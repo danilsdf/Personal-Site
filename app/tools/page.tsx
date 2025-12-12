@@ -1,20 +1,20 @@
 export default function FitnessToolsPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-white">
+    <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-neutral-900 dark:text-neutral-100">
 
       {/* TITLE */}
       <section className="text-center mb-12">
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-[#d2a852]">
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-yellow-600 dark:text-yellow-400">
           Fitness Tools.
         </h1>
-        <p className="mt-1 text-sm text-neutral-300">
+        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
           A toolkit for hybrid athletes.
         </p>
       </section>
 
       {/* TOP TOOL CARDS (3 IN A ROW) */}
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-        <ToolCard title="Macro Calculator" href="/tools/macro-calculator" />
+        <ToolCard title="Calories Calculator" href="/tools/calories-calculator" />
         <ToolCard title="Meal Plan Generator" href="/tools/meal-plan-generator" />
         <ToolCard title="Hybrid Training Templates" href="/tools/training-templates" />
       </section>
@@ -34,15 +34,15 @@ export default function FitnessToolsPage() {
 
       {/* CTA BLOCK */}
       <section className="text-center">
-        <h2 className="text-lg font-semibold text-[#d2a852]">
+        <h2 className="text-lg font-semibold text-yellow-600 dark:text-yellow-400">
           Start using tools.
         </h2>
-        <p className="mt-2 text-sm text-neutral-300 max-w-md mx-auto">
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300 max-w-md mx-auto">
           Level up your fitness with our suite of tools.
         </p>
         <a
           href="/tools/about"
-          className="mt-5 inline-block rounded-full bg-[#d2a852] px-6 py-2 text-xs font-semibold text-black shadow-sm transition hover:bg-[#bfa14a] focus:outline-none focus:ring-2 focus:ring-[#d2a852]"
+          className="mt-5 inline-block rounded-full bg-yellow-600 dark:bg-yellow-400 px-6 py-2 text-xs font-semibold text-white dark:text-black shadow-sm transition hover:bg-yellow-700 dark:hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400"
         >
           About the Tools
         </a>
@@ -55,16 +55,16 @@ export default function FitnessToolsPage() {
 function ToolCard({ title, href }: { title: string; href?: string }) {
   const content = (
     <>
-      <div className="mb-4 h-28 w-full rounded-xl bg-[#23232a]/70" />
-      <h3 className="text-sm font-semibold text-white">{title}</h3>
+      <div className="mb-4 h-28 w-full rounded-xl bg-neutral-200 dark:bg-neutral-800" />
+      <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{title}</h3>
     </>
   );
   return href ? (
-    <a href={href} className="rounded-2xl border border-[#23232a] bg-[#23232a] p-4 cursor-pointer transition hover:bg-[#23232a]/80 block focus:outline-none focus:ring-2 focus:ring-[#d2a852]">
+    <a href={href} className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-4 cursor-pointer transition hover:bg-neutral-200 dark:hover:bg-neutral-800 block focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400">
       {content}
     </a>
   ) : (
-    <div className="rounded-2xl border border-[#23232a] bg-[#23232a] p-4 cursor-pointer transition hover:bg-[#23232a]/80">
+    <div className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-4 cursor-pointer transition hover:bg-neutral-200 dark:hover:bg-neutral-800">
       {content}
     </div>
   );
@@ -81,17 +81,17 @@ function MidToolCard({
 }) {
   const content = (
     <>
-      <div className="mb-5 h-32 w-full rounded-xl bg-[#23232a] sm:h-40" />
-      <h3 className="text-sm font-semibold text-white">{title}</h3>
-      <p className="mt-1 text-xs text-neutral-300">{description}</p>
+      <div className="mb-5 h-32 w-full rounded-xl bg-neutral-200 dark:bg-neutral-800 sm:h-40" />
+      <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{title}</h3>
+      <p className="mt-1 text-xs text-neutral-600 dark:text-neutral-300">{description}</p>
     </>
   );
   return href ? (
-    <a href={href} className="rounded-2xl border border-[#23232a] bg-[#23232a] p-6 block cursor-pointer transition hover:bg-[#23232a]/80 focus:outline-none focus:ring-2 focus:ring-[#d2a852]">
+    <a href={href} className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-6 block cursor-pointer transition hover:bg-neutral-200 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400">
       {content}
     </a>
   ) : (
-    <div className="rounded-2xl border border-[#23232a] bg-[#23232a] p-6">
+    <div className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-6">
       {content}
     </div>
   );
@@ -105,10 +105,10 @@ function BottomToolCard({
   description: string;
 }) {
   return (
-    <div className="rounded-2xl border border-[#23232a] bg-[#23232a] p-6">
-      <div className="mb-5 h-32 w-full rounded-xl bg-[#23232a] sm:h-40" />
-      <h3 className="text-sm font-semibold text-white">{title}</h3>
-      <p className="mt-1 text-xs text-neutral-300">{description}</p>
+    <div className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-6">
+      <div className="mb-5 h-32 w-full rounded-xl bg-neutral-200 dark:bg-neutral-800 sm:h-40" />
+      <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{title}</h3>
+      <p className="mt-1 text-xs text-neutral-600 dark:text-neutral-300">{description}</p>
     </div>
   );
 }

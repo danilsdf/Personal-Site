@@ -28,12 +28,12 @@ export function RecipeDetailBody({
   imageUrl,
 }: RecipeDetailBodyProps) {
   return (
-    <div className="mx-auto max-w-3xl px-4 pb-20 pt-8 text-white">
+    <div className="mx-auto max-w-3xl px-4 pb-20 pt-8 text-black dark:text-white">
       {/* Back link */}
       <div className="mb-4">
         <Link
           href={backHref}
-          className="text-xs font-medium text-neutral-500 hover:text-neutral-800"
+          className="text-xs font-medium text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200"
         >
           ← Back to recipes
         </Link>
@@ -41,10 +41,10 @@ export function RecipeDetailBody({
 
       {/* TITLE + DATE */}
       <section className="text-center">
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-white">
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-black dark:text-white">
           {title}
         </h1>
-        <p className="mt-1 text-xs text-white/60">{date}</p>
+        <p className="mt-1 text-xs text-black/60 dark:text-white/60">{date}</p>
       </section>
 
       {/* IMAGE (placeholder for now) */}
@@ -57,45 +57,45 @@ export function RecipeDetailBody({
             className="h-64 w-full rounded-xl object-cover sm:h-80 md:h-96"
           />
         ) : (
-          <div className="h-64 w-full rounded-xl bg-neutral-200 sm:h-80 md:h-96" />
+          <div className="h-64 w-full rounded-xl bg-neutral-200 dark:bg-neutral-800 sm:h-80 md:h-96" />
         )}
       </section>
 
       {/* CONTENT */}
-      <section className="mt-10 space-y-6 text-sm leading-relaxed text-white">
+      <section className="mt-10 space-y-6 text-sm leading-relaxed text-black dark:text-white">
         {/* MACROS */}
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-white/60">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-black/60 dark:text-white/60">
             Macros (per serving):
           </h2>
           <ul className="mt-2 list-disc pl-5">
-            <li>Calories: <span className="text-white">{macros.calories}</span></li>
-            <li>Protein: <span className="text-white">{macros.protein}g</span></li>
-            <li>Carbs: <span className="text-white">{macros.carbs}g</span></li>
-            <li>Fat: <span className="text-white">{macros.fat}g</span></li>
+            <li>Calories: <span className="text-black dark:text-white">{macros.calories}</span></li>
+            <li>Protein: <span className="text-black dark:text-white">{macros.protein}g</span></li>
+            <li>Carbs: <span className="text-black dark:text-white">{macros.carbs}g</span></li>
+            <li>Fat: <span className="text-black dark:text-white">{macros.fat}g</span></li>
           </ul>
         </div>
 
         {/* INGREDIENTS */}
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-white/60">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-black/60 dark:text-white/60">
             Ingredients
           </h2>
           <ul className="mt-2 list-disc pl-5">
             {ingredients.map((item) => (
-              <li key={item} className="text-white">{item}</li>
+              <li key={item} className="text-black dark:text-white">{item}</li>
             ))}
           </ul>
         </div>
 
         {/* STEPS */}
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-white/60">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-black/60 dark:text-white/60">
             Steps
           </h2>
           <ol className="mt-2 list-decimal pl-5">
             {steps.map((step, index) => (
-              <li key={index} className="mb-1 text-white">
+              <li key={index} className="mb-1 text-black dark:text-white">
                 {step}
               </li>
             ))}

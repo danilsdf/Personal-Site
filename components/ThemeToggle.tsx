@@ -4,15 +4,13 @@ import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-
-  const isDark = theme === "dark";
-
   return (
     <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="rounded-full border border-neutral-300 dark:border-neutral-700 px-3 py-1 text-xs font-medium uppercase tracking-wide hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="px-2 py-1 rounded text-xs font-semibold transition-colors duration-150 bg-white/10 text-white hover:bg-blue-400/80"
+      aria-label="Toggle theme"
     >
-      {isDark ? "Light" : "Dark"}
+      {theme === "dark" ? "🌙" : "☀️"}
     </button>
   );
 }
