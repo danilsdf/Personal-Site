@@ -17,6 +17,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-64H6G758CS"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-64H6G758CS');
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-white text-black dark:bg-[#0f1418] dark:text-white transition-colors">
         <ThemeProvider
           attribute="class"

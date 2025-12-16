@@ -1,4 +1,19 @@
+"use client";
+
+import { useEffect } from "react";
+
 export default function RecipesPage() {
+  useEffect(() => {
+    fetch("/api/recipes")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Receipts from API:", data);
+      })
+      .catch((err) => {
+        console.error("Error fetching receipts:", err);
+      });
+  }, []);
+
   return (
     <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-black dark:text-white">
       {/* PAGE TITLE */}
@@ -16,7 +31,7 @@ export default function RecipesPage() {
         <RecipeCard
           title="High-Protein Chicken & Rice Meal Prep"
           date="Jun 9, 2024"
-          slug="high-protein-chicken-rice-meal-prep"
+          slug="farfalle-pasta-shrimp-feta"
         />
         <RecipeCard
           title="Simple Overnight Oats (Berry Fuel)"

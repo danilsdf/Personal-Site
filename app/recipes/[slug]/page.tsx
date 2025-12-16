@@ -1,31 +1,39 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { RecipeDetailBody } from "@/components/pages/RecipeDetailBody";
 
-export default function HighProteinChickenRicePage() {
-  return (
-    <RecipeDetailBody
-      backHref="/recipes"
-      title="High-Protein Chicken & Rice Meal Prep"
-      date="Jun 9, 2024"
-      macros={{
-        calories: 500,
-        protein: 48,
-        carbs: 54,
-        fat: 16,
-      }}
-      ingredients={[
-        "2 boneless, skinless chicken breasts",
-        "1 cup jasmine rice",
-        "2 cups broccoli florets",
-        "1 tbsp olive oil",
-        "Salt and pepper to taste",
-      ]}
-      steps={[
-        "Preheat oven to 425°F (218°C).",
-        "Season chicken with salt, pepper, and 1/2 tbsp olive oil. Bake for 18–20 minutes, or until cooked through.",
-        "Cook jasmine rice according to package instructions.",
-        "Toss broccoli with remaining olive oil, salt, and pepper. Roast for 14 minutes.",
-        "Slice chicken and assemble meal prep boxes with rice and broccoli. Enjoy throughout the week.",
-      ]}
-    />
-  );
+export default function RecipePage() {
+  const params = useParams();
+  const slug = typeof params.slug === "string" ? params.slug : Array.isArray(params.slug) ? params.slug[0] : "";
+  const [recipe, setRecipe] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+    fetch(`/api/recipes/${encodeURIComponent(slug)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Recipe not found");
+        return res.json();
+      })
+      .then((data) => {
+        setRecipe(data);
+        setError(null);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setRecipe(null);
+      })
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
+    return <div className="text-center py-10 text-neutral-400">Loading...</div>;
+  }
+  if (error || !recipe) {
+    return <div className="text-center py-10 text-red-500">Recipe not found.</div>;
+  }
+  return <RecipeDetailBody recipe={recipe} backHref="/recipes" />;
 }
