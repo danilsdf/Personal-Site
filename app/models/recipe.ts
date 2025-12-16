@@ -66,7 +66,7 @@ export interface Recipe {
   servings: number;         // e.g. 5
   servingUnit?: string;     // e.g. "container"
 
-  ingredients: RecipeIngredientLine[];
+  ingredients: RecipeIngredientLinePopulated[];
   instructions: InstructionBlock[];
 
   mealPrep?: MealPrepInfo;
