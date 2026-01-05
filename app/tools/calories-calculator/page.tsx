@@ -245,7 +245,7 @@
             <Listbox.Button className="w-full rounded border px-3 py-2 text-left">
               {formula.label}
             </Listbox.Button>
-            <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
+            <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-[#0f1418] shadow-lg">
               {formulaOptions.map(f => (
                 <Listbox.Option
                   key={f.value}
@@ -270,7 +270,8 @@
           {/* Age */}
           <div>
             <label className="block text-sm font-medium mb-1">Age (years)</label>
-            <input type="number" min="0" value={age} onChange={e => setAge(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
+            <input type="number" min="0" value={age} onChange={e => setAge(Number(e.target.value))}
+              className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
             {errors.age && <p className="text-xs text-red-500 mt-1">{errors.age}</p>}
           </div>
 
@@ -279,19 +280,19 @@
             <div className="flex gap-2">
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1">Height (ft)</label>
-                <input type="number" min="0" value={heightFt} onChange={e => setHeightFt(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
+                <input type="number" min="0" value={heightFt} onChange={e => setHeightFt(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
                 {errors.heightFt && <p className="text-xs text-red-500 mt-1">{errors.heightFt}</p>}
               </div>
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1">Height (in)</label>
-                <input type="number" min="0" value={heightIn} onChange={e => setHeightIn(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
+                <input type="number" min="0" value={heightIn} onChange={e => setHeightIn(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
                 {errors.heightIn && <p className="text-xs text-red-500 mt-1">{errors.heightIn}</p>}
               </div>
             </div>
           ) : (
             <div>
               <label className="block text-sm font-medium mb-1">Height (cm)</label>
-              <input type="number" min="0" value={heightCm} onChange={e => setHeightCm(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
+              <input type="number" min="0" value={heightCm} onChange={e => setHeightCm(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
               {errors.heightCm && <p className="text-xs text-red-500 mt-1">{errors.heightCm}</p>}
             </div>
           )}
@@ -300,13 +301,13 @@
           {units === 'imperial' ? (
             <div>
               <label className="block text-sm font-medium mb-1">Weight (lbs)</label>
-              <input type="number" min="0" value={weightLbs} onChange={e => setWeightLbs(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
+              <input type="number" min="0" value={weightLbs} onChange={e => setWeightLbs(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
               {errors.weightLbs && <p className="text-xs text-red-500 mt-1">{errors.weightLbs}</p>}
             </div>
           ) : (
             <div>
               <label className="block text-sm font-medium mb-1">Weight (kg)</label>
-              <input type="number" min="0" value={weightKg} onChange={e => setWeightKg(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
+              <input type="number" min="0" value={weightKg} onChange={e => setWeightKg(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
               {errors.weightKg && <p className="text-xs text-red-500 mt-1">{errors.weightKg}</p>}
             </div>
           )}
@@ -320,7 +321,7 @@
                 max="70"
                 value={bodyFat ?? ""}
                 onChange={e => setBodyFat(Number(e.target.value))}
-                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900"
+                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]"
                 placeholder="e.g. 15"
               />
               {errors.bodyFat && <p className="text-xs text-red-500 mt-1">{errors.bodyFat}</p>}
@@ -337,7 +338,7 @@
                 min="0"
                 value={lbm ?? ""}
                 onChange={e => setLBM(Number(e.target.value))}
-                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900"
+                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]"
                 placeholder={units === 'imperial' ? "e.g. 150" : "e.g. 68"}
               />
               {errors.lbm && <p className="text-xs text-red-500 mt-1">{errors.lbm}</p>}
@@ -375,7 +376,7 @@
                 {activity.short}
               </Listbox.Button>
 
-              <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
+              <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-[#0f1418] shadow-lg">
                 {activityOptions.map(o => (
                   <Listbox.Option
                     key={o.value}
