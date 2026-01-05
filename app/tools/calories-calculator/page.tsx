@@ -245,7 +245,7 @@
             <Listbox.Button className="w-full rounded border px-3 py-2 text-left">
               {formula.label}
             </Listbox.Button>
-            <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
+            <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded border border-neutral-300 dark:border-neutral-700 text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
               {formulaOptions.map(f => (
                 <Listbox.Option
                   key={f.value}
@@ -376,7 +376,7 @@
                 {activity.short}
               </Listbox.Button>
 
-              <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
+              <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded border border-neutral-300 dark:border-neutral-700 text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
                 {activityOptions.map(o => (
                   <Listbox.Option
                     key={o.value}
