@@ -1,14 +1,26 @@
 /* Custom scrollbar styling for Chrome, Edge, and Safari */
 html {
+  --scrollbar-bg: #181c20;
+  --scrollbar-thumb: #23272e;
+  --scrollbar-thumb-hover: #374151;
+}
+
+html.dark {
   --scrollbar-bg: #e5e7eb;
   --scrollbar-thumb: #bdbdbd;
   --scrollbar-thumb-hover: #a3a3a3;
 }
 
-html.dark {
-  --scrollbar-bg: #181c20;
-  --scrollbar-thumb: #23272e;
-  --scrollbar-thumb-hover: #374151;
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 ::-webkit-scrollbar {

@@ -120,7 +120,9 @@
   const [goal, setGoal] = useState('maintain');
   const [lastCalculatedGoal, setLastCalculatedGoal] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  
   const resultRef = useRef<HTMLHeadingElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const validateInputs = () => {
     const newErrors: { [key: string]: string } = {};
@@ -154,7 +156,15 @@
     e.preventDefault();
     const validation = validateInputs();
     setErrors(validation);
-    if (Object.keys(validation).length > 0) return;
+    if (Object.keys(validation).length > 0) {
+      setTimeout(() => {
+        if (formRef.current) {
+          const y = formRef.current.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 100);
+      return;
+    }
 
     let weight = units === 'imperial' ? weightLbs * 0.453592 : weightKg;
     let height = units === 'imperial' ? ((heightFt * 12 + heightIn) * 2.54) : heightCm;
@@ -235,7 +245,7 @@
             <Listbox.Button className="w-full rounded border px-3 py-2 text-left">
               {formula.label}
             </Listbox.Button>
-            <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded bg-neutral-900 shadow-lg">
+            <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
               {formulaOptions.map(f => (
                 <Listbox.Option
                   key={f.value}
@@ -243,13 +253,13 @@
                   className="cursor-pointer px-3 py-2 text-sm whitespace-normal"
                 >
                   <div className="font-semibold">{f.label}</div>
-                  <div className="text-xs text-neutral-200">{f.description}</div>
+                  <div className="text-xs text-neutral-700 dark:text-neutral-200">{f.description}</div>
                 </Listbox.Option>
               ))}
             </Listbox.Options>
           </Listbox>
         </div>
-        <form className="space-y-6" onSubmit={handleCalculate}>
+        <form ref={formRef} className="space-y-6" onSubmit={handleCalculate}>
           {/* Unit Switch */}
           <div className="flex items-center justify-center gap-4 my-4">
             <span className="text-sm font-medium">Units:</span>
@@ -260,7 +270,7 @@
           {/* Age */}
           <div>
             <label className="block text-sm font-medium mb-1">Age (years)</label>
-            <input type="number" min="0" value={age} onChange={e => setAge(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]" />
+            <input type="number" min="0" value={age} onChange={e => setAge(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
             {errors.age && <p className="text-xs text-red-500 mt-1">{errors.age}</p>}
           </div>
 
@@ -269,19 +279,19 @@
             <div className="flex gap-2">
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1">Height (ft)</label>
-                <input type="number" min="0" value={heightFt} onChange={e => setHeightFt(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]" />
+                <input type="number" min="0" value={heightFt} onChange={e => setHeightFt(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
                 {errors.heightFt && <p className="text-xs text-red-500 mt-1">{errors.heightFt}</p>}
               </div>
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1">Height (in)</label>
-                <input type="number" min="0" value={heightIn} onChange={e => setHeightIn(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]" />
+                <input type="number" min="0" value={heightIn} onChange={e => setHeightIn(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
                 {errors.heightIn && <p className="text-xs text-red-500 mt-1">{errors.heightIn}</p>}
               </div>
             </div>
           ) : (
             <div>
               <label className="block text-sm font-medium mb-1">Height (cm)</label>
-              <input type="number" min="0" value={heightCm} onChange={e => setHeightCm(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]" />
+              <input type="number" min="0" value={heightCm} onChange={e => setHeightCm(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
               {errors.heightCm && <p className="text-xs text-red-500 mt-1">{errors.heightCm}</p>}
             </div>
           )}
@@ -290,13 +300,13 @@
           {units === 'imperial' ? (
             <div>
               <label className="block text-sm font-medium mb-1">Weight (lbs)</label>
-              <input type="number" min="0" value={weightLbs} onChange={e => setWeightLbs(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]" />
+              <input type="number" min="0" value={weightLbs} onChange={e => setWeightLbs(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
               {errors.weightLbs && <p className="text-xs text-red-500 mt-1">{errors.weightLbs}</p>}
             </div>
           ) : (
             <div>
               <label className="block text-sm font-medium mb-1">Weight (kg)</label>
-              <input type="number" min="0" value={weightKg} onChange={e => setWeightKg(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]" />
+              <input type="number" min="0" value={weightKg} onChange={e => setWeightKg(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900" />
               {errors.weightKg && <p className="text-xs text-red-500 mt-1">{errors.weightKg}</p>}
             </div>
           )}
@@ -310,7 +320,7 @@
                 max="70"
                 value={bodyFat ?? ""}
                 onChange={e => setBodyFat(Number(e.target.value))}
-                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]"
+                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900"
                 placeholder="e.g. 15"
               />
               {errors.bodyFat && <p className="text-xs text-red-500 mt-1">{errors.bodyFat}</p>}
@@ -327,7 +337,7 @@
                 min="0"
                 value={lbm ?? ""}
                 onChange={e => setLBM(Number(e.target.value))}
-                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-neutral-100 dark:bg-[#23232a]"
+                className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-neutral-900"
                 placeholder={units === 'imperial' ? "e.g. 150" : "e.g. 68"}
               />
               {errors.lbm && <p className="text-xs text-red-500 mt-1">{errors.lbm}</p>}
@@ -365,7 +375,7 @@
                 {activity.short}
               </Listbox.Button>
 
-              <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded bg-neutral-900 shadow-lg">
+              <Listbox.Options className="mt-1 max-h-60 w-full overflow-auto rounded text-black dark:text-white bg-white dark:bg-neutral-900 shadow-lg">
                 {activityOptions.map(o => (
                   <Listbox.Option
                     key={o.value}
