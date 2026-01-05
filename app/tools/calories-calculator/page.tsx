@@ -216,7 +216,7 @@
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-24 pt-12 text-black dark:text-white">
+    <div className="mx-auto max-w-4xl px-4 pb-4 pt-12 text-black dark:text-white">
       {/* TITLE */}
       <section className="mb-10 text-center">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-[#d2a852] dark:text-[#f0c46a]">
@@ -228,7 +228,7 @@
       </section>
 
       {/* CALCULATOR FORM */}
-      <section className="mx-auto mb-16 max-w-xl">
+      <section className="mx-auto mb-4 max-w-xl">
         <div>
           <label className="block text-sm font-medium mb-1">Formula</label>
           <Listbox value={formula} onChange={setFormula}>
@@ -403,7 +403,7 @@
           </div>
         </form>
         {result !== null && (
-            <div className="mt-8 text-center" style={{minHeight: 300}}>
+          <div className="mt-8 text-center" style={{minHeight: 300}}>
             <h4 id="estimated-calories-title" ref={resultRef} className="text-lg font-semibold text-[#d2a852] dark:text-[#f0c46a]">
               {lastCalculatedGoal === 'lose' && 'Estimated Calories for Weight Loss'}
               {lastCalculatedGoal === 'gain' && 'Estimated Calories for Weight Gain'}
@@ -443,6 +443,46 @@
                 </div>
               </div>
             )}
+            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+              {/* Meal prep search button with image */}
+              <div className="mt-8 flex flex-col items-center gap-3">
+                <img
+                  src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80"
+                  alt="Meal prep"
+                  className="rounded-lg shadow-md w-48 h-32 object-cover"
+                  loading="lazy"
+                />
+                <a
+                  href={`https://www.google.com/search?q=meal+prep+recipes+${result}+calories`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block rounded-full bg-[#d2a852] dark:bg-[#f0c46a] px-6 py-2 text-xs font-semibold text-black dark:text-[#23232a] transition hover:bg-[#bfa14a] dark:hover:bg-[#d2a852] mt-2"
+                >
+                  Search {result} kcal MEAL PREP
+                </a>
+              </div>
+              {/* Program promo image and button */}
+              {/* <div className="mt-8 flex flex-col items-center gap-3">
+                <img
+                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+                  alt={
+                    lastCalculatedGoal === 'lose'
+                      ? "Fat loss program"
+                      : lastCalculatedGoal === 'gain'
+                      ? "Muscle gain program"
+                      : "Maintenance program"
+                  }
+                  className="rounded-lg shadow-md w-48 h-32 object-cover"
+                  loading="lazy"
+                />
+                <a
+                  href="#"
+                  className="inline-block rounded-full bg-[#d2a852] dark:bg-[#f0c46a] px-6 py-2 text-xs font-semibold text-black dark:text-[#23232a] transition hover:bg-[#bfa14a] dark:hover:bg-[#d2a852] mt-2"
+                >
+                  GET the FREE Week of Program
+                </a>
+              </div> */}
+            </div>
           </div>
         )}
       </section>
