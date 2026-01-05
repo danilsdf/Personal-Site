@@ -62,7 +62,7 @@
       value: "mifflin",
       label: "Mifflin–St Jeor (modern standard)",
       description: "Use when you don’t know body fat. Good population average. Ignores muscle vs fat.",
-      formula: (sex: string, weight: number, height: number, age: number) =>
+      formula: (sex: string, weight: number, height: number, age: number, _lbm: number, _fat: number) =>
         sex === "male"
           ? (10 * weight) + (6.25 * height) - (5 * age) + 5
           : (10 * weight) + (6.25 * height) - (5 * age) - 161,
@@ -73,7 +73,7 @@
       value: "harris",
       label: "Harris–Benedict (legacy)",
       description: "Historical reference. Slightly higher for muscular people. Overestimates fat mass metabolism.",
-      formula: (sex: string, weight: number, height: number, age: number) =>
+      formula: (sex: string, weight: number, height: number, age: number, _lbm: number, _fat: number) =>
         sex === "male"
           ? 88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)
           : 447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age),
@@ -84,7 +84,7 @@
       value: "katch",
       label: "Katch–McArdle (LBM-based)",
       description: "Best if you know your body fat %. Directly muscle-driven.",
-      formula: (_sex: string, _weight: number, _height: number, _age: number, lbm: number) =>
+      formula: (_sex: string, _weight: number, _height: number, _age: number, lbm: number, _fat: number) =>
         370 + (21.6 * lbm),
       pros: ["Directly muscle-driven", "Explains why two 85 kg bodies differ"],
       cons: ["Garbage in → garbage out if BF% is wrong"],
@@ -94,7 +94,7 @@
       value: "cunningham",
       label: "Cunningham Equation (athlete-biased)",
       description: "Aggressive, assumes trained muscle. Use for high training volume.",
-      formula: (_sex: string, _weight: number, _height: number, _age: number, lbm: number) =>
+      formula: (_sex: string, _weight: number, _height: number, _age: number, lbm: number, _fat: number) =>
         500 + (22 * lbm),
       pros: ["Reflects real athletes better", "Closer to lab results for trained men"],
       cons: ["Overestimates for casual lifters"],
@@ -175,10 +175,10 @@
       if (formula.value === "nelson") {
         bmr = formula.formula(sex, weight, height, age, usedLBM, fat);
       } else {
-        bmr = formula.formula(sex, weight, height, age, usedLBM);
+        bmr = formula.formula(sex, weight, height, age, usedLBM, 0);
       }
     } else {
-      bmr = formula.formula(sex, weight, height, age);
+      bmr = formula.formula(sex, weight, height, age, 0, 0);
     }
 
     let activityFactor = activity.factor;
