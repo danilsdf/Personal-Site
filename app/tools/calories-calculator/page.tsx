@@ -307,7 +307,7 @@
           ) : (
             <div>
               <label className="block text-sm font-medium mb-1">Weight (kg)</label>
-              <input type="number" min="0" value={weightKg} onChange={e => setWeightKg(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
+              <input type="number" min="0" step="any" value={weightKg} onChange={e => setWeightKg(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
               {errors.weightKg && <p className="text-xs text-red-500 mt-1">{errors.weightKg}</p>}
             </div>
           )}
@@ -319,6 +319,7 @@
                 type="number"
                 min="0"
                 max="70"
+                step="any"
                 value={bodyFat ?? ""}
                 onChange={e => setBodyFat(Number(e.target.value))}
                 className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]"
@@ -336,6 +337,7 @@
               <input
                 type="number"
                 min="0"
+                step="any"
                 value={lbm ?? ""}
                 onChange={e => setLBM(Number(e.target.value))}
                 className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]"

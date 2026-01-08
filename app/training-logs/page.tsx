@@ -56,7 +56,7 @@ export default function TrainingLogsPage() {
           Training Logs
         </h1>
         <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
-          All Danil's workouts, sorted by category. See progress by date.
+          Last 30 days workouts, sorted by category. See progress by date.
         </p>
         {updated && (
           <p className="mt-1 text-xs text-neutral-400 dark:text-neutral-500">Last updated: {new Date(updated).toLocaleString()}</p>

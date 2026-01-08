@@ -14,9 +14,9 @@ export default function FitnessToolsPage() {
 
       {/* TOP TOOL CARDS (3 IN A ROW) */}
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-        <ToolCard title="Calories Calculator" href="/tools/calories-calculator" />
-        <ToolCard title="Meal Plan Generator" href="/tools/meal-plan-generator" />
-        <ToolCard title="Hybrid Training Templates" href="/tools/training-templates" />
+        <ToolCard title="Calories Calculator" href="/tools/calories-calculator" imageSrc="/calories-calculator-tool.png" />
+        <ToolCard title="Meal Plan Generator" href="/tools/meal-plan-generator" imageSrc="/coming-soon-tool.png" />
+        <ToolCard title="Hybrid Training Templates" href="/tools/training-templates" imageSrc="/coming-soon-tool-2.png" />
       </section>
 
       {/* TWO MID-CARDS (BIG) */}
@@ -25,10 +25,12 @@ export default function FitnessToolsPage() {
           title="Workout generator."
           description="Build a custom gym routine with a single click."
           href="/tools/workout-generator"
+          imageSrc="/coming-soon-tool.png"
         />
         <MidToolCard
           title="More coming soon"
           description="New tools and features are on the way."
+          imageSrc="/coming-soon-tool-1.png"
         />
       </section>
 
@@ -52,15 +54,19 @@ export default function FitnessToolsPage() {
   );
 }
 
-function ToolCard({ title, href }: { title: string; href?: string }) {
+function ToolCard({ title, href, imageSrc }: { title: string; href?: string; imageSrc?: string }) {
   const content = (
     <>
-      <div className="mb-4 h-28 w-full rounded-xl bg-neutral-200 dark:bg-neutral-800" />
+      <img
+        src={imageSrc}
+        alt={title}
+        className="mb-4 h-30 w-full rounded-xl object-cover bg-neutral-200 dark:bg-neutral-800"
+      />
       <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{title}</h3>
     </>
   );
   return href ? (
-    <a href={href} className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-4 cursor-pointer transition hover:bg-neutral-200 dark:hover:bg-neutral-800 block focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400">
+    <a href={href} className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 p-4 cursor-pointer transition hover:bg-neutral-100 dark:hover:bg-neutral-900 block focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400">
       {content}
     </a>
   ) : (
@@ -74,24 +80,30 @@ function MidToolCard({
   title,
   description,
   href,
+  imageSrc,
 }: {
   title: string;
   description: string;
   href?: string;
+  imageSrc?: string;
 }) {
   const content = (
     <>
-      <div className="mb-5 h-32 w-full rounded-xl bg-neutral-200 dark:bg-neutral-800 sm:h-40" />
+      <img
+          src={imageSrc}
+          alt={title}
+          className="mb-5 h-32 w-full rounded-xl object-cover bg-neutral-200 dark:bg-neutral-800 sm:h-40"
+        />
       <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{title}</h3>
       <p className="mt-1 text-xs text-neutral-600 dark:text-neutral-300">{description}</p>
     </>
   );
   return href ? (
-    <a href={href} className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-6 block cursor-pointer transition hover:bg-neutral-200 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400">
+    <a href={href} className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800 p-6 block cursor-pointer transition hover:bg-neutral-100 dark:hover:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400">
       {content}
     </a>
   ) : (
-    <div className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 p-6">
+    <div className="rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800 p-6">
       {content}
     </div>
   );
