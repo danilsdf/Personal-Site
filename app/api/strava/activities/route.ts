@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 
 const CACHE_PATH = "./strava-activities-cache.json";
-const STRAVA_ACCESS_TOKEN = "cb1b4dd497155b482d7e3e409460eb84ae0b15d2" // For demo, use a static token;
+const STRAVA_ACCESS_TOKEN = "bdd34c29474c49a4aff68b8d241f0debeb5586c2" // For demo, use a static token;
 
 async function fetchAndCacheActivities() {
   const res = await fetch("https://www.strava.com/api/v3/athlete/activities?per_page=30", {
@@ -11,6 +11,7 @@ async function fetchAndCacheActivities() {
     },
   });
   const activities = await res.json();
+  console.log("Fetching fresh data from Strava API, response status:", res);
   if (!res.ok) throw new Error("Failed to fetch from Strava");
   const cacheData = { activities, updated: new Date().toISOString() };
   await fs.writeFile(CACHE_PATH, JSON.stringify(cacheData, null, 2));
