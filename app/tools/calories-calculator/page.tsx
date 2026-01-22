@@ -270,7 +270,7 @@
           {/* Age */}
           <div>
             <label className="block text-sm font-medium mb-1">Age (years)</label>
-            <input type="number" min="0" value={age} onChange={e => setAge(Number(e.target.value))}
+            <input type="number" value={age === 0 ? "" : age} onChange={e => setAge(e.target.value === "" ? 0 : Number(e.target.value))}
               className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
             {errors.age && <p className="text-xs text-red-500 mt-1">{errors.age}</p>}
           </div>
@@ -280,19 +280,19 @@
             <div className="flex gap-2">
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1">Height (ft)</label>
-                <input type="number" min="0" value={heightFt} onChange={e => setHeightFt(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
+                <input type="number" value={heightFt === 0 ? "" : heightFt} onChange={e => setHeightFt(e.target.value === "" ? 0 : Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
                 {errors.heightFt && <p className="text-xs text-red-500 mt-1">{errors.heightFt}</p>}
               </div>
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1">Height (in)</label>
-                <input type="number" min="0" value={heightIn} onChange={e => setHeightIn(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
+                <input type="number" value={heightIn === 0 ? "" : heightIn} onChange={e => setHeightIn(e.target.value === "" ? 0 : Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
                 {errors.heightIn && <p className="text-xs text-red-500 mt-1">{errors.heightIn}</p>}
               </div>
             </div>
           ) : (
             <div>
               <label className="block text-sm font-medium mb-1">Height (cm)</label>
-              <input type="number" min="0" value={heightCm} onChange={e => setHeightCm(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
+              <input type="number" value={heightCm === 0 ? "" : heightCm} onChange={e => setHeightCm(e.target.value === "" ? 0 : Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
               {errors.heightCm && <p className="text-xs text-red-500 mt-1">{errors.heightCm}</p>}
             </div>
           )}
@@ -301,13 +301,13 @@
           {units === 'imperial' ? (
             <div>
               <label className="block text-sm font-medium mb-1">Weight (lbs)</label>
-              <input type="number" min="0" value={weightLbs} onChange={e => setWeightLbs(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
+              <input type="number" value={weightLbs === 0 ? "" : weightLbs} onChange={e => setWeightLbs(e.target.value === "" ? 0 : Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
               {errors.weightLbs && <p className="text-xs text-red-500 mt-1">{errors.weightLbs}</p>}
             </div>
           ) : (
             <div>
               <label className="block text-sm font-medium mb-1">Weight (kg)</label>
-              <input type="number" min="0" step="any" value={weightKg} onChange={e => setWeightKg(Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
+              <input type="number" step="any" value={weightKg === 0 ? "" : weightKg} onChange={e => setWeightKg(e.target.value === "" ? 0 : Number(e.target.value))} className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]" />
               {errors.weightKg && <p className="text-xs text-red-500 mt-1">{errors.weightKg}</p>}
             </div>
           )}
@@ -317,11 +317,10 @@
               <label className="block text-sm font-medium mb-1">Body Fat (%)</label>
               <input
                 type="number"
-                min="0"
                 max="70"
                 step="any"
-                value={bodyFat ?? ""}
-                onChange={e => setBodyFat(Number(e.target.value))}
+                value={bodyFat === null ? "" : bodyFat}
+                onChange={e => setBodyFat(e.target.value === "" ? null : Number(e.target.value))}
                 className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]"
                 placeholder="e.g. 15"
               />
@@ -336,10 +335,9 @@
               </label>
               <input
                 type="number"
-                min="0"
                 step="any"
-                value={lbm ?? ""}
-                onChange={e => setLBM(Number(e.target.value))}
+                value={lbm === null ? "" : lbm}
+                onChange={e => setLBM(e.target.value === "" ? null : Number(e.target.value))}
                 className="w-full rounded border px-3 py-2 text-black dark:text-white bg-white dark:bg-[#0f1418]"
                 placeholder={units === 'imperial' ? "e.g. 150" : "e.g. 68"}
               />

@@ -2,6 +2,7 @@
 "use client"
 
 import LogLine from "@/components/LogRow";
+import PainPointsStrip from "@/components/PainPointsStrip";
 import Link from "next/link";
 
 type ToolLink = {
@@ -40,245 +41,109 @@ const toolLinks: ToolLink[] = [
 
 import { useEffect, useState } from "react";
 
+
 export default function HomePage() {
-  const [latestActivities, setLatestActivities] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetch("/api/strava/activities")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data.activities)) {
-          setLatestActivities(data.activities.slice(0, 3));
-        }
-      });
-  }, []);
-
-    return (
-      <main className="mt-10 flex-1 space-y-12 md:mt-16">
-          {/* HERO */}
-          <section className="text-center">
-            <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#d2a852]">
-              Hybrid Athlete
-            </div>
-            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl text-black dark:text-white">
-              Danil Kravchenko
-            </h1>
-            <p className="mt-2 text-sm text-black/70 dark:text-white/70 sm:text-base">
-              Hybrid athlete. Built on strength &amp; endurance.
-            </p>
-            <div className="mt-5 flex justify-center">
-              <Link
-                href="/training-logs"
-                className="rounded-full bg-black/10 dark:bg-white px-5 py-2 text-xs font-semibold text-black dark:text-[#0f1418] shadow-sm transition hover:bg-[#d2a852] dark:hover:bg-[#f0c46a]"
-              >
-                View training profile
-              </Link>
-            </div>
-          </section>
-
-          {/* QUICK ACCESS CARDS: Recipes / Training Logs / Drills */}
-          <section aria-label="Quick sections">
-            <div className="grid gap-4 md:grid-cols-3">
-              <QuickCard
-                href="/recipes"
-                title="Recipes"
-                subtitle="Meal prep that fuels double sessions."
-                image="/meal-prep-main.png"
-              />
-              <QuickCard
-                href="/training-logs"
-                title="Training Logs"
-                subtitle="Track runs, boxing, gym & hybrid days."
-                image="/training-log-main.png"
-              />
-              <QuickCard
-                href="/drills"
-                title="Drills"
-                subtitle="Favourite running, boxing & strength drills."
-                image="/training-drills-main.png"
-              />
-            </div>
-          </section>
-
-          {/* WEEKLY CALENDAR + PR LEADERBOARD */}
-          <section
-            aria-label="Calendars and PRs"
-            className="grid gap-4 md:grid-cols-2"
-          >
-            <InfoCard
-              title="Weekly calendars"
-              description="See the full hybrid week: runs, boxing, gym & recovery scheduled around a 9–5."
-              href="/weekly-calendar"
-              linkLabel="View calendar"
-            />
-            <InfoCard
-              title="PR leaderboard"
-              description="Track your best 5K, 10K, half-marathon and key lifting numbers in one place."
-              href="/leaderboard"
-              linkLabel="View PRs"
-            />
-          </section>
-
-          {/* TOOLS ROW */}
-          <section aria-label="Tools">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-black/80 dark:text-white/80">
-                Tools
-              </h2>
-              <Link
-                href="/tools"
-                className="text-xs text-[#d2a852] hover:text-[#f0c46a]"
-              >
-                View all
-              </Link>
-            </div>
-
-            <div className="grid gap-3 text-xs sm:grid-cols-2 lg:grid-cols-4">
-              {toolLinks.map((tool) => (
-                <Link
-                  key={tool.href}
-                  href={tool.href}
-                  className="group flex flex-col rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 transition hover:border-[#d2a852] hover:bg-black/10 dark:hover:bg-white/10"
-                >
-                  <div className="mb-2 flex items-center gap-2">
-                    {tool.icon && (
-                      <span className="text-base leading-none">
-                        {tool.icon}
-                      </span>
-                    )}
-                    <span className="text-[11px] font-semibold uppercase tracking-wide text-black/80 dark:text-white/80">
-                      {tool.label}
-                    </span>
-                  </div>
-                  <p className="text-[11px] leading-relaxed text-black/65 dark:text-white/65">
-                    {tool.description}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {/* FEATURED RECIPES */}
-          <section aria-label="Featured recipes" className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-black/80 dark:text-white/80">
-                Featured Recipes
-              </h2>
-              <Link
-                href="/recipes"
-                className="text-xs text-[#d2a852] hover:text-[#f0c46a]"
-              >
-                View all
-              </Link>
-            </div>
-
-            {/* Placeholder list – replace with real data later */}
-            <div className="space-y-2 text-xs text-black/70 dark:text-white/70">
-              <RecipeRow
-                title="Rice noodles with teriyaki chicken"
-                meta="800 kcal • 55P / 95C / 18F"
-              />
-              <RecipeRow
-                title="Bulgur with mushrooms & beef"
-                meta="775 kcal • 48P / 65C / 25F"
-              />
-            </div>
-          </section>
-
-          {/* LATEST TRAINING LOGS */}
-          <section aria-label="Latest training logs" className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-black/80 dark:text-white/80">
-                Latest Training Logs
-              </h2>
-              <Link
-                href="/training-logs"
-                className="text-xs text-[#d2a852] hover:text-[#f0c46a]"
-              >
-                View all
-              </Link>
-            </div>
-
-            <div className="space-y-2 text-xs text-black/70 dark:text-white/70">
-              {latestActivities.length === 0 ? (
-                <div className="text-black/40 dark:text-white/40">No recent activities found.</div>
-              ) : (
-                latestActivities.map((activity) => (
-                  <LogLine
-                    key={activity.id || activity.name || activity.title}
-                    activity={activity}
-                  />
-                ))
-              )}
-            </div>
-          </section>
-        </main>
-  );
-}
-
-type InfoCardProps = {
-  title: string;
-  description: string;
-  href: string;
-  linkLabel: string;
-};
-
-function InfoCard({ title, description, href, linkLabel }: InfoCardProps) {
   return (
-    <div className="flex flex-col justify-between rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-4 text-xs text-black/75 dark:text-white/75">
-      <div>
-        <h3 className="text-sm font-semibold text-black dark:text-white">{title}</h3>
-        <p className="mt-2 leading-relaxed">{description}</p>
-      </div>
-      <Link
-        href={href}
-        className="mt-3 inline-flex items-center text-[11px] font-semibold text-[#d2a852] hover:text-[#f0c46a]"
-      >
-        {linkLabel}
-      </Link>
+    <div className="bg-[#1a1a1a] text-white min-h-screen flex flex-col font-sans">
+      {/* Hero Section */}
+      <section className="relative flex flex-col md:flex-row min-h-[90vh]">
+        {/* Split Background Images */}
+        <div className="absolute flex w-full h-full z-0">
+          <div className="w-1/2 h-full hidden md:block">
+            <img src="/home-page/home-working.jpg" alt="Professional" className="w-full h-full object-cover object-center" />
+          </div>
+          <div className="w-1/2 h-full hidden md:block">
+            <img src="/home-page/home-athlete.PNG" alt="Athlete" className="w-full h-full object-cover object-center" />
+          </div>
+          {/* Mobile: Stacked images */}
+          <div className="w-full h-1/2 md:hidden">
+            <img src="/home-page/home-working.jpg" alt="Professional" className="w-full h-full object-cover object-center" />
+          </div>
+          <div className="w-full h-1/2 md:hidden">
+            <img src="/home-page/home-athlete.PNG" alt="Athlete" className="w-full h-full object-cover object-center" />
+          </div>
+          <div className="absolute bg-gradient-to-b from-[#1a1a1a]/80 to-[#2d2d2d]/90"></div>
+        </div>
+        {/* Glassmorphism Card - bottom half overlay */}
+        <div className="absolute bottom-0 left-0 w-full flex justify-center z-10 pointer-events-none">
+          <div className="pointer-events-auto bg-[#232323]/90 border border-white/10 w-full mx-auto p-6 md:p-10 flex flex-col items-center text-center shadow-xl">
+            <h1 className="text-2xl md:text-4xl font-extrabold mb-3 text-white leading-tight">Get the Body You Want<br className="hidden md:block" /> Without Quitting Your 9-5</h1>
+            <p className="text-base md:text-lg text-white/80 mb-6 font-medium">Tailored online coaching for busy professionals. Lose fat and build muscle with 60-minute workouts that fit your schedule.</p>
+            <a href="#lead-magnet" className="w-full md:w-auto inline-block bg-[#e5ae51] text-[#1a1a1a] font-bold text-base md:text-lg px-8 py-4 rounded-full shadow-lg hover:bg-[#f0c46a] transition mb-1 md:mb-2" id="main-cta">Download Free 7-Day Meal Plan</a>
+          </div>
+        </div>
+      </section>
+
+      <PainPointsStrip></PainPointsStrip>
+
+      {/* Instagram/Proof Section */}
+      <section className="bg-[#2e2f30] py-16 px-4" id="transformations">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-8">Real Results in Real Time.</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="relative aspect-square">
+              <img src="/home-page/results/result-1.PNG" alt="Result 1" className="w-full h-full object-cover rounded-xl" />
+              <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 1</span>
+            </div>
+            <div className="relative aspect-square">
+              <img src="/home-page/results/result-2.PNG" alt="Result 2" className="w-full h-full object-cover rounded-xl" />
+              <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 2</span>
+            </div>
+            <div className="relative aspect-square">
+              <img src="/home-page/results/result-3.PNG" alt="Result 3" className="w-full h-full object-cover rounded-xl" />
+              <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 3</span>
+            </div>
+            <div className="relative aspect-square">
+              <img src="/home-page/results/3-weeks.png" alt="3 Weeks" className="w-full h-full object-cover rounded-xl" />
+              <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 4</span>
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <a href="https://instagram.com/danilkravafit" target="_blank" className="px-6 py-2 rounded-full border-2 border-[#e5ae51] text-[#e5ae51] font-bold hover:bg-[#e5ae51] hover:text-[#1a1a1a] transition">Follow on Instagram</a>
+          </div>
+        </div>
+      </section>
+
+      {/* The Solution (How it Works) */}
+      <section className="max-w-5xl mx-auto py-16 px-4" id="about">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-10">How It Works</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="flex flex-col items-center text-center bg-[#2d2d2d] rounded-2xl p-8 shadow hover:shadow-lg transition">
+            <img src="/home-page/solution/meals.png" alt="Custom Nutrition" className="h-13 w-14 mb-3 object-contain" />
+            <h3 className="font-bold text-lg mb-2">Custom Nutrition</h3>
+            <p className="text-white/80">A personalized meal plan that fits your work and life</p>
+            <span className="mt-4 text-xs uppercase tracking-widest text-[#e5ae51] font-bold">The Fuel</span>
+          </div>
+          <div className="flex flex-col items-center text-center bg-[#2d2d2d] rounded-2xl p-8 shadow hover:shadow-lg transition">
+            <img src="/home-page/solution/workouts.png" alt="Efficient Workouts" className="h-14 w-14 mb-3 object-contain" />
+            <h3 className="font-bold text-lg mb-2">Efficient Workouts</h3>
+            <p className="text-white/80">Sessions you can do anywhere, designed for real results</p>
+            <span className="mt-4 text-xs uppercase tracking-widest text-[#e5ae51] font-bold">The Engine</span>
+          </div>
+          <div className="flex flex-col items-center text-center bg-[#2d2d2d] rounded-2xl p-8 shadow hover:shadow-lg transition">
+            <img src="/home-page/solution/chat.png" alt="1-on-1 Accountability" className="h-14 w-14 mb-3 object-contain" />
+            <h3 className="font-bold text-lg mb-2">1-on-1 Accountability</h3>
+            <p className="text-white/80">Daily check-ins and support from your coach — never go it alone</p>
+            <span className="mt-4 text-xs uppercase tracking-widest text-[#e5ae51] font-bold">The Driver</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Lead Magnet / Contact Form */}
+      <section id="lead-magnet" className="max-w-2xl mx-auto py-16 px-4">
+        <div className="bg-[#2d2d2d] rounded-2xl p-8 shadow-lg flex flex-col items-center">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-4">Get Your Free Full Week Meal Plan</h2>
+          <p className="text-white/80 text-center mb-8">Enter your details below and get instant access to simple, high-protein recipes for busy workdays.</p>
+          <form className="w-full flex flex-col gap-4" id="lead-form" onSubmit={e => { e.preventDefault(); document.getElementById('thankyou')?.classList.remove('hidden'); }}>
+            <input type="text" name="name" placeholder="Name" required className="w-full rounded-lg border border-[#e5ae51]/30 px-4 py-3 bg-[#1a1a1a] text-white focus:outline-none focus:ring-2 focus:ring-[#e5ae51] font-medium" />
+            <input type="email" name="email" placeholder="Email" required className="w-full rounded-lg border border-[#e5ae51]/30 px-4 py-3 bg-[#1a1a1a] text-white focus:outline-none focus:ring-2 focus:ring-[#e5ae51] font-medium" />
+            <button type="submit" className="bg-[#e5ae51] text-[#1a1a1a] font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-[#f0c46a] transition">Send Me Free Meal Plan</button>
+          </form>
+          <div id="thankyou" className="hidden mt-6 text-[#e5ae51] font-bold text-center">Thank you! Check your inbox for your meal plan.</div>
+        </div>
+      </section>
     </div>
   );
 }
 
-type QuickCardProps = {
-  href: string;
-  title: string;
-  subtitle: string;
-  image?: string;
-};
-
-function QuickCard({ href, title, subtitle, image }: QuickCardProps) {
-  return (
-    <Link
-      href={href}
-      className="flex flex-col justify-between rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-4 text-xs text-black/75 dark:text-white/75 transition hover:border-[#d2a852] hover:bg-black/10 dark:hover:bg-white/10"
-    >
-      <div>
-        {image ? (
-          <img
-            src={image}
-            alt={title}
-            className="mb-3 h-28 w-full object-cover rounded-xl"
-            loading="lazy"
-          />
-        ) : (
-          <div className="mb-3 h-28 rounded-xl bg-black/5 dark:bg-white/5" />
-        )}
-        <h3 className="text-sm font-semibold text-black dark:text-white">{title}</h3>
-        <p className="mt-1 leading-relaxed">{subtitle}</p>
-      </div>
-    </Link>
-  );
-}
-
-function RecipeRow({ title, meta }: { title: string; meta: string }) {
-  return (
-    <div className="flex items-center gap-3 rounded-xl bg-black/5 dark:bg-white/5 px-3 py-2">
-      <div className="h-8 w-8 rounded-lg bg-black/10 dark:bg-white/10" />
-      <div>
-        <div className="text-[11px] font-semibold text-black dark:text-white">{title}</div>
-        <div className="text-[10px] text-black/60 dark:text-white/60">{meta}</div>
-      </div>
-    </div>
-  );
-}
+// ...existing code...

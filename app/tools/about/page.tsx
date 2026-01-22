@@ -14,11 +14,6 @@ const TOOLS = [
     body: `Select your dietary preferences and calorie target. The tool will generate a sample meal plan for the week, including recipes and a shopping list. Adjust meals as needed for variety or taste.`
   },
   {
-    title: "Hybrid Training Templates",
-    summary: "Download training templates for hybrid athletes.",
-    body: `Choose a template based on your focus (e.g., running + strength, boxing + strength). Each template includes a weekly schedule, recommended sessions, and tips for balancing modalities.`
-  },
-  {
     title: "Workout Generator",
     summary: "Build a custom gym routine with a single click.",
     body: `Pick your training split (full body, upper/lower, push/pull/legs) and equipment. The generator will create a workout with sets, reps, and rest times. Use it as a base and modify as needed.`
@@ -29,7 +24,7 @@ export default function ToolsAboutPage() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 pb-20 pt-10 text-black dark:text-white bg-white dark:bg-[#18181b]">
+    <div className="mx-auto max-w-3xl px-4 pb-20 pt-10 text-black dark:text-white">
       <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-[#d2a852] dark:text-[#f0c46a] mb-8">About the Tools</h1>
       <p className="mb-8 text-neutral-500 dark:text-neutral-300">Learn what each tool does and how to get the most out of it. Click on a tool to expand details and usage instructions.</p>
       <div className="flex flex-col gap-4">

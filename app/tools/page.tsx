@@ -16,22 +16,18 @@ export default function FitnessToolsPage() {
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
         <ToolCard title="Calories Calculator" href="/tools/calories-calculator" imageSrc="/calories-calculator-tool.png" />
         <ToolCard title="Meal Plan Generator" href="/tools/meal-plan-generator" imageSrc="/coming-soon-tool.png" />
-        <ToolCard title="Hybrid Training Templates" href="/tools/training-templates" imageSrc="/coming-soon-tool-2.png" />
+        <ToolCard title="Workout generator" href="/tools/workout-generator" imageSrc="/coming-soon-tool-2.png" />
       </section>
 
       {/* TWO MID-CARDS (BIG) */}
-      <section className="grid gap-6 sm:grid-cols-2 mb-16">
-        <MidToolCard
-          title="Workout generator."
-          description="Build a custom gym routine with a single click."
-          href="/tools/workout-generator"
-          imageSrc="/coming-soon-tool.png"
-        />
-        <MidToolCard
-          title="More coming soon"
-          description="New tools and features are on the way."
-          imageSrc="/coming-soon-tool-1.png"
-        />
+      <section className="flex justify-center items-center w-full text-center mb-16">
+        <div className="max-w-100 w-full">
+          <MidToolCard
+            title="More coming soon"
+            description="New tools and features are on the way."
+            imageSrc="/coming-soon-tool-1.png"
+          />
+        </div>
       </section>
 
       {/* CTA BLOCK */}
