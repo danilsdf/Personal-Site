@@ -13,25 +13,25 @@ type ToolLink = {
 
 const toolLinks: ToolLink[] = [
   {
-    href: "/tools/calories-calculator",
+    href: "/tool/calories-calculator",
     label: "Calories Calculator",
     description: "Dial in calories and macros for hybrid training.",
     icon: "🍽️",
   },
   {
-    href: "/tools/meal-plan-generator",
+    href: "/tool/meal-plan-generator",
     label: "Meal Plans",
     description: "Auto-generate weekly meal prep based on your macros.",
     icon: "📆",
   },
   {
-    href: "/tools/training-templates",
+    href: "/tool/training-templates",
     label: "Training Templates",
     description: "Ready-to-use hybrid training week templates.",
     icon: "📑",
   },
   {
-    href: "/tools/workout-generator",
+    href: "/tool/workout-generator",
     label: "Workout Gen",
     description: "Build structured gym sessions around your goals.",
     icon: "🏋️‍♂️",

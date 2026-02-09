@@ -5,18 +5,18 @@ export default function FitnessToolsPage() {
       {/* TITLE */}
       <section className="text-center mb-12">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-yellow-600 dark:text-yellow-400">
-          Fitness Tools.
+          Hybrid Athlete Tools
         </h1>
         <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
-          A toolkit for hybrid athletes.
+          A toolkit for hybrid athletes
         </p>
       </section>
 
       {/* TOP TOOL CARDS (3 IN A ROW) */}
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-        <ToolCard title="Calories Calculator" href="/tools/calories-calculator" imageSrc="/calories-calculator-tool.png" />
-        <ToolCard title="Meal Plan Generator" href="/tools/meal-plan-generator" imageSrc="/coming-soon-tool.png" />
-        <ToolCard title="Workout generator" href="/tools/workout-generator" imageSrc="/coming-soon-tool-2.png" />
+        <ToolCard title="Calories Calculator" href="/tool/calories-calculator" imageSrc="/calories-calculator-tool.png" />
+        <ToolCard title="Meal Plan Generator" href="/tool/meal-plan-generator" imageSrc="/coming-soon-tool.png" />
+        <ToolCard title="Workout generator" href="/tool/workout-generator" imageSrc="/coming-soon-tool-2.png" />
       </section>
 
       {/* TWO MID-CARDS (BIG) */}
@@ -33,10 +33,10 @@ export default function FitnessToolsPage() {
       {/* CTA BLOCK */}
       <section className="text-center">
         <h2 className="text-lg font-semibold text-yellow-600 dark:text-yellow-400">
-          Start using tools.
+          Start using tools
         </h2>
         <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300 max-w-md mx-auto">
-          Level up your fitness with our suite of tools.
+          Level up your fitness with our suite of tools
         </p>
         <a
           href="/tools/about"

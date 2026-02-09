@@ -3,10 +3,10 @@ import TreePageBody from "@/components/pages/TreePageBody";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tree | Danil Kravchenko",
+  title: "Tree | Hybrid Athlete Hub",
   description: "Explore the tree view of Danil Kravchenko's hybrid athlete and coding journey.",
   openGraph: {
-    title: "Tree | Danil Kravchenko",
+    title: "Tree | Hybrid Athlete Hub",
     description: "Explore the tree view of Danil Kravchenko's hybrid athlete and coding journey.",
     url: "https://danilkrava.fit/tree",
     siteName: "Danil Kravchenko",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tree | Danil Kravchenko",
+    title: "Tree | Hybrid Athlete Hub",
     description: "Explore the tree view of Danil Kravchenko's hybrid athlete and coding journey.",
   },
 };
