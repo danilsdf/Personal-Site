@@ -22,7 +22,9 @@ export default function CaloriesScreen({
   setDays,
   onContinue,
 }: CaloriesScreenProps) {
-  const [meals, setMeals] = React.useState({
+  type MealName = 'Breakfast' | 'Breakfast 2' | 'Lunch' | 'Lunch 2' | 'Snack' | 'Dinner';
+
+  const [meals, setMeals] = React.useState<Record<MealName, boolean>>({
     Breakfast: true,
     'Breakfast 2': false,
     Lunch: true,
@@ -31,7 +33,7 @@ export default function CaloriesScreen({
     Dinner: true,
   });
 
-  const handleMealChange = (meal: string) => {
+  const handleMealChange = (meal: MealName) => {
     setMeals(prev => {
       const updated = { ...prev, [meal]: !prev[meal] };
       // If Breakfast is unchecked, also uncheck Breakfast 2

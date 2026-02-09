@@ -5,7 +5,7 @@ interface SummaryScreenProps {
 	calorieGoal: number;
 	macros: { protein: number; fat: number; carbs: number };
 	days: number;
-	ingredients: { name: string; amount: string }[];
+	ingredients: { name: string; unit: string; amount: string }[];
 	nutritionSummary: { totalKcal: number; totalProtein: number; totalCarbs: number; totalFat: number };
 	totalGoal: { kcal: number; protein: number; fat: number; carbs: number };
 	isWithinGoal: (actual: number, goal: number) => boolean;

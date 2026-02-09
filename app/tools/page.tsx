@@ -15,7 +15,7 @@ export default function FitnessToolsPage() {
       {/* TOP TOOL CARDS (3 IN A ROW) */}
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
         <ToolCard title="Calories Calculator" href="/tool/calories-calculator" imageSrc="/calories-calculator-tool.png" />
-        <ToolCard title="Meal Plan Generator" href="/tool/meal-plan-generator" imageSrc="/coming-soon-tool.png" />
+        <ToolCard title="Meal Prep Helper" href="/tool/meal-prep-helper" imageSrc="/coming-soon-tool.png" />
         <ToolCard title="Workout generator" href="/tool/workout-generator" imageSrc="/coming-soon-tool-2.png" />
       </section>
 

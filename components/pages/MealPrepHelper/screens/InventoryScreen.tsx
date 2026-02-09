@@ -8,7 +8,7 @@ interface Ingredient {
 
 interface InventoryScreenProps {
 	ingredients: Ingredient[];
-	setIngredients: (ings: Ingredient[]) => void;
+	setIngredients: React.Dispatch<React.SetStateAction<Ingredient[]>>;
 	onContinue: () => void;
 }
 export default function InventoryScreen({ ingredients, setIngredients, onContinue }: InventoryScreenProps) {
@@ -183,7 +183,7 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 												onBlur={() => setEditingIdx(null)}
 												onChange={e => {
 													const newAmount = e.target.value;
-													setIngredients(ings => ings.map((item, i) => i === idx ? { ...item, amount: newAmount } : item));
+													setIngredients((ings: Ingredient[]) => ings.map((item, i) => i === idx ? { ...item, amount: newAmount } : item));
 													}}
 												className="rounded border px-2 py-1 text-sm w-20 bg-neutral-50 dark:bg-neutral-900 text-neutral-500"
 											/>
@@ -212,7 +212,7 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 											type="button"
 											className="p-1 text-neutral-400 hover:text-yellow-600 cursor-pointer transition"
 											onClick={() => {
-												setIngredients(ings => ings.filter((_, i) => i !== idx));
+												setIngredients((ings: Ingredient[]) => ings.filter((_, i) => i !== idx));
 											}}
 											aria-label="Remove ingredient"
 										>
