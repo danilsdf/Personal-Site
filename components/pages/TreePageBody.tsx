@@ -71,7 +71,7 @@ export default function TreePageBody() {
 
         {/* Links */}
         <div className="mt-6 space-y-4">
-          <LinkButton label="Meal prep generator" link="/tool/meal-prep-generator" blank={false} />
+          <LinkButton label="Meal prep helper" link="/tool/meal-prep-helper" blank={false} />
           <LinkButton label="Strava" link="https://www.strava.com/athletes/66921238" blank={true} />
           <LinkButton label="Instagram" link="https://instagram.com/danilkravafit" blank={true} />
           <LinkButton label="TikTok" link="https://tiktok.com/@danilkravafit" blank={true} />

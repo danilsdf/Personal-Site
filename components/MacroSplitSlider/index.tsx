@@ -279,14 +279,15 @@ const styles: Record<string, React.CSSProperties> = {
   },
   handleKnob: {
     pointerEvents: "auto",
-    width: 64,
-    height: 64,
+    width: 32,
+    height: 32,
     borderRadius: 999,
     background: "#FFFFFF",
     display: "grid",
     placeItems: "center",
     boxShadow: "0 12px 30px rgba(0,0,0,0.45)",
-    marginBottom: -22, // makes it sit lower like in the screenshot
+    marginBottom: "auto",
+    marginTop: "auto",
     cursor: "grab",
   },
 };
