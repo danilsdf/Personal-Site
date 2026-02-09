@@ -69,7 +69,7 @@ export default function HomePage() {
           <div className="pointer-events-auto bg-[#232323]/90 border border-white/10 w-full mx-auto p-6 md:p-10 flex flex-col items-center text-center shadow-xl">
             <h1 className="text-2xl md:text-4xl font-extrabold mb-3 text-white leading-tight">Get the Body You Want<br className="hidden md:block" /> Without Quitting Your 9-5</h1>
             <p className="text-base md:text-lg text-white/80 mb-6 font-medium">Tailored online coaching for busy professionals. Lose fat and build muscle with 60-minute workouts that fit your schedule.</p>
-            <a href="#lead-magnet" className="w-full md:w-auto inline-block bg-[#e5ae51] text-[#1a1a1a] font-bold text-base md:text-lg px-8 py-4 rounded-full shadow-lg hover:bg-[#f0c46a] transition mb-1 md:mb-2" id="main-cta">Download Free 7-Day Meal Plan</a>
+            {/* <a href="#lead-magnet" className="w-full md:w-auto inline-block bg-[#e5ae51] text-[#1a1a1a] font-bold text-base md:text-lg px-8 py-4 rounded-full shadow-lg hover:bg-[#f0c46a] transition mb-1 md:mb-2" id="main-cta">Download Free 7-Day Meal Plan</a> */}
           </div>
         </div>
       </section>
@@ -130,7 +130,7 @@ export default function HomePage() {
       </section>
 
       {/* Lead Magnet / Contact Form */}
-      <section id="lead-magnet" className="max-w-2xl mx-auto py-16 px-4">
+      {/* <section id="lead-magnet" className="max-w-2xl mx-auto py-16 px-4">
         <div className="bg-[#2d2d2d] rounded-2xl p-8 shadow-lg flex flex-col items-center">
           <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-4">Get Your Free Full Week Meal Plan</h2>
           <p className="text-white/80 text-center mb-8">Enter your details below and get instant access to simple, high-protein recipes for busy workdays.</p>
@@ -141,7 +141,7 @@ export default function HomePage() {
           </form>
           <div id="thankyou" className="hidden mt-6 text-[#e5ae51] font-bold text-center">Thank you! Check your inbox for your meal plan.</div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

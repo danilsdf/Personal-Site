@@ -1,4 +1,14 @@
+"use client";
+import MacroSplitSlider from "@/components/MacroSplitSlider";
+import { use, useState } from "react";
+
 export default function WeeklyMealPlanPage() {
+  const [macros, setMacros] = useState({
+    protein: 33,
+    fat: 30,
+    carbs: 37,
+  });
+  
   return (
     <div className="mx-auto max-w-4xl px-4 pb-24 pt-12 text-neutral-900 dark:text-neutral-100">
       {/* TITLE */}
@@ -52,6 +62,18 @@ export default function WeeklyMealPlanPage() {
           Generate Plan
         </button>
       </section>
+
+      <MacroSplitSlider
+        initial={macros}
+        minPct={10}
+        totalProteinG={2300/4}
+        totalFatG={2300/9}
+        totalCarbsG={2300/4}
+        onChange={(v) => {
+          setMacros(v);
+          console.log("Updated macros:", v);
+        }}
+      />
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function MainHeader() {
         </div>
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-4 text-[14px]">
-          <Link href="/programs" className="hover:text-blue-600 dark:hover:text-blue-400 text-black dark:text-white">Programs</Link>
+          {/* <Link href="/programs" className="hover:text-blue-600 dark:hover:text-blue-400 text-black dark:text-white">Programs</Link> */}
           <Link href="/recipes" className="hover:text-blue-600 dark:hover:text-blue-400 text-black dark:text-white">Recipes</Link>
           <Link href="/tools" className="hover:text-blue-600 dark:hover:text-blue-400 text-black dark:text-white">Tools</Link>
           <Link href="/about-me" className="hover:text-blue-600 dark:hover:text-blue-400 text-black dark:text-white">About me</Link>
