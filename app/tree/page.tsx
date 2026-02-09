@@ -5,9 +5,14 @@ import { useState } from "react";
 export default function Page() {
   const [copied, setCopied] = useState(false);
   return (
-    <main className="min-h-screen flex justify-center px-4">
+    <main className="min-h-screen flex justify-center px-4 sm:px-0">
       {/* Phone card */}
-      <div className="w-full max-w-[390px] h-full mt-10 bg-background bg-card rounded-[28px] shadow-2xl px-6 py-8 text-center relative">
+      <div
+        className="w-full max-w-[390px] h-full mt-0 bg-background bg-card rounded-[28px] shadow-2xl px-6 py-8 text-center relative
+        sm:mt-10 sm:rounded-[28px] sm:shadow-2xl sm:px-6 sm:py-8
+        min-h-screen min-w-screen fixed top-0 left-0 right-0 bottom-0 m-0 rounded-none shadow-none px-0 py-0 sm:min-h-0 sm:min-w-0 sm:relative sm:m-0 sm:rounded-[28px] sm:shadow-2xl sm:px-6 sm:py-8
+        "
+      >
         {/* Top icons */}
         <button
           type="button"

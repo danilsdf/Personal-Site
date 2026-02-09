@@ -1,3 +1,22 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Me | Danil Kravchenko",
+  description: "Learn more about Danil Kravchenko, a hybrid athlete and professional, and his approach to fitness, nutrition, and life.",
+  openGraph: {
+    title: "About Me | Danil Kravchenko",
+    description: "Learn more about Danil Kravchenko, a hybrid athlete and professional, and his approach to fitness, nutrition, and life.",
+    url: "https://danilkrava.fit/about-me",
+    siteName: "Danil Kravchenko",
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Me | Danil Kravchenko",
+    description: "Learn more about Danil Kravchenko, a hybrid athlete and professional, and his approach to fitness, nutrition, and life.",
+  },
+};
+
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 pb-20 pt-12 text-black dark:text-white">

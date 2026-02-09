@@ -1,7 +1,5 @@
 "use client";
 import Link from "next/link";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 import { use, useState } from "react";
 
@@ -41,10 +39,11 @@ export default function MainHeader() {
       {/* Mobile menu dropdown */}
       {menuOpen && (
         <nav className="md:hidden bg-white dark:bg-[#0f1418] border-t border-black/10 dark:border-white/10 px-4 py-4 flex flex-col gap-4 text-base font-semibold animate-in fade-in slide-in-from-top-2">
-          <Link href="/programs" className="hover:text-[#e5ae51] text-black dark:text-white" onClick={() => setMenuOpen(false)}>Programs</Link>
-          <Link href="/recipes" className="hover:text-[#e5ae51] text-black dark:text-white" onClick={() => setMenuOpen(false)}>Recipes</Link>
+          {/* <Link href="/programs" className="hover:text-[#e5ae51] text-black dark:text-white" onClick={() => setMenuOpen(false)}>Programs</Link> */}
           <Link href="/tools" className="hover:text-[#e5ae51] text-black dark:text-white" onClick={() => setMenuOpen(false)}>Tools</Link>
+          <Link href="/recipes" className="hover:text-[#e5ae51] text-black dark:text-white" onClick={() => setMenuOpen(false)}>Recipes</Link>
           <Link href="/about-me" className="hover:text-[#e5ae51] text-black dark:text-white" onClick={() => setMenuOpen(false)}>About me</Link>
+          <Link href="/training-logs" className="hover:text-[#e5ae51] text-black dark:text-white" onClick={() => setMenuOpen(false)}>Training Logs</Link>
         </nav>
       )}
     </header>

@@ -1,8 +1,8 @@
 // components/RecipeDetailBody.tsx
 
 import Link from "next/link";
-import type { Recipe, RecipeIngredientLinePopulated, InstructionBlock } from "@/app/models/recipe";
-import type { Ingredient } from "@/app/models/ingredient";
+import type { Recipe, RecipeIngredientLinePopulated, InstructionBlock } from "@/app/data/models/recipe";
+import type { Ingredient } from "@/app/data/models/ingredient";
 
 type RecipeDetailBodyProps = {
   recipe: Recipe | null;
