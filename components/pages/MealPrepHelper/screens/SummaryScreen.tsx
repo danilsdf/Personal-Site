@@ -79,7 +79,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
 									<li key={idx} className="py-2 flex flex-col text-sm">
 										<div className="flex justify-between items-center">
 											<span>{ing.name}</span>
-											<span className="text-neutral-500">{ing.amount}</span>
+											<span>{ing.amount} {ing.unit}</span>
 										</div>
 										{nut && (
 											<div className="flex flex-wrap gap-4 text-xs text-neutral-500 mt-1 ml-2">
@@ -163,10 +163,8 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
 				{isWithinGoal(nutritionSummary.totalKcal, totalGoal.kcal) &&
 					isWithinGoal(nutritionSummary.totalProtein, totalGoal.protein) &&
 					isWithinGoal(nutritionSummary.totalFat, totalGoal.fat) &&
-					isWithinGoal(nutritionSummary.totalCarbs, totalGoal.carbs) ? (
+					isWithinGoal(nutritionSummary.totalCarbs, totalGoal.carbs) && (
 						<div className="text-green-600 font-semibold">Your plan matches your goal! ✅</div>
-				) : (
-					<div className="text-red-600 font-semibold">Your plan does not match your goal. Adjust your ingredients.</div>
 				)}
 				{(nutritionSummary.totalProtein > totalGoal.protein * 1.05) && (
 					<div className="text-yellow-600 mt-2">Protein is over the goal by more than 5%. Consider removing some protein sources.</div>
@@ -176,7 +174,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
 				)}
 			</div>
 			<button
-				className="rounded bg-yellow-600 dark:bg-yellow-400 px-6 py-2 text-xs font-semibold text-white dark:text-black hover:bg-yellow-700 dark:hover:bg-yellow-300"
+				className="rounded bg-yellow-600 dark:bg-yellow-400 px-6 py-2 text-xs font-semibold text-white dark:text-black hover:bg-yellow-700 dark:hover:bg-yellow-300 justify-center transition mx-auto block"
 				onClick={onBack}
 			>Back to Inventory</button>
 		</div>

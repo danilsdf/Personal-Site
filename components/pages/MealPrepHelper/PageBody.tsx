@@ -63,7 +63,7 @@ export default function MealPrepHelperPageBody() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-24 pt-12 text-neutral-900 dark:text-neutral-100">
+    <div className="sm:mx-auto max-w-4xl px-4 pb-24 pt-12 text-neutral-900 dark:text-neutral-100">
       <section className="mb-10 text-center">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-yellow-600 dark:text-yellow-400">
           Meal Prep Helper

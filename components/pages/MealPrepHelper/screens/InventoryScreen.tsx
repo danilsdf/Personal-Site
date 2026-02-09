@@ -33,12 +33,10 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 
 	const handleModalAdd = () => {
 		if (!selectedIngredient || !unit || !amount) return;
-		const ingredientObj = ingredientDB.find(i => i.name === selectedIngredient);
 		setIngredients([
 			...ingredients,
 			{ name: `${selectedIngredient}`, unit, amount }
 		]);
-        console.log("Ingredients:", ...ingredients);
 		setShowModal(false);
 		setSearch("");
 		setSelectedIngredient(null);
@@ -94,7 +92,7 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 								</ul>
 								<button
 									className="mt-2 text-xs text-neutral-500 underline"
-									onClick={() => setShowModal(false)}
+									onClick={() => {setShowModal(false); setSelectedIngredient(null);}}
 								>Cancel</button>
 							</>
 						) : (
@@ -134,7 +132,7 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 									>Add</button>
 									<button
 										className="rounded bg-neutral-200 dark:bg-neutral-700 px-4 py-1 text-xs font-semibold text-neutral-800 dark:text-neutral-200"
-										onClick={() => setShowModal(false)}
+										onClick={() => {setShowModal(false); setSelectedIngredient(null);}}
 									>Cancel</button>
 								</div>
 							</>
@@ -143,39 +141,38 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 				</div>
 			)}
 			<section className="mb-8">
-				<table className="min-w-full text-sm border-separate border-spacing-y-1">
-					<thead>
-						<tr className="text-neutral-700 dark:text-neutral-200">
-							<th className="text-left px-2 py-1">Ingredient</th>
-							<th className="text-left px-2 py-1">Amount</th>
-							<th className="text-left px-2 py-1">Kcal</th>
-							<th className="text-left px-2 py-1">Protein</th>
-							<th className="text-left px-2 py-1">Fat</th>
-							<th className="text-left px-2 py-1">Carbs</th>
-							<th className="text-left px-2 py-1"> </th>
-						</tr>
-					</thead>
-					<tbody>
-						{ingredients.length === 0 && (
-							<tr><td colSpan={7} className="py-2 text-neutral-500 text-center">No ingredients added yet.</td></tr>
-						)}
-						{ingredients.map((ing, idx) => {
-							// Nutrition calculation (copied from SummaryScreen logic)
-							const db = ingredientDB.find(i => i.name === ing.name);
-							const conv = db?.unitConversions.find((u: any) => u.unit === ing.unit);
-							const grams = conv ? parseFloat(ing.amount) * conv.grams : 0;
-							const nut = db && conv ? {
-								kcal: grams * db.kcalPer1g,
-								protein: grams * db.proteinPer1g,
-								fat: grams * db.fatPer1g,
-								carbs: grams * db.carbsPer1g,
-							} : null;
-							return (
-								<tr key={idx} className="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
-									<td className="px-2 py-1">{ing.name}</td>
-									<td className="px-2 py-1">
-										{editingIdx === idx ? (
-											<input
+				<div className="overflow-x-auto w-full">
+					<table className="min-w-full text-sm border-separate border-spacing-y-1">
+						<thead>
+							<tr className="text-neutral-700 dark:text-neutral-200">
+								<th className="text-left px-2 py-1">Ingredient</th>
+								<th className="text-left px-2 py-1">Amount</th>
+								<th className="text-left px-2 py-1">Kcal</th>
+								<th className="text-center px-2 py-1">P/F/C</th>
+								<th className="text-left px-2 py-1"> </th>
+							</tr>
+						</thead>
+						<tbody>
+							{ingredients.length === 0 && (
+								<tr><td colSpan={5} className="py-2 text-neutral-500 text-center">No ingredients added yet.</td></tr>
+							)}
+							{ingredients.map((ing, idx) => {
+								// Nutrition calculation (copied from SummaryScreen logic)
+								const db = ingredientDB.find(i => i.name === ing.name);
+								const conv = db?.unitConversions.find((u: any) => u.unit === ing.unit);
+								const grams = conv ? parseFloat(ing.amount) * conv.grams : 0;
+								const nut = db && conv ? {
+									kcal: grams * db.kcalPer1g,
+									protein: grams * db.proteinPer1g,
+									fat: grams * db.fatPer1g,
+									carbs: grams * db.carbsPer1g,
+								} : null;
+								return (
+									<tr key={idx} className="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+										<td className="px-2 py-1">{ing.name}</td>
+										<td className="px-2 py-1">
+											{editingIdx === idx ? (
+												<input
 												type="number"
 												min="0"
 												value={ing.amount}
@@ -184,10 +181,10 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 												onChange={e => {
 													const newAmount = e.target.value;
 													setIngredients((ings: Ingredient[]) => ings.map((item, i) => i === idx ? { ...item, amount: newAmount } : item));
-													}}
+												}}
 												className="rounded border px-2 py-1 text-sm w-20 bg-neutral-50 dark:bg-neutral-900 text-neutral-500"
 											/>
-										) : (
+											) : (
 											<span className="flex items-center">
 												<span className="text-neutral-500 mr-1">{ing.amount} {ing.unit}</span>
 												<button
@@ -199,14 +196,12 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 												<svg width="16" height="16" fill="none" viewBox="0 0 16 16">
 													<path d="M2 13.5V14h.5l9.06-9.06-1.5-1.5L2 13.5zM14.06 4.06a1 1 0 0 0 0-1.41l-1.71-1.71a1 1 0 0 0-1.41 0l-.88.88 3.12 3.12.88-.88z" fill="currentColor"/>
 												</svg>
-											</button>
-										</span>
-										)}
+												</button>
+											</span>
+											)}
 									</td>
 									<td className="px-2 py-1">{nut ? nut.kcal.toFixed(0) : '-'}</td>
-									<td className="px-2 py-1">{nut ? nut.protein.toFixed(1) : '-'}</td>
-									<td className="px-2 py-1">{nut ? nut.fat.toFixed(1) : '-'}</td>
-									<td className="px-2 py-1">{nut ? nut.carbs.toFixed(1) : '-'}</td>
+									<td className="px-2 py-1">{nut ? nut.protein.toFixed(1) : '-'}/{nut ? nut.fat.toFixed(1) : '-'}/{nut ? nut.carbs.toFixed(1) : '-'}</td>
 									<td className="px-2 py-1">
 										<button
 											type="button"
@@ -215,7 +210,7 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 												setIngredients((ings: Ingredient[]) => ings.filter((_, i) => i !== idx));
 											}}
 											aria-label="Remove ingredient"
-										>
+											>
 											<svg width="16" height="16" fill="none" viewBox="0 0 16 16">
 												<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 											</svg>
@@ -223,9 +218,10 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 									</td>
 								</tr>
 							);
-						})}
-					</tbody>
-				</table>
+							})}
+						</tbody>
+					</table>
+				</div>
 			</section>
 			<section className="text-center">
 				<button

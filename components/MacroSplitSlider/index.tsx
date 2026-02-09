@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
+import "./styles.css";
 
 type Macro = "protein" | "fat" | "carbs";
 
@@ -95,9 +96,9 @@ export default function MacroSplitSlider({
   };
 
   return (
-    <div style={styles.wrap}>
+    <div className="wrap">
       {/* Top cards */}
-      <div style={styles.cardsRow}>
+      <div className="cardsRow">
         <MacroCard
           title="Protein"
           dot="#B26BCB"
@@ -116,19 +117,19 @@ export default function MacroSplitSlider({
       </div>
 
       {/* Slider */}
-      <div style={styles.sliderArea}>
+      <div className="sliderArea">
         <div
           ref={barRef}
-          style={styles.bar}
+          className="bar"
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
           onPointerLeave={onPointerUp}
         >
           {/* segments */}
-          <div style={{ ...styles.seg, width: `${h1}%`, background: "#B26BCB" }} />
-          <div style={{ ...styles.seg, width: `${h2 - h1}%`, background: "#7AC48B" }} />
-          <div style={{ ...styles.seg, width: `${100 - h2}%`, background: "#FF9A4D" }} />
+          <div className="seg" style={{ width: `${h1}%`, background: "#B26BCB" }} />
+          <div className="seg" style={{ width: `${h2 - h1}%`, background: "#7AC48B" }} />
+          <div className="seg" style={{ width: `${100 - h2}%`, background: "#FF9A4D" }} />
 
           {/* handle 1 */}
           <Handle leftPct={h1} onPointerDown={onPointerDown("h1")} />
@@ -154,11 +155,11 @@ function MacroCard({
   grams: number;
 }) {
   return (
-    <div style={{ ...styles.card, background: bg }}>
-      <div style={styles.cardTop}>
-        <div style={styles.cardTitle}>
-          <span style={{ ...styles.dot, background: dot }} />
-          <span style={styles.cardTitleText}>{title}</span>
+    <div className="card" style={{ background: bg }}>
+      <div className="cardTop">
+        <div className="cardTitle">
+          <span className="dot" style={{ background: dot }} />
+          <span className="cardTitleText">{title}</span>
         </div>
 
         {/* edit icon */}
@@ -184,7 +185,7 @@ function MacroCard({
         </svg>
       </div>
 
-      <div style={styles.cardValue}>
+      <div className="cardValue">
         {pct}%/{grams.toFixed(1)}g
       </div>
     </div>
@@ -199,9 +200,9 @@ function Handle({
   onPointerDown: (e: React.PointerEvent) => void;
 }) {
   return (
-    <div style={{ ...styles.handleWrap, left: `${leftPct}%` }}>
-      <div style={styles.handleLine} />
-      <div style={styles.handleKnob} onPointerDown={onPointerDown} role="slider" tabIndex={0}>
+    <div className="handleWrap" style={{ left: `${leftPct}%` }}>
+      <div className="handleLine" />
+      <div className="handleKnob" onPointerDown={onPointerDown} role="slider" tabIndex={0}>
         {/* left/right arrows */}
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
           <path
@@ -223,71 +224,3 @@ function Handle({
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  wrap: {
-    width: "100%",
-    maxWidth: 980,
-    margin: "0 auto",
-    padding: 18,
-    borderRadius: 24,
-    background: "#0D0F10",
-  },
-  cardsRow: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 18 },
-  card: {
-    borderRadius: 18,
-    padding: 16,
-    color: "rgba(255,255,255,0.9)",
-    boxShadow: "0 10px 24px rgba(0,0,0,0.35)",
-  },
-  cardTop: { display: "flex", alignItems: "center", justifyContent: "space-between" },
-  cardTitle: { display: "flex", alignItems: "center", gap: 10 },
-  dot: { width: 10, height: 10, borderRadius: 999 },
-  cardTitleText: { fontSize: 18, opacity: 0.9 },
-  cardValue: { marginTop: 10, fontSize: 34, fontWeight: 700, letterSpacing: -0.5 },
-
-  sliderArea: { marginTop: 22, padding: "6px 2px 2px" },
-  bar: {
-    position: "relative",
-    display: "flex",
-    height: 74,
-    borderRadius: 22,
-    overflow: "hidden",
-    background: "#15181A",
-    boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.04)",
-    userSelect: "none",
-    touchAction: "none",
-  },
-  seg: { height: "100%" },
-
-  handleWrap: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    transform: "translateX(-50%)",
-    display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "center",
-    pointerEvents: "none",
-  },
-  handleLine: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    width: 2,
-    background: "rgba(255,255,255,0.85)",
-  },
-  handleKnob: {
-    pointerEvents: "auto",
-    width: 32,
-    height: 32,
-    borderRadius: 999,
-    background: "#FFFFFF",
-    display: "grid",
-    placeItems: "center",
-    boxShadow: "0 12px 30px rgba(0,0,0,0.45)",
-    marginBottom: "auto",
-    marginTop: "auto",
-    cursor: "grab",
-  },
-};
