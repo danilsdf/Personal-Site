@@ -114,16 +114,14 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
 			<div className="mb-4">
 				{(() => {
 					const over = (actual: number, goal: number) => actual > goal * 1.01;
-					const under = (actual: number, goal: number) => actual < goal * 0.99;
-					const getValueColor = (actual: number, goal: number) => over(actual, goal) ? "text-green-600" : "text-white";
-					const getGoalColor = (actual: number, goal: number) => over(actual, goal) ? "text-white" : "text-white";
+					const getValueColor = (actual: number, goal: number) => over(actual, goal) ? "text-green-600" : "text-black dark:text-white";
 					const renderRow = (label: string, actual: number, goal: number) => (
 						<div className="flex justify-between">
 							<span>{label}</span>
 							<span>
 								<span className={getValueColor(actual, goal)}>{actual.toFixed(0)}</span>
 								<span className="text-neutral-400"> / </span>
-								<span className={getGoalColor(actual, goal)}>{goal.toFixed(0)}</span>
+								<span className="text-black dark:text-white">{goal.toFixed(0)}</span>
 							</span>
 						</div>
 					);
