@@ -66,7 +66,9 @@ export default function HomePage() {
           <div className="absolute bottom-0 left-0 w-full flex justify-center z-10 pointer-events-none">
             <div className="pointer-events-auto bg-[#232323]/90 border border-white/10 w-full mx-auto p-6 md:p-10 flex flex-col items-center text-center shadow-xl">
               <h1 className="text-2xl md:text-4xl font-extrabold mb-3 text-white leading-tight">Training for a better body with a full-time job</h1>
-              <p className="text-base md:text-lg text-white/80 mb-6 font-medium">Tailored online coaching for busy professionals. Lose fat and build muscle with 60-minute workouts that fit your schedule.</p>
+              <p className="text-base md:text-lg text-white/80 mb-6 font-medium">Early mornings, late nights, and meal prep became my routine. This site is my logbook: honest progress, mistakes, and what works for me.
+
+If you want to connect or follow my journey, check out the links below. I am always happy to chat and share what I've learned.</p>
               {/* <a href="#lead-magnet" className="w-full md:w-auto inline-block bg-[#e5ae51] text-[#1a1a1a] font-bold text-base md:text-lg px-8 py-4 rounded-full shadow-lg hover:bg-[#f0c46a] transition mb-1 md:mb-2" id="main-cta">Download Free 7-Day Meal Plan</a> */}
             </div>
           </div>
