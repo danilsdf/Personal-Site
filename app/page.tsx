@@ -65,7 +65,7 @@ export default function HomePage() {
           {/* Glassmorphism Card - bottom half overlay */}
           <div className="absolute bottom-0 left-0 w-full flex justify-center z-10 pointer-events-none">
             <div className="pointer-events-auto bg-[#232323]/90 border border-white/10 w-full mx-auto p-6 md:p-10 flex flex-col items-center text-center shadow-xl">
-              <h1 className="text-2xl md:text-4xl font-extrabold mb-3 text-white leading-tight">Get the Body You Want<br className="hidden md:block" /> Without Quitting Your 9-5</h1>
+              <h1 className="text-2xl md:text-4xl font-extrabold mb-3 text-white leading-tight">Training for a better body with a full-time job</h1>
               <p className="text-base md:text-lg text-white/80 mb-6 font-medium">Tailored online coaching for busy professionals. Lose fat and build muscle with 60-minute workouts that fit your schedule.</p>
               {/* <a href="#lead-magnet" className="w-full md:w-auto inline-block bg-[#e5ae51] text-[#1a1a1a] font-bold text-base md:text-lg px-8 py-4 rounded-full shadow-lg hover:bg-[#f0c46a] transition mb-1 md:mb-2" id="main-cta">Download Free 7-Day Meal Plan</a> */}
             </div>
@@ -77,24 +77,24 @@ export default function HomePage() {
         {/* Instagram/Proof Section */}
         <section className="bg-[#2e2f30] py-16 px-4" id="transformations">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-8">Real Results in Real Time.</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-8">Real Progress in Real Time</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <div className="relative aspect-square">
-                <img src="/home-page/results/result-1.PNG" alt="Result 1" className="w-full h-full object-cover rounded-xl" />
-                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 1</span>
-              </div>
-              <div className="relative aspect-square">
-                <img src="/home-page/results/result-2.PNG" alt="Result 2" className="w-full h-full object-cover rounded-xl" />
-                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 2</span>
-              </div>
-              <div className="relative aspect-square">
-                <img src="/home-page/results/result-3.PNG" alt="Result 3" className="w-full h-full object-cover rounded-xl" />
-                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 3</span>
-              </div>
-              <div className="relative aspect-square">
-                <img src="/home-page/results/3-weeks.png" alt="3 Weeks" className="w-full h-full object-cover rounded-xl" />
-                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full">Week 4</span>
-              </div>
+              <a href="https://www.instagram.com/danilkravafit/reel/DT-3n1RifCo/" target="_blank" className="relative aspect-square group block">
+                <img src="/home-page/results/routines.jpg" alt="Routines" className="w-full h-full object-cover rounded-xl group-hover:opacity-90 transition" />
+                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full group-hover:bg-[#e5ae51]/80 group-hover:text-[#1a1a1a] transition">Routines</span>
+              </a>
+              <a href="https://www.instagram.com/danilkravafit/reel/DUG3iIbCXzv/" target="_blank" className="relative aspect-square group block">
+                <img src="/home-page/results/tips.jpg" alt="Tips" className="w-full h-full object-cover rounded-xl group-hover:opacity-90 transition" />
+                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full group-hover:bg-[#e5ae51]/80 group-hover:text-[#1a1a1a] transition">Tips</span>
+              </a>
+              <a href="https://www.instagram.com/danilkravafit/reel/DSa9uYSifqg/" target="_blank" className="relative aspect-square group block">
+                <img src="/home-page/results/nutritions.jpg" alt="Nutritions" className="w-full h-full object-cover rounded-xl group-hover:opacity-90 transition" />
+                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full group-hover:bg-[#e5ae51]/80 group-hover:text-[#1a1a1a] transition">Nutritions</span>
+              </a>
+              <a href="https://www.instagram.com/danilkravafit/reel/DUTYVuVkczg/" target="_blank" className="relative aspect-square group block">
+                <img src="/home-page/results/progress.png" alt="Progress" className="w-full h-full object-cover rounded-xl group-hover:opacity-90 transition" />
+                <span className="absolute bottom-2 left-2 bg-[#1a1a1a]/80 text-[#e5ae51] text-xs md:text-sm font-bold px-3 py-1 rounded-full group-hover:bg-[#e5ae51]/80 group-hover:text-[#1a1a1a] transition">Progress</span>
+              </a>
             </div>
             <div className="flex justify-center">
               <a href="https://instagram.com/danilkravafit" target="_blank" className="px-6 py-2 rounded-full border-2 border-[#e5ae51] text-[#e5ae51] font-bold hover:bg-[#e5ae51] hover:text-[#1a1a1a] transition">Follow on Instagram</a>
@@ -103,7 +103,7 @@ export default function HomePage() {
         </section>
 
         {/* The Solution (How it Works) */}
-        <section className="max-w-5xl mx-auto py-16 px-4" id="about">
+        {/* <section className="max-w-5xl mx-auto py-16 px-4" id="about">
           <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-10">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center bg-[#2d2d2d] rounded-2xl p-8 shadow hover:shadow-lg transition">
@@ -125,7 +125,7 @@ export default function HomePage() {
               <span className="mt-4 text-xs uppercase tracking-widest text-[#e5ae51] font-bold">The Driver</span>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Lead Magnet / Contact Form */}
         {/* <section id="lead-magnet" className="max-w-2xl mx-auto py-16 px-4">

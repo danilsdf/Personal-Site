@@ -1,5 +1,6 @@
 import React from "react";
 import mockedIngredients from "../mockedIngredients.json";
+import NutritionDashboardCard from "@/components/MealPrepHelper/NutritionDashboardCard";
 
 interface SummaryScreenProps {
 	calorieGoal: number;
@@ -39,30 +40,42 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
 	}
 
 	return (
-		<div className="max-w-xl mx-auto mt-8">
-			<h2 className="text-xl font-bold mb-4 text-yellow-600 dark:text-yellow-400">Your Meal Prep Plan</h2>
-			<div className="mb-6 p-4 rounded bg-neutral-100 dark:bg-neutral-800 relative">
-				<button
-					type="button"
-					className="absolute top-2 right-2 p-1 rounded hover:bg-yellow-200 dark:hover:bg-yellow-700"
-					title="Edit calorie/macro goal"
-					onClick={onBackCalories}
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-yellow-600 dark:text-yellow-400">
-						<path d="M15.232 5.232a2.5 2.5 0 0 0-3.535 0l-7.071 7.07A2 2 0 0 0 4 15h3.5a.5.5 0 0 0 .5-.5V13a.5.5 0 0 1 .146-.354l7.07-7.07a2.5 2.5 0 0 0 0-3.535zM13.5 3.5a1.5 1.5 0 0 1 2.121 2.121l-1.06 1.06-2.12-2.12 1.06-1.06z" />
-						<path d="M2 17.5A.5.5 0 0 1 2.5 17H17a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5z" />
-					</svg>
-				</button>
-				<div className="mb-2 font-semibold">Calorie Goal: <span className="font-mono">{calorieGoal} kcal/day</span></div>
+		<div className="max-w-xl mx-auto">
+			<h2 className="text-xl font-bold mb-4 text-yellow-600 dark:text-yellow-400 text-center">Meal Prep Results</h2>
+			<div className="rounded">
+                <NutritionDashboardCard
+                    goalKcal={totalGoal.kcal / days}
+                    intakeKcal={nutritionSummary.totalKcal / days}
+                    burnedKcal={0}
+                    showOverflow={true}
+                    nutrients={{
+                        protein: { currentG: nutritionSummary.totalProtein / days, targetG: totalGoal.protein / days },
+                        fat: { currentG: nutritionSummary.totalFat / days, targetG: totalGoal.fat / days },
+                        carbs: { currentG: nutritionSummary.totalCarbs / days, targetG: totalGoal.carbs / days },
+                    }}
+                    onBackCalories={onBackCalories}
+                ></NutritionDashboardCard>
+				{/* <div className="mb-2 font-semibold">Calorie Goal: <span className="font-mono">{calorieGoal} kcal/day</span></div>
 				<div className="mb-2 font-semibold">Macro Split:</div>
 				<ul className="mb-2 ml-4 text-sm">
 					<li>Protein: {macros.protein}% ({(macros.protein / 100 * calorieGoal / 4).toFixed(0)}g/day)</li>
 					<li>Fat: {macros.fat}% ({(macros.fat / 100 * calorieGoal / 9).toFixed(0)}g/day)</li>
 					<li>Carbs: {macros.carbs}% ({(macros.carbs / 100 * calorieGoal / 4).toFixed(0)}g/day)</li>
 				</ul>
-				<div className="mb-2 font-semibold">Days: <span className="font-mono">{days}</span></div>
+				<div className="mb-2 font-semibold">Days: <span className="font-mono">{days}</span></div> */}
 			</div>
-			<div className="mb-6">
+			<div className="mb-6 relative">
+                <button
+					type="button"
+					className="absolute top-2 right-2 p-1 rounded hover:bg-yellow-200 dark:hover:bg-yellow-700"
+					title="Edit inventory"
+					onClick={onBack}
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-yellow-600 dark:text-yellow-400">
+						<path d="M15.232 5.232a2.5 2.5 0 0 0-3.535 0l-7.071 7.07A2 2 0 0 0 4 15h3.5a.5.5 0 0 0 .5-.5V13a.5.5 0 0 1 .146-.354l7.07-7.07a2.5 2.5 0 0 0 0-3.535zM13.5 3.5a1.5 1.5 0 0 1 2.121 2.121l-1.06 1.06-2.12-2.12 1.06-1.06z" />
+						<path d="M2 17.5A.5.5 0 0 1 2.5 17H17a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5z" />
+					</svg>
+				</button>
 				<div className="font-semibold mb-2">Inventory:</div>
 				{(() => {
 					const [showAll, setShowAll] = React.useState(false);
@@ -128,33 +141,6 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
 							{renderRow("Protein (g):", nutritionSummary.totalProtein, totalGoal.protein)}
 							{renderRow("Fat (g):", nutritionSummary.totalFat, totalGoal.fat)}
 							{renderRow("Carbs (g):", nutritionSummary.totalCarbs, totalGoal.carbs)}
-						</>
-					);
-				})()}
-			</div>
-			<h3 className="text-lg font-bold mb-2 text-yellow-600 dark:text-yellow-400">Nutrition Summary(per day)</h3>
-			<div className="mb-4">
-				{(() => {
-					const over = (actual: number, goal: number) => actual > goal * 1.01;
-					const under = (actual: number, goal: number) => actual < goal * 0.99;
-					const getValueColor = (actual: number, goal: number) => over(actual, goal) ? "text-green-600" : "text-white";
-					const getGoalColor = (actual: number, goal: number) => over(actual, goal) ? "text-white" : "text-white";
-					const renderRow = (label: string, actual: number, goal: number) => (
-						<div className="flex justify-between">
-							<span>{label}</span>
-							<span>
-								<span className={getValueColor(actual, goal)}>{actual.toFixed(0)}</span>
-								<span className="text-neutral-400"> / </span>
-								<span className={getGoalColor(actual, goal)}>{goal.toFixed(0)}</span>
-							</span>
-						</div>
-					);
-					return (
-						<>
-							{renderRow("Total kcal:", nutritionSummary.totalKcal / days, totalGoal.kcal / days)}
-							{renderRow("Protein (g):", nutritionSummary.totalProtein / days, totalGoal.protein / days)}
-							{renderRow("Fat (g):", nutritionSummary.totalFat / days, totalGoal.fat / days)}
-							{renderRow("Carbs (g):", nutritionSummary.totalCarbs / days, totalGoal.carbs / days)}
 						</>
 					);
 				})()}

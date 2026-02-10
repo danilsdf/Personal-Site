@@ -26,7 +26,7 @@ export default function TreePageBody() {
         >
           <span>🔗</span>
           {copied && (
-            <span className="absolute top-12 right-1/2 translate-x-1/2 bg-primary text-white text-xs rounded px-2 py-1 shadow z-10 whitespace-nowrap transition-opacity duration-200 opacity-100 pointer-events-none select-none">
+            <span className="absolute top-12 right-6 translate-x-1/2 bg-primary text-white text-xs rounded px-2 py-1 shadow z-10 whitespace-nowrap transition-opacity duration-200 opacity-100 pointer-events-none select-none">
               Link copied!
             </span>
           )}

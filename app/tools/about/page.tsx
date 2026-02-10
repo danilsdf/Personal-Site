@@ -9,9 +9,9 @@ const TOOLS = [
     body: `Enter your age, weight, height, and activity level to get a personalized breakdown of calories, protein, carbs, and fats. Use this to guide your nutrition for training or body composition goals.`
   },
   {
-    title: "Meal Plan Generator",
-    summary: "Create weekly meal plans tailored to your goals.",
-    body: `Select your dietary preferences and calorie target. The tool will generate a sample meal plan for the week, including recipes and a shopping list. Adjust meals as needed for variety or taste.`
+    title: "Meal Prep Helper",
+    summary: "Calculate your weekly meal plan based on your calorie target and available ingredients.",
+    body: `Input your daily calorie goal, macro split, and the ingredients you have on hand. The tool will generate a meal prep plan for the week, showing how to combine your ingredients to meet your nutritional targets.`
   },
   {
     title: "Workout Generator",

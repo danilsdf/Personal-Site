@@ -1,4 +1,4 @@
-import MacroSplitSlider from "@/components/MacroSplitSlider";
+import MacroSplitSlider from "@/components/MealPrepHelper/MacroSplitSlider";
 import React from "react";
 
 type Macros = { protein: number; fat: number; carbs: number };
@@ -73,7 +73,7 @@ export default function CaloriesScreen({
 
       {/* MEALS & DAYS */}
       <section className="mb-8">
-        <div className="mb-4">
+        <div className="mb-4 justify-center items-center w-full text-center">
           <label className="text-sm font-semibold">Days:</label>
           <input
             type="number"
@@ -84,7 +84,7 @@ export default function CaloriesScreen({
             className="ml-2 rounded border px-2 py-1 text-sm w-16 bg-neutral-50 dark:bg-neutral-900"
           />
         </div>
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <label className="text-sm font-semibold">Meals:</label>
           <label className="flex items-center gap-2">
             <input type="checkbox" checked={meals['Breakfast']} onChange={() => handleMealChange('Breakfast')} />
@@ -114,7 +114,7 @@ export default function CaloriesScreen({
             <input type="checkbox" checked={meals['Dinner']} onChange={() => handleMealChange('Dinner')} />
             Dinner
           </label>
-        </div>
+        </div> */}
       </section>
       {/* CONTINUE BUTTON */}
       <section className="mb-10 text-center">

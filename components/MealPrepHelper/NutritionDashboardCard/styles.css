@@ -1,0 +1,298 @@
+/* MealPrepResultsWidget.css */
+
+/* Root */
+.mpw {
+  width: 100%;
+  display: block;
+}
+
+.mpw__title {
+  text-align: center;
+  font-size: clamp(18px, 2.4vw, 22px);
+  font-weight: 800;
+  color: #f3c623;
+  margin: 0 0 14px 0;
+}
+
+/* Widget container */
+.mpw__widget {
+  border-radius: 28px;
+}
+
+/* ---- TOP GRID: responsive by design ----
+   Desktop: 2 columns (Goal big + right stacked)
+   Tablet: 2 columns but Intake/Burned on right
+   Mobile: 1 column (Goal, Intake, Burned stacked)
+*/
+.mpw__topGrid {
+    display: grid;
+    gap: 14px;
+}
+
+@media (min-width: 760px) {
+  .mpw__topGrid {
+    gap: 18px;
+    grid-template-columns: 1.2fr 1fr;
+    grid-template-areas:
+      "goal intake"
+      "goal burned";
+    align-items: stretch;
+  }
+}
+
+/* Cards */
+.mpw-card {
+  border-radius: 26px;
+  padding: clamp(16px, 2.2vw, 22px);
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.mpw-card--goal {
+  background: linear-gradient(180deg, #163228 0%, #0e1f18 100%);
+  min-height: clamp(220px, 32vw, 260px);
+  grid-area: goal;
+}
+
+.mpw-card--intake {
+  background: linear-gradient(180deg, #06273a 0%, #071b2a 100%);
+  min-height: clamp(110px, 18vw, 121px);
+  grid-area: intake;
+}
+
+.mpw-card--burned {
+  background: linear-gradient(180deg, #2e180f 0%, #1b0f0a 100%);
+  min-height: clamp(110px, 18vw, 121px);
+  grid-area: burned;
+}
+
+.mpw-card--nutrients {
+  margin-top: 16px;
+  background: linear-gradient(180deg, #141516 0%, #0f1011 100%);
+}
+
+/* Card header */
+.mpw__cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.mpw__cardHeader--withIcon {
+  align-items: center;
+}
+
+.mpw__cardLabel {
+  font-size: 18px;
+  opacity: 0.55;
+  letter-spacing: 0.2px;
+}
+
+/* Icon badge */
+.mpw__iconBadge {
+  width: 33px;
+  height: 33px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Big numbers */
+.mpw__bigNumberRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 6px;
+  flex-wrap: wrap; /* mobile: prevents overflow */
+}
+
+.mpw__bigNumber {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -1.2px;
+  line-height: 1;
+}
+
+.mpw__unit {
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+/* Goal ring center */
+.mpw__goalCenter {
+  display: grid;
+  place-items: center;
+  position: relative;
+  margin-top: 6px;
+}
+
+.mpw__goalText {
+  position: absolute;
+  text-align: center;
+  transform: translateY(2px);
+}
+
+.mpw__goalValue {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1.05;
+}
+
+.mpw__goalSub {
+  margin-top: 6px;
+  font-size: 16px;
+  opacity: 0.9;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Ring */
+.mpw__ring {
+  display: block;
+  width: 150px;
+  height: 150px;
+}
+
+.mpw__ringTrack {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.mpw__ringFill {
+  fill: none;
+}
+
+.mpw__ringFill--left {
+  stroke: #ff9a4d;
+}
+
+.mpw__ringFill--over {
+  stroke: #67d4ae;
+}
+
+/* Nutrients header */
+.mpw__nutrientsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.mpw__nutrientsTitle {
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.mpw__dots {
+  font-size: 22px;
+  opacity: 0.35;
+  letter-spacing: 2px;
+}
+
+/* Nutrients grid: 3 columns desktop, 1 column mobile */
+.mpw__nutrientsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* Macro block */
+.mpw__macroTitle {
+  font-size: 18px;
+  opacity: 0.55;
+  margin-bottom: 12px;
+}
+
+.mpw__barTrack {
+  height: 14px;
+  width: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.mpw__barFill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 250ms ease;
+}
+
+/* Macro colors */
+.mpw__barFill--protein {
+  background: #b26bcb;
+}
+
+.mpw__barFill--fat {
+  background: #7ac48b;
+}
+
+.mpw__barFill--carbs {
+  background: #ff9a4d;
+}
+
+/* Overflow look (optional) */
+.mpw__barFill--overflow {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.12));
+}
+
+.mpw__macroValue {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    letter-spacing: -0.2px;
+    color: rgba(255, 255, 255, 0.85);
+    word-break: break-word;
+}
+
+.mpw__macroValue--good {
+  color: #67d4ae;
+}
+
+/* Icons */
+.mpw__icon {
+  width: 22px;
+  height: 22px;
+}
+
+.mpw__fire {
+  fill: #ff8c3a;
+}
+
+.mpw__bowl {
+  fill: #2ea8ff;
+}
+
+.mpw__bowlStroke {
+  stroke: #2ea8ff;
+}
+
+/* Accessibility & reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mpw__barFill {
+    transition: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .mpw__topGrid {
+    gap: 18px;
+    grid-template-columns: 1.2fr 1fr;
+    grid-template-areas:
+      "goal intake"
+      "goal burned";
+    align-items: stretch;
+  }
+    .mpw__barTrack {
+        height: 12px;
+    }
+    .mpw__macroValue {
+        font-size: 16px;
+    }
+}
