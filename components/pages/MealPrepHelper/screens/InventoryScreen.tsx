@@ -86,7 +86,8 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 									placeholder="Search ingredient..."
 									value={search}
 									onChange={e => setSearch(e.target.value)}
-									className="w-full mb-2 rounded border px-2 py-1 text-sm bg-neutral-50 dark:bg-neutral-800"
+									className="w-full mb-2 rounded border px-2 py-1 bg-neutral-50 dark:bg-neutral-800"
+									style={{ fontSize: 16 }}
 									autoFocus
 								/>
 								<ul className="max-h-40 overflow-y-auto mb-2">
@@ -121,12 +122,14 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 										min="0"
 										value={amount}
 										onChange={e => setAmount(e.target.value)}
-										className="rounded border px-2 py-1 text-sm bg-neutral-50 dark:bg-neutral-800 w-26"
+										className="rounded border px-2 py-1 bg-neutral-50 dark:bg-neutral-800 w-26"
+										style={{ fontSize: 16 }}
 									/>
-                                    <select
+									<select
 										value={unit}
 										onChange={e => setUnit(e.target.value)}
-										className="rounded border px-2 py-1 text-sm bg-neutral-50 dark:bg-neutral-800 mx-2"
+										className="rounded border px-2 py-1 bg-neutral-50 dark:bg-neutral-800 mx-2"
+										style={{ fontSize: 16 }}
 									>
 										<option value="">Select unit</option>
 										{ingredientDB.find(i => i.name === selectedIngredient)?.unitConversions.map((u: any) => (
