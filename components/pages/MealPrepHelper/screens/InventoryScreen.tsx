@@ -33,7 +33,19 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 
 	const handleModalAdd = () => {
 		if (!selectedIngredient || !unit || !amount) return;
-		setIngredients([
+		// Blur any focused input to prevent iOS zoom lock
+		if (typeof window !== "undefined" && document.activeElement instanceof HTMLElement) {
+			document.activeElement.blur();
+		}
+		// Reset viewport scale on iOS
+		const viewport = document.querySelector('meta[name=viewport]');
+		if (viewport) {
+			viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0');
+			setTimeout(() => {
+				viewport.setAttribute('content', 'width=device-width, initial-scale=1');
+			}, 300);
+		}
+		setIngredients([    
 			...ingredients,
 			{ name: `${selectedIngredient}`, unit, amount }
 		]);
