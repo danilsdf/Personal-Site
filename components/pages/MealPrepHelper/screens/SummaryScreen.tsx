@@ -55,16 +55,8 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({
                     }}
                     onBackCalories={onBackCalories}
                 ></NutritionDashboardCard>
-				{/* <div className="mb-2 font-semibold">Calorie Goal: <span className="font-mono">{calorieGoal} kcal/day</span></div>
-				<div className="mb-2 font-semibold">Macro Split:</div>
-				<ul className="mb-2 ml-4 text-sm">
-					<li>Protein: {macros.protein}% ({(macros.protein / 100 * calorieGoal / 4).toFixed(0)}g/day)</li>
-					<li>Fat: {macros.fat}% ({(macros.fat / 100 * calorieGoal / 9).toFixed(0)}g/day)</li>
-					<li>Carbs: {macros.carbs}% ({(macros.carbs / 100 * calorieGoal / 4).toFixed(0)}g/day)</li>
-				</ul>
-				<div className="mb-2 font-semibold">Days: <span className="font-mono">{days}</span></div> */}
 			</div>
-			<div className="mb-6 relative">
+			<div className="mb-6 mt-4 relative">
                 <button
 					type="button"
 					className="absolute top-2 right-2 p-1 rounded hover:bg-yellow-200 dark:hover:bg-yellow-700"
