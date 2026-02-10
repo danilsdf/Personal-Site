@@ -10,9 +10,7 @@ export default function MealPrepHelperPageBody() {
   const [calorieGoal, setCalorieGoal] = useState(2300);
   const [days, setDays] = useState(5);
   const [step, setStep] = useState<'calories' | 'inventory' | 'summary'>('calories');
-  const [ingredients, setIngredients] = useState<{ name: string; amount: string; unit: string }[]>([
-    {name: 'Chicken breast', unit: 'kg', amount: '1.1'}, {name: 'Chicken thighs', unit: 'kg', amount: '0.5'}, {name: 'Shrimps', unit: 'g', amount: '680'}, {name: 'Beef', unit: 'kg', amount: '0.82'}, {name: 'Buckwheat', unit: 'g', amount: '400'}, {name: 'Sweet potato', unit: 'kg', amount: '1.7'}, {name: 'Whey protein', unit: 'scoop', amount: '5'}, {name: 'Oatmeal', unit: 'g', amount: '400'}, {name: 'Protein yogurt', unit: 'g', amount: '40'}, {name: 'Frozen berries', unit: 'g', amount: '500'}, {name: 'Mushrooms', unit: 'g', amount: '720'}, {name: 'Bell pepper', unit: 'g', amount: '720'}, {name: 'Olive oil', unit: 'tbsp', amount: '5'}, {name: 'Avocado', unit: 'g', amount: '400'}, {name: 'Soy sauce', unit: 'tbsp', amount: '25'}
-  ]);
+  const [ingredients, setIngredients] = useState<{ name: string; amount: string; unit: string }[]>([]);
   const [nutritionSummary, setNutritionSummary] = useState<any>(null);
 
   // Calculate nutrition for all ingredients

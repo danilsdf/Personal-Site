@@ -76,6 +76,7 @@ export default function TreePageBody() {
           <LinkButton label="Instagram" link="https://instagram.com/danilkravafit" blank={true} />
           <LinkButton label="TikTok" link="https://tiktok.com/@danilkravafit" blank={true} />
           <LinkButton label="Calories calculator" link="/tool/calories-calculator" blank={false} />
+          <LinkButton label="About me" link="/about-me" blank={false} />
         </div>
       </div>
     </main>
