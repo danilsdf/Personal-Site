@@ -1,5 +1,6 @@
 // app/layout.tsx
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -32,6 +33,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-white text-black dark:bg-[#0f1418] dark:text-white transition-colors">
         <SpeedInsights/>
+        <Analytics/>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
