@@ -580,5 +580,79 @@
     "isActive": true,
     "createdAt": "2024-01-01T00:00:00.000Z",
     "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "1001",
+    "name": "Ground beef extra lean",
+    "aliases": ["ground beef 96/4", "lean ground beef"],
+    "category": "protein",
+    "nutritionBasis": "raw",
+    "kcalPer1g": 1.37,
+    "proteinPer1g": 0.21,
+    "carbsPer1g": 0,
+    "fatPer1g": 0.04,
+    "unitConversions": [
+      { "unit": "g", "grams": 1 },
+      { "unit": "kg", "grams": 1000 }
+    ],
+    "isActive": true,
+    "createdAt": "2026-02-16T00:00:00.000Z",
+    "updatedAt": "2026-02-16T00:00:00.000Z"
+  },
+  {
+    "_id": "1002",
+    "name": "Ground turkey extra lean",
+    "aliases": ["ground turkey 99/1", "lean ground turkey"],
+    "category": "protein",
+    "nutritionBasis": "raw",
+    "kcalPer1g": 1.07,
+    "proteinPer1g": 0.23,
+    "carbsPer1g": 0,
+    "fatPer1g": 0.01,
+    "unitConversions": [
+      { "unit": "g", "grams": 1 },
+      { "unit": "kg", "grams": 1000 }
+    ],
+    "isActive": true,
+    "createdAt": "2026-02-16T00:00:00.000Z",
+    "updatedAt": "2026-02-16T00:00:00.000Z"
+  },
+  {
+    "_id": "1004",
+    "name": "Asparagus",
+    "aliases": ["asparagus spears"],
+    "category": "vegetable",
+    "nutritionBasis": "raw",
+    "kcalPer1g": 0.2,
+    "proteinPer1g": 0.022,
+    "carbsPer1g": 0.039,
+    "fatPer1g": 0.002,
+    "unitConversions": [
+      { "unit": "g", "grams": 1 },
+      { "unit": "kg", "grams": 1000 },
+      { "unit": "piece", "grams": 12 }
+    ],
+    "isActive": true,
+    "createdAt": "2026-02-16T00:00:00.000Z",
+    "updatedAt": "2026-02-16T00:00:00.000Z"
+  },
+  {
+    "_id": "1005",
+    "name": "Parmesan cheese",
+    "aliases": ["parmesan", "parmigiano reggiano", "grated parmesan"],
+    "category": "fat",
+    "nutritionBasis": "as_sold",
+    "kcalPer1g": 4.3,
+    "proteinPer1g": 0.38,
+    "carbsPer1g": 0.04,
+    "fatPer1g": 0.29,
+    "unitConversions": [
+      { "unit": "g", "grams": 1 },
+      { "unit": "tbsp", "grams": 5 },
+      { "unit": "cup", "grams": 100 }
+    ],
+    "isActive": true,
+    "createdAt": "2026-02-16T00:00:00.000Z",
+    "updatedAt": "2026-02-16T00:00:00.000Z"
   }
 ]
