@@ -21,7 +21,7 @@ export default function InventoryScreen({ ingredients, setIngredients, onContinu
 	// Load ingredient database from JSON
 	const [ingredientDB, setIngredientDB] = useState<any[]>([]);
 	useEffect(() => {
-		import("../mockedIngredients.json").then(mod => setIngredientDB(mod.default));
+		import("@/mocked/mockedIngredients.json").then(mod => setIngredientDB(mod.default));
 	}, []);
 
 	const filteredIngredients = ingredientDB.filter(i => i.name.toLowerCase().includes(search.toLowerCase()));

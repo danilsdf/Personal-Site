@@ -3,7 +3,7 @@ import { useState } from "react";
 import CaloriesScreen from "./screens/CaloriesScreen";
 import InventoryScreen from "./screens/InventoryScreen";
 import SummaryScreen from "./screens/SummaryScreen";
-import mockedIngredients from "./mockedIngredients.json";
+import mockedIngredients from "@/mocked/mockedIngredients.json";
 
 export default function MealPrepHelperPageBody() {
   const [macros, setMacros] = useState({ protein: 35, fat: 30, carbs: 35 });

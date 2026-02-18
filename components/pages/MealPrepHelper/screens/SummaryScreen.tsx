@@ -1,5 +1,5 @@
 import React from "react";
-import mockedIngredients from "../mockedIngredients.json";
+import mockedIngredients from "@/mocked/mockedIngredients.json";
 import NutritionDashboardCard from "@/components/MealPrepHelper/NutritionDashboardCard";
 
 interface SummaryScreenProps {
