@@ -5,10 +5,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type SortKey = "date" | "calories" | "protein";
 
-const options: { key: SortKey; label: string }[] = [
-  { key: "date", label: "Order by Date" },
-  { key: "calories", label: "Calories (High-Low)" },
-  { key: "protein", label: "Protein" },
+const options: { key: SortKey; label: string; order?: string }[] = [
+  { key: "date", label: "Order by Date", order: "by Date" },
+  { key: "calories", label: "Calories (High-Low)", order: "by Calories (High-Low)" },
+  { key: "protein", label: "Protein", order: "by Protein (High-Low)" },
 ];
 
 export default function PlansToolbar() {
@@ -25,7 +25,7 @@ export default function PlansToolbar() {
   };
 
   const activeLabel = useMemo(
-    () => options.find((o) => o.key === sort)?.label ?? "Order by Date",
+    () => options.find((o) => o.key === sort)?.order ?? "by Date",
     [sort]
   );
 
@@ -52,7 +52,7 @@ export default function PlansToolbar() {
         );
       })}
 
-      <div className="ml-auto hidden text-sm font-semibold text-emerald-600 md:block">
+      <div className="ml-auto hidden text-sm font-semibold md:block">
         Sorting: <span className="text-emerald-700">{activeLabel}</span>
       </div>
     </div>

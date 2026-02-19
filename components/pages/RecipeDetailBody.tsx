@@ -6,10 +6,10 @@ import type { Ingredient } from "@/app/data/models/ingredient";
 
 type RecipeDetailBodyProps = {
   recipe: Recipe | null;
-  backHref: string;
+  onBack: () => void;
 };
 
-export function RecipeDetailBody({ recipe, backHref }: RecipeDetailBodyProps) {
+export function RecipeDetailBody({ recipe, onBack }: RecipeDetailBodyProps) {
   if (!recipe) {
     return (
       <div className="mx-auto max-w-3xl px-4 pb-20 pt-8 text-center text-red-600 dark:text-red-400">
@@ -25,12 +25,9 @@ export function RecipeDetailBody({ recipe, backHref }: RecipeDetailBodyProps) {
     <div className="mx-auto max-w-3xl px-4 pb-20 pt-8 text-black dark:text-white">
       {/* Back link */}
       <div className="mb-4">
-        <Link
-          href={backHref}
-          className="text-xs font-medium text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200"
-        >
-          ← Back to recipes
-        </Link>
+        <button onClick={onBack} className="text-xs font-medium text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200">
+          ← Back
+        </button>
       </div>
 
       {/* TITLE + TAGS + DATE */}

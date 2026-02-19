@@ -58,7 +58,7 @@ type RecipeCardProps = {
 
 function RecipeCard({ title, date, slug }: RecipeCardProps) {
   return (
-    <Link href={`/recipes/${slug}`} className="block">
+    <Link href={`/recipe/${slug}`} className="block">
       <div className="cursor-pointer rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 transition hover:border-[#d2a852] hover:bg-black/10 dark:hover:bg-white/10">
         {/* IMAGE PLACEHOLDER */}
         <div className="mb-3 h-40 w-full rounded-xl bg-black/10 dark:bg-white/10" />
