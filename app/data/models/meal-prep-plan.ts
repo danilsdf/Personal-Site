@@ -12,4 +12,5 @@ export type MealPrepPlan = {
 
   ingredientNames: string[]; // e.g. ["Chicken Breast", "Ground Turkey", ...]
   imageUrl?: string | null;
+  isCurrentWeek?: boolean;
 };

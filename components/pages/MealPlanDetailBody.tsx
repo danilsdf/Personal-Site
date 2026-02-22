@@ -4,6 +4,12 @@ import allRecipes from "@/mocked/mockedRecipes.json";
 import Link from "next/link";
 import { MealPrepPlan } from "@/app/data/models/meal-prep-plan";
 
+function formatDate(iso: string) {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return iso;
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
 type MealPlanDetailBodyProps = {
     plan: MealPrepPlan;
     backHref: string
@@ -15,6 +21,8 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
     backHref,
     focusIngredients = false,
 }) => {
+    const dateRange = `${formatDate(plan.startDate)} – ${formatDate(plan.endDate)}`;
+
     // Find all recipe connections for this plan
     const planRecipes = (mealPlanRecipes as any[])
         .filter((x) => x.mealPrepId === plan.id)
@@ -44,34 +52,34 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
 
                 {/* Meal Prep Image and Details */}
                 <header
-                    className="mt-4 rounded-2xl border border-white/60 bg-[#171c25] p-5 shadow-sm backdrop-blur flex flex-col sm:flex-row gap-6 items-center"
+                    className="mt-4 flex flex-col gap-5 rounded-2xl border border-white/60 bg-[#171c25] p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:gap-6 sm:p-5"
                     style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04), 0 10px 30px rgba(0,0,0,0.35)' }}
                 >
-                    <div className="relative group">
+                    <div className="relative w-full group sm:w-auto">
                         <img
-                            src={plan.imageUrl}
+                            src={plan.imageUrl ?? "/home-page/results/meal-prep.jpg"}
                             alt={plan.title}
-                            className="w-36 h-36 object-cover rounded-2xl border border-slate-700 shadow-lg transition-transform duration-200 group-hover:scale-105"
+                            className="h-44 w-full rounded-2xl border border-slate-700 object-cover shadow-lg transition-transform duration-200 group-hover:scale-105 sm:h-36 sm:w-36"
                         />
                         {/* Current week badge */}
                         {plan.isCurrentWeek && (
-                            <span className="absolute top-2 left-2 bg-sky-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm animate-pulse">● CURRENT WEEK</span>
+                            <span className="absolute left-2 top-2 rounded-full bg-sky-500 px-2 py-1 text-[10px] font-bold text-white shadow-sm animate-pulse sm:text-xs">● CURRENT WEEK</span>
                         )}
                     </div>
                     <div className="flex-1 text-center sm:text-left">
-                        <h1 className="text-4xl font-extrabold text-amber-400 mb-2 tracking-tight">{plan.calories} kcal
+                        <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-amber-400 sm:text-4xl">{plan.calories} kcal
                         </h1>
-                        <div className="flex justify-center sm:justify-start gap-2 mb-3">
+                        <div className="mb-3 flex flex-wrap justify-center gap-2 sm:justify-start">
                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-900/60 text-blue-200 tracking-wider">{plan.protein}g PROTEIN</span>
                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-purple-900/60 text-purple-200 tracking-wider">{plan.fat}g FAT</span>
                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-900/60 text-amber-200 tracking-wider">{plan.carbs}g CARBS</span>
                         </div>
                         <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
-                            <span className="text-sm text-slate-400 font-medium">{plan.startDate} – {plan.endDate}</span>
+                            <span className="text-sm text-slate-400 font-medium">{dateRange}</span>
                         </div>
                         {/* Macro distribution bar (optional) */}
                         {/* Macro distribution bar: 1 line, 3 colors */}
-                        <div className="max-w-sm h-2 rounded bg-slate-800 overflow-hidden mb-2 flex">
+                        <div className="mb-2 flex h-2 w-full overflow-hidden rounded bg-slate-800 sm:max-w-sm">
                             {(() => {
                                 const total = plan.protein * 4 + plan.fat * 9 + plan.carbs * 4;
                                 const proteinPct = total ? (plan.protein * 4 / total) * 100 : 0;
@@ -90,11 +98,11 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
                 </header>
 
                 {/* Recipes by Meal Type */}
-                <section className="mt-5 rounded-2xl border border-white/60 bg-[#171c25] p-5 shadow-sm backdrop-blur">
+                <section className="mt-5 rounded-2xl border border-white/60 bg-[#171c25] p-4 shadow-sm backdrop-blur sm:p-5">
                     <h2 className="text-lg font-extrabold text-white mb-6 tracking-wider">PLAN RECIPES</h2>
                     {mealTypes.map((type) => (
                         recipesByType[type].length > 0 && (
-                            <div key={type} className="mb-8">
+                            <div key={type} className="mb-6 sm:mb-8">
                                 <div className="uppercase text-xs tracking-[0.12em] text-slate-400 mb-2 flex items-center gap-2">
                                     {type}
                                     <span className="flex-1 border-b border-slate-700" />
@@ -107,35 +115,39 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
                                             <Link
                                                 key={recipe._id}
                                                 href={{ pathname: `/recipe/${recipe.slug}` }}
-                                                className="group block rounded-2xl border border-slate-700 bg-[#1f2937] p-4 flex flex-row gap-4 items-center shadow-lg transition duration-200 hover:bg-[#263244] hover:-translate-y-0.5"
+                                                className="group flex flex-col items-start gap-3 rounded-2xl border border-slate-700 bg-[#1f2937] p-3 shadow-lg transition duration-200 hover:-translate-y-0.5 hover:bg-[#263244] sm:flex-row sm:items-center sm:gap-4 sm:p-4"
                                                 style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04), 0 10px 30px rgba(0,0,0,0.35)' }}
                                             >
                                                 <img
                                                     src={recipe.imageUrl || "/home-page/results/meal-prep.jpg"}
                                                     alt={recipe.title}
-                                                    className="w-20 h-20 object-cover rounded-xl border border-slate-700 bg-slate-900 transition-transform duration-200 group-hover:scale-105"
+                                                    className="h-36 w-full rounded-xl border border-slate-700 bg-slate-900 object-cover transition-transform duration-200 group-hover:scale-105 sm:h-20 sm:w-20"
                                                 />
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="font-semibold text-white text-lg truncate">{recipe.title}</div>
-                                                    <div className="text-xs text-slate-400 mt-1 truncate">{recipe.description}</div>
+                                                    <div className="text-base font-semibold text-white sm:text-lg">{recipe.title}</div>
+                                                    <div className="text-xs text-slate-400 mt-1">{recipe.description}</div>
                                                 </div>
-                                                <div className="flex flex-col items-end gap-1 min-w-[90px]">
-                                                    <span className="text-2xl font-bold text-sky-400 leading-none">{recipe.servings}
+                                                <div className="flex w-full flex-row items-center justify-between gap-2 sm:w-auto sm:min-w-[90px] sm:flex-col sm:items-end sm:justify-start sm:gap-1">
+                                                    <span className="text-xl font-bold leading-none text-sky-400 sm:text-2xl">{recipe.servings}
                                                         <span className="text-xs uppercase text-slate-400 tracking-wider"> SERVINGS</span>
                                                     </span>
                                                     
                                                     {/* Macro preview per serving */}
-                                                    {recipe.kcal && (
-                                                        <span className="text-xs text-sky-300 mt-1">{recipe.kcal} kcal</span>
-                                                    )}
-                                                    {recipe.protein && (
-                                                        <span className="text-xs text-blue-200">P {recipe.protein}g</span>
-                                                    )}
-                                                    {recipe.fat && (
-                                                        <span className="text-xs text-purple-200">F {recipe.fat}g</span>
-                                                    )}
-                                                    {recipe.carbs && (
-                                                        <span className="text-xs text-amber-200">C {recipe.carbs}g</span>
+                                                    {recipe.nutritionTotals.perServing && (
+                                                        <div className="flex flex-wrap items-center gap-2">
+                                                            {recipe.nutritionTotals.perServing.calories !== undefined && (
+                                                                <span className="text-xs text-sky-300 mt-1">{recipe.nutritionTotals.perServing.calories} kcal</span>
+                                                            )}
+                                                            {recipe.nutritionTotals.perServing.protein !== undefined && (
+                                                                <span className="text-xs text-blue-200 mt-1">P {recipe.nutritionTotals.perServing.protein}g</span>
+                                                            )}
+                                                            {recipe.nutritionTotals.perServing.fat !== undefined && (
+                                                                <span className="text-xs text-purple-200 mt-1">F {recipe.nutritionTotals.perServing.fat}g</span>
+                                                            )}
+                                                            {recipe.nutritionTotals.perServing.carbs !== undefined && (
+                                                                <span className="text-xs text-amber-200 mt-1">C {recipe.nutritionTotals.perServing.carbs}g</span>
+                                                            )}
+                                                        </div>
                                                     )}
                                                 </div>
                                             </Link>
@@ -150,7 +162,7 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
                 {/* Ingredients Section */}
                 <section
                     id="ingredients"
-                    className={["mt-5 rounded-2xl border border-white/60 bg-[#171c25] p-5 shadow-sm backdrop-blur", focusIngredients ? "ring-2 ring-sky-400/50" : ""].join(" ")}
+                    className={["mt-5 rounded-2xl border border-white/60 bg-[#171c25] p-4 shadow-sm backdrop-blur sm:p-5", focusIngredients ? "ring-2 ring-sky-400/50" : ""].join(" ")}
                 >
                     <h2 className="text-lg font-extrabold text-white mb-2 tracking-wider">INGREDIENTS</h2>
                     <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-400">
