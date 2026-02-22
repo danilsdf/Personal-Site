@@ -46,5 +46,5 @@ export default function RecipePage() {
     return <div className="text-center py-10 text-red-500">Recipe not found.</div>;
   }
 
-  return <RecipeDetailBody recipe={recipe} backHref="#" onBack={handleBack} />;
+  return <RecipeDetailBody recipe={recipe} onBack={handleBack} />;
 }

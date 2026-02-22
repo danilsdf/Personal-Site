@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import PlansToolbar from "@/components/meal-prep-plans/PlansToolbar";
 import PlanCard from "@/components/meal-prep-plans/PlanCard";
@@ -8,7 +8,7 @@ import mockPlans from "@/mocked/mockedMealPrepPlans.json";
 
 type SortKey = "date" | "calories" | "protein";
 
-export default function MealPrepPlansPage() {
+function MealPrepPlansContent() {
   const sp = useSearchParams();
   const sortParam = sp.get("sort");
   const sort: SortKey =
@@ -59,5 +59,13 @@ export default function MealPrepPlansPage() {
         </section>
       </div>
     </main>
+  );
+}
+
+export default function MealPrepPlansPage() {
+  return (
+    <Suspense fallback={<main className="min-h-dvh text-[#F3F4F6]" />}>
+      <MealPrepPlansContent />
+    </Suspense>
   );
 }
