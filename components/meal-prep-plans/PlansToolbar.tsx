@@ -43,8 +43,8 @@ export default function PlansToolbar() {
               "rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition",
               "border backdrop-blur",
               isActive
-                ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                : "border-slate-200 bg-white/60 text-slate-700 hover:bg-emerald-50 hover:text-emerald-700",
+                ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-900/30 dark:text-emerald-300"
+                : "border-slate-200 bg-white/60 text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-600 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-emerald-900/20 dark:hover:text-emerald-300",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40",
             ].join(" ")}
           >
@@ -54,7 +54,7 @@ export default function PlansToolbar() {
       })}
 
       <div className="ml-auto hidden text-sm font-semibold md:block" aria-live="polite">
-        Sorting: <span className="text-emerald-700">{activeLabel}</span>
+        Sorting: <span className="text-emerald-700 dark:text-emerald-400">{activeLabel}</span>
       </div>
     </div>
   );
