@@ -2,49 +2,31 @@
   {
     "type": "Breakfast",
     "order": 1,
-    "mealPrepId": "lean-bulk-week",
-    "recipeId": "694193661e7363a2e3ba79b3"
-  },
-  {
-    "type": "Lunch",
-    "order": 2,
-    "mealPrepId": "lean-bulk-week",
-    "recipeId": "694193661e7363a2e3ba79ab"
-  },
-  {
-    "type": "Dinner",
-    "order": 3,
-    "mealPrepId": "lean-bulk-week",
-    "recipeId": "694193661e7363a2e3ba79af"
-  },
-  {
-    "type": "Snack",
-    "order": 4,
-    "mealPrepId": "lean-bulk-week",
-    "recipeId": "694193661e7363a2e3ba79ae"
+    "mealPrepId": "high-protein-cut",
+    "recipeId": "694193661e7363a2e3ba79c1"
   },
   {
     "type": "Breakfast",
-    "order": 1,
-    "mealPrepId": "cut-week-2100",
-    "recipeId": "694193661e7363a2e3ba79ae"
+    "order": 2,
+    "mealPrepId": "high-protein-cut",
+    "recipeId": "694193661e7363a2e3ba79c2"
   },
   {
     "type": "Lunch",
-    "order": 2,
-    "mealPrepId": "cut-week-2100",
-    "recipeId": "694193661e7363a2e3ba79ac"
+    "order": 3,
+    "mealPrepId": "high-protein-cut",
+    "recipeId": "694193661e7363a2e3ba79c3"
+  },
+  {
+    "type": "Lunch",
+    "order": 4,
+    "mealPrepId": "high-protein-cut",
+    "recipeId": "694193661e7363a2e3ba79c4"
   },
   {
     "type": "Dinner",
-    "order": 3,
-    "mealPrepId": "cut-week-2100",
-    "recipeId": "694193661e7363a2e3ba79ad"
-  },
-  {
-    "type": "Snack",
-    "order": 4,
-    "mealPrepId": "cut-week-2100",
-    "recipeId": "694193661e7363a2e3ba79b1"
+    "order": 5,
+    "mealPrepId": "high-protein-cut",
+    "recipeId": "694193661e7363a2e3ba79c5"
   }
 ]

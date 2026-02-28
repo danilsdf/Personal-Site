@@ -1,34 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { RecipeDetailBody } from "@/components/pages/RecipeDetailBody";
+import mockedRecipes from "@/mocked/mockedRecipes.json";
+import mockedRecipes2 from "@/mocked/mockedRecipes2.json";
+
+const allRecipes = [...mockedRecipes, ...mockedRecipes2];
 
 export default function RecipePage() {
   const params = useParams();
   const router = useRouter();
   const slug = typeof params.slug === "string" ? params.slug : Array.isArray(params.slug) ? params.slug[0] : "";
-  const [recipe, setRecipe] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    fetch(`/api/recipes/${encodeURIComponent(slug)}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Recipe not found");
-        return res.json();
-      })
-      .then((data) => {
-        setRecipe(data);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setRecipe(null);
-      })
-      .finally(() => setLoading(false));
-  }, [slug]);
+  const recipe = useMemo(
+    () => allRecipes.find((r) => r.slug === slug) ?? null,
+    [slug]
+  );
   
   // Custom back handler: go back if possible, else go to /recipes
   const handleBack = () => {
@@ -39,10 +26,7 @@ export default function RecipePage() {
     }
   };
 
-  if (loading) {
-    return <div className="text-center py-10 text-neutral-400">Loading...</div>;
-  }
-  if (error || !recipe) {
+  if (!recipe) {
     return <div className="text-center py-10 text-red-500">Recipe not found.</div>;
   }
 

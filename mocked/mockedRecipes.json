@@ -1,295 +1,292 @@
 [
   {
-    "_id": "694193661e7363a2e3ba79aa",
-    "title": "Farfalle pasta with shrimp & feta",
-    "description": "Meal-prep farfalle with baked feta & cherry tomatoes, finished with pan-seared shrimp.",
-    "tags": ["meal-prep", "pasta", "seafood"],
-    "slug": "farfalle-pasta-shrimp-feta-1",
+    "_id": "694193661e7363a2e3ba79c1",
+    "title": "Protein Oatmeal with Greek Yogurt & Berries",
+    "description": "Fresh-cooked oatmeal with whey protein and Greek yogurt, topped with frozen berries — a quick 44 g protein breakfast.",
+    "tags": ["fresh-cook", "breakfast", "oatmeal", "high-protein", "yogurt"],
+    "slug": "protein-oatmeal-greek-yogurt-berries",
     "cookingPostLink": "",
     "mealPrepPostLink": "",
-    "imageUrl": "https://as1.ftcdn.net/v2/jpg/02/54/45/12/1000_F_254451278_7AAYmhYkBEVQ9MYnZYIomTI5WdFCif1g.jpg",
-    "servings": 5,
-    "servingUnit": "container",
+    "imageUrl": "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=400&q=80",
+    "servings": 1,
+    "servingUnit": "bowl",
     "ingredients": [
-      {"ingredientId": "694193642fb4d1c02187927b", "quantity": 200, "unit": "g", "grams": 200, "note": "dry"},
-      {"ingredientId": "694193652fb4d1c02187927c", "quantity": 750, "unit": "g", "grams": 750, "note": "raw (peeled, deveined)"},
-      {"ingredientId": "694193652fb4d1c02187927d", "quantity": 250, "unit": "g", "grams": 250, "note": null},
-      {"ingredientId": "694193652fb4d1c02187927e", "quantity": 150, "unit": "g", "grams": 150, "note": null},
-      {"ingredientId": "694193652fb4d1c02187927f", "quantity": null, "unit": "to taste", "grams": null, "note": null},
-      {"ingredientId": "694193652fb4d1c021879280", "quantity": null, "unit": "to taste", "grams": null, "note": null}
+      { "ingredientId": "10", "quantity": 80, "unit": "g", "grams": 80, "note": "dry rolled oats" },
+      { "ingredientId": "20", "quantity": 100, "unit": "g", "grams": 100, "note": "plain Greek yogurt" },
+      { "ingredientId": "5",  "quantity": 1,   "unit": "scoop", "grams": 31, "note": "whey protein isolate" }
     ],
     "instructions": [
-      {"section": "Prepare ingredients", "image": "", "steps": ["Rinse cherry tomatoes under cold running water.", "If shrimp are frozen, thaw fully and pat dry with a paper towel.", "Prepare salt, black pepper, and a small amount of oil or non-stick spray."], "timing": {"activeMin": 5}},
-      {"section": "Cook farfalle pasta", "image": "", "steps": ["Bring a pot of salted water to a boil.", "Add farfalle pasta.", "Cook for 5 minutes (slightly undercooked / al dente).", "Drain pasta and set aside."], "timing": {"activeMin": 10}},
-      {"section": "Cook shrimp", "image": "", "steps": ["Heat a pan over medium-high heat.", "Add a small amount of oil or non-stick spray.", "Add shrimp in a single layer.", "Season lightly with salt and black pepper.", "Cook 2–3 minutes per side, until shrimp turn pink and opaque.", "Remove from heat and set aside."], "timing": {"activeMin": 8}},
-      {"section": "Bake pasta with feta & tomatoes", "image": "", "steps": ["Preheat oven to 200°C / 400°F.", "In a baking dish: add cooked pasta and cherry tomatoes, then place feta block in the center.", "Bake for 20–25 minutes, until tomatoes burst and feta becomes soft and lightly golden."], "timing": {"ovenC": 200, "minutes": 25}},
-      {"section": "Create the sauce", "image": "", "steps": ["Remove dish from oven.", "Gently press tomatoes to release juices.", "Mix softened feta with pasta and tomatoes until creamy."], "timing": {"activeMin": 5}},
-      {"section": "Combine & finish", "image": "", "steps": ["Add cooked shrimp to the pasta.", "Mix gently so shrimp stay intact.", "Taste and adjust salt and black pepper if needed.", "Portion into meal prep containers.", "Let food cool completely before closing containers."], "timing": {"activeMin": 5}}
+      {
+        "section": "Cook oatmeal",
+        "image": "",
+        "steps": [
+          "Bring 160 ml water to a boil in a small pot.",
+          "Add 80 g rolled oats, reduce heat to medium-low.",
+          "Cook 4–5 minutes, stirring occasionally, until oats absorb most of the water.",
+          "Remove from heat."
+        ],
+        "timing": { "activeMin": 6 }
+      },
+      {
+        "section": "Mix protein, yogurt & serve",
+        "image": "",
+        "steps": [
+          "Add 1 scoop whey protein to the warm oatmeal and stir until fully dissolved.",
+          "Fold in 100 g Greek yogurt gently until combined.",
+          "Add a pinch of cinnamon or sweetener if desired.",
+          "Top with a handful of frozen berries (blueberries, raspberries, or mixed).",
+          "Serve immediately."
+        ],
+        "timing": { "activeMin": 3 }
+      }
     ],
-    "mealPrep": {"fridgeDays": 5, "freezerDays": 30, "reheatNotes": "Add 1–2 tbsp water before reheating if it feels dry."},
-    "nutritionTotals": {"perServing": {"kcal": 400, "protein": 40, "carbs": 35, "fat": 9}, "perRecipe": {"kcal": 2000, "protein": 200, "carbs": 175, "fat": 45}},
+    "mealPrep": null,
+    "nutritionTotals": {
+      "perServing": { "kcal": 483, "protein": 44, "carbs": 63, "fat": 8 },
+      "perRecipe":   { "kcal": 483, "protein": 44, "carbs": 63, "fat": 8 }
+    },
     "status": "published",
     "createdBy": null,
-    "createdAt": "2025-12-16T17:14:14.116+0000",
-    "updatedAt": "2025-12-16T17:14:14.116+0000"
+    "createdAt": "2026-02-27T10:00:00.000+0000",
+    "updatedAt": "2026-02-27T10:00:00.000+0000"
   },
   {
-    "_id": "694193661e7363a2e3ba79ab",
-    "title": "Chicken & Brown Rice Bowl",
-    "description": "Grilled chicken breast served with brown rice and steamed broccoli.",
-    "tags": ["meal-prep", "chicken", "rice", "broccoli"],
-    "slug": "chicken-brown-rice-bowl",
+    "_id": "694193661e7363a2e3ba79c2",
+    "title": "Eggs & Egg Whites with Parmesan & Avocado",
+    "description": "Fresh-cooked fluffy scramble of whole eggs and egg whites finished with grated Parmesan, served alongside sliced avocado.",
+    "tags": ["fresh-cook", "breakfast", "eggs", "parmesan", "avocado", "low-carb"],
+    "slug": "eggs-egg-whites-parmesan-avocado",
     "cookingPostLink": "",
     "mealPrepPostLink": "",
-    "imageUrl": "https://images.unsplash.com/photo-1519864604240-62a4b7b2b2b7?auto=format&fit=crop&w=400&q=80",
-    "servings": 4,
-    "servingUnit": "container",
+    "imageUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400&q=80",
+    "servings": 1,
+    "servingUnit": "plate",
     "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879281", "quantity": 400, "unit": "g", "grams": 400, "note": "grilled"},
-      {"ingredientId": "694193652fb4d1c021879282", "quantity": 300, "unit": "g", "grams": 300, "note": "cooked"},
-      {"ingredientId": "694193652fb4d1c021879283", "quantity": 200, "unit": "g", "grams": 200, "note": "steamed"}
+      { "ingredientId": "6",    "quantity": 2,   "unit": "piece", "grams": 100, "note": "whole eggs" },
+      { "ingredientId": "19",   "quantity": 150, "unit": "g",     "grams": 150, "note": "liquid egg whites" },
+      { "ingredientId": "1005", "quantity": 20,  "unit": "g",     "grams": 20,  "note": "grated Parmesan" },
+      { "ingredientId": "16",   "quantity": 100, "unit": "g",     "grams": 100, "note": "ripe avocado flesh" }
     ],
     "instructions": [
-      {"section": "Prepare chicken", "image": "", "steps": ["Season chicken breast with salt and pepper.", "Grill until cooked through."], "timing": {"activeMin": 15}},
-      {"section": "Cook rice", "image": "", "steps": ["Cook brown rice according to package instructions."], "timing": {"activeMin": 30}},
-      {"section": "Steam broccoli", "image": "", "steps": ["Steam broccoli until tender."], "timing": {"activeMin": 10}},
-      {"section": "Assemble bowls", "image": "", "steps": ["Divide chicken, rice, and broccoli among containers.", "Let cool before sealing."], "timing": {"activeMin": 5}}
+      {
+        "section": "Cook scramble",
+        "image": "",
+        "steps": [
+          "Crack 2 eggs into a bowl, add 150 g liquid egg whites.",
+          "Season with salt and black pepper, whisk until combined.",
+          "Heat a non-stick pan over medium-low heat.",
+          "Pour in egg mixture and gently fold with a spatula for 3–4 minutes until soft curds form.",
+          "Sprinkle 20 g grated Parmesan over the scramble and fold in.",
+          "Remove from heat while still slightly wet — residual heat finishes cooking."
+        ],
+        "timing": { "activeMin": 5 }
+      },
+      {
+        "section": "Plate & serve",
+        "image": "",
+        "steps": [
+          "Slice 100 g avocado and arrange on the plate alongside the scramble.",
+          "Season avocado with a pinch of salt and black pepper.",
+          "Serve immediately."
+        ],
+        "timing": { "activeMin": 2 }
+      }
     ],
-    "mealPrep": {"fridgeDays": 4, "freezerDays": 20, "reheatNotes": "Microwave with lid slightly open."},
-    "nutritionTotals": {"perServing": {"kcal": 350, "protein": 35, "carbs": 40, "fat": 6}, "perRecipe": {"kcal": 1400, "protein": 140, "carbs": 160, "fat": 24}},
+    "mealPrep": null,
+    "nutritionTotals": {
+      "perServing": { "kcal": 467, "protein": 39, "carbs": 12, "fat": 31 },
+      "perRecipe":   { "kcal": 467, "protein": 39, "carbs": 12, "fat": 31 }
+    },
     "status": "published",
     "createdBy": null,
-    "createdAt": "2025-12-17T10:00:00.000+0000",
-    "updatedAt": "2025-12-17T10:00:00.000+0000"
+    "createdAt": "2026-02-27T10:00:00.000+0000",
+    "updatedAt": "2026-02-27T10:00:00.000+0000"
   },
   {
-    "_id": "694193661e7363a2e3ba79ac",
-    "title": "Beef & Quinoa Power Bowl",
-    "description": "Lean ground beef with quinoa, roasted bell peppers, and spinach.",
-    "tags": ["meal-prep", "beef", "quinoa", "spinach"],
-    "slug": "beef-quinoa-power-bowl",
+    "_id": "694193661e7363a2e3ba79c3",
+    "title": "Lean Beef & Bell Pepper with Roasted Potatoes",
+    "description": "Extra-lean ground beef sautéed with bell pepper, served over crispy roasted potatoes.",
+    "tags": ["meal-prep", "lunch", "beef", "potato", "bell-pepper"],
+    "slug": "lean-beef-bell-pepper-roasted-potatoes",
     "cookingPostLink": "",
     "mealPrepPostLink": "",
     "imageUrl": "https://images.unsplash.com/photo-1464306076886-ff63fc5de191?auto=format&fit=crop&w=400&q=80",
-    "servings": 4,
-    "servingUnit": "container",
-    "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879284", "quantity": 350, "unit": "g", "grams": 350, "note": "cooked"},
-      {"ingredientId": "694193652fb4d1c021879285", "quantity": 200, "unit": "g", "grams": 200, "note": "cooked"},
-      {"ingredientId": "694193652fb4d1c021879286", "quantity": 150, "unit": "g", "grams": 150, "note": "roasted"},
-      {"ingredientId": "694193652fb4d1c021879287", "quantity": 100, "unit": "g", "grams": 100, "note": "fresh"}
-    ],
-    "instructions": [
-      {"section": "Cook beef", "image": "", "steps": ["Brown ground beef in a skillet.", "Drain excess fat."], "timing": {"activeMin": 10}},
-      {"section": "Prepare quinoa", "image": "", "steps": ["Cook quinoa according to package instructions."], "timing": {"activeMin": 20}},
-      {"section": "Roast peppers", "image": "", "steps": ["Roast bell peppers until tender."], "timing": {"activeMin": 15}},
-      {"section": "Assemble bowls", "image": "", "steps": ["Combine beef, quinoa, peppers, and spinach in containers.", "Let cool before sealing."], "timing": {"activeMin": 5}}
-    ],
-    "mealPrep": {"fridgeDays": 4, "freezerDays": 20, "reheatNotes": "Microwave with lid slightly open."},
-    "nutritionTotals": {"perServing": {"kcal": 420, "protein": 38, "carbs": 45, "fat": 10}, "perRecipe": {"kcal": 1680, "protein": 152, "carbs": 180, "fat": 40}},
-    "status": "published",
-    "createdBy": null,
-    "createdAt": "2025-12-18T10:00:00.000+0000",
-    "updatedAt": "2025-12-18T10:00:00.000+0000"
-  },
-  {
-    "_id": "694193661e7363a2e3ba79ad",
-    "title": "Salmon & Sweet Potato Tray Bake",
-    "description": "Baked salmon fillets with sweet potatoes and green beans.",
-    "tags": ["meal-prep", "salmon", "sweet potatoes", "green beans"],
-    "slug": "salmon-sweet-potato-tray-bake",
-    "cookingPostLink": "",
-    "mealPrepPostLink": "",
-    "imageUrl": "https://images.unsplash.com/photo-1502741126161-b048400d98e6?auto=format&fit=crop&w=400&q=80",
-    "servings": 3,
-    "servingUnit": "container",
-    "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879288", "quantity": 300, "unit": "g", "grams": 300, "note": "fillet"},
-      {"ingredientId": "694193652fb4d1c021879289", "quantity": 400, "unit": "g", "grams": 400, "note": "cubed"},
-      {"ingredientId": "694193652fb4d1c021879290", "quantity": 150, "unit": "g", "grams": 150, "note": "trimmed"}
-    ],
-    "instructions": [
-      {"section": "Prepare tray bake", "image": "", "steps": ["Arrange salmon, sweet potatoes, and green beans on a tray.", "Season and bake at 200°C for 25 minutes."], "timing": {"ovenC": 200, "minutes": 25}},
-      {"section": "Cool & portion", "image": "", "steps": ["Let cool before portioning into containers."], "timing": {"activeMin": 5}}
-    ],
-    "mealPrep": {"fridgeDays": 3, "freezerDays": 15, "reheatNotes": "Microwave with lid slightly open."},
-    "nutritionTotals": {"perServing": {"kcal": 430, "protein": 36, "carbs": 48, "fat": 12}, "perRecipe": {"kcal": 1290, "protein": 108, "carbs": 144, "fat": 36}},
-    "status": "published",
-    "createdBy": null,
-    "createdAt": "2025-12-19T10:00:00.000+0000",
-    "updatedAt": "2025-12-19T10:00:00.000+0000"
-  },
-  {
-    "_id": "694193661e7363a2e3ba79ae",
-    "title": "Egg Muffin Breakfast Prep",
-    "description": "Egg muffins with spinach, tomatoes, and feta cheese.",
-    "tags": ["meal-prep", "breakfast", "egg", "spinach", "tomatoes"],
-    "slug": "farfalle-pasta-shrimp-feta",
-    "cookingPostLink": "",
-    "mealPrepPostLink": "",
-    "imageUrl": "https://as1.ftcdn.net/v2/jpg/02/54/45/12/1000_F_254451278_7AAYmhYkBEVQ9MYnZYIomTI5WdFCif1g.jpg",
-    "servings": 6,
-    "servingUnit": "muffin",
-    "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879291", "quantity": 6, "unit": "piece", "grams": 300, "note": "large eggs"},
-      {"ingredientId": "694193652fb4d1c021879292", "quantity": 100, "unit": "g", "grams": 100, "note": "fresh spinach"},
-      {"ingredientId": "694193652fb4d1c021879293", "quantity": 80, "unit": "g", "grams": 80, "note": "cherry tomatoes"},
-      {"ingredientId": "694193652fb4d1c021879294", "quantity": 50, "unit": "g", "grams": 50, "note": "feta cheese"}
-    ],
-    "instructions": [
-      {"section": "Prepare muffins", "image": "", "steps": ["Whisk eggs.", "Add spinach, tomatoes, and feta.", "Pour into muffin tins and bake at 180°C for 20 minutes."], "timing": {"ovenC": 180, "minutes": 20}},
-      {"section": "Cool & store", "image": "", "steps": ["Let cool before storing in containers."], "timing": {"activeMin": 5}}
-    ],
-    "mealPrep": {"fridgeDays": 5, "freezerDays": 20, "reheatNotes": "Microwave for 30 seconds."},
-    "nutritionTotals": {"perServing": {"kcal": 120, "protein": 10, "carbs": 4, "fat": 7}, "perRecipe": {"kcal": 720, "protein": 60, "carbs": 24, "fat": 42}},
-    "status": "published",
-    "createdBy": null,
-    "createdAt": "2025-12-20T10:00:00.000+0000",
-    "updatedAt": "2025-12-20T10:00:00.000+0000"
-  },
-  {
-    "_id": "694193661e7363a2e3ba79af",
-    "title": "Turkey & Lentil Pasta",
-    "description": "Ground turkey with lentil pasta, zucchini, and tomato sauce.",
-    "tags": ["meal-prep", "turkey", "lentil pasta", "zucchini", "tomato sauce"],
-    "slug": "turkey-lentil-pasta",
-    "cookingPostLink": "",
-    "mealPrepPostLink": "",
-    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "servings": 4,
-    "servingUnit": "container",
-    "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879295", "quantity": 350, "unit": "g", "grams": 350, "note": "cooked"},
-      {"ingredientId": "694193652fb4d1c021879296", "quantity": 200, "unit": "g", "grams": 200, "note": "cooked"},
-      {"ingredientId": "694193652fb4d1c021879297", "quantity": 100, "unit": "g", "grams": 100, "note": "sliced"},
-      {"ingredientId": "694193652fb4d1c021879298", "quantity": 150, "unit": "g", "grams": 150, "note": "tomato sauce"}
-    ],
-    "instructions": [
-      {"section": "Cook turkey", "image": "", "steps": ["Brown ground turkey in a skillet.", "Drain excess fat."], "timing": {"activeMin": 10}},
-      {"section": "Prepare pasta", "image": "", "steps": ["Cook lentil pasta according to package instructions."], "timing": {"activeMin": 10}},
-      {"section": "Cook zucchini", "image": "", "steps": ["Sauté zucchini until tender."], "timing": {"activeMin": 5}},
-      {"section": "Combine & finish", "image": "", "steps": ["Mix turkey, pasta, zucchini, and tomato sauce in containers.", "Let cool before sealing."], "timing": {"activeMin": 5}}
-    ],
-    "mealPrep": {"fridgeDays": 4, "freezerDays": 15, "reheatNotes": "Microwave with lid slightly open."},
-    "nutritionTotals": {"perServing": {"kcal": 370, "protein": 32, "carbs": 45, "fat": 8}, "perRecipe": {"kcal": 1480, "protein": 128, "carbs": 180, "fat": 32}},
-    "status": "published",
-    "createdBy": null,
-    "createdAt": "2025-12-21T10:00:00.000+0000",
-    "updatedAt": "2025-12-21T10:00:00.000+0000"
-  },
-  {
-    "_id": "694193661e7363a2e3ba79b0",
-    "title": "Vegetarian Chickpea Curry",
-    "description": "Chickpeas simmered in curry sauce with carrots, peas, and rice.",
-    "tags": ["meal-prep", "vegetarian", "chickpeas", "curry", "rice", "carrots", "peas"],
-    "slug": "vegetarian-chickpea-curry",
-    "cookingPostLink": "",
-    "mealPrepPostLink": "",
-    "imageUrl": "https://images.unsplash.com/photo-1506089676908-3592f7389d4d?auto=format&fit=crop&w=400&q=80",
     "servings": 5,
     "servingUnit": "container",
     "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879299", "quantity": 300, "unit": "g", "grams": 300, "note": "cooked"},
-      {"ingredientId": "694193652fb4d1c021879300", "quantity": 200, "unit": "g", "grams": 200, "note": "cooked"},
-      {"ingredientId": "694193652fb4d1c021879301", "quantity": 100, "unit": "g", "grams": 100, "note": "sliced"},
-      {"ingredientId": "694193652fb4d1c021879302", "quantity": 100, "unit": "g", "grams": 100, "note": "peas"},
-      {"ingredientId": "694193652fb4d1c021879303", "quantity": 150, "unit": "g", "grams": 150, "note": "rice"}
+      { "ingredientId": "1001", "quantity": 800,  "unit": "g", "grams": 800,  "note": "extra lean 96/4" },
+      { "ingredientId": "23",   "quantity": 1500, "unit": "g", "grams": 1500, "note": "peeled, cubed 1.5 cm" },
+      { "ingredientId": "14",   "quantity": 300,  "unit": "g", "grams": 300,  "note": "diced" },
+      { "ingredientId": "15",   "quantity": 25,   "unit": "g", "grams": 25,   "note": null }
     ],
     "instructions": [
-      {"section": "Prepare curry", "image": "", "steps": ["Simmer chickpeas, carrots, peas, and rice in curry sauce."], "timing": {"activeMin": 20}},
-      {"section": "Cool & portion", "image": "", "steps": ["Let cool before portioning into containers."], "timing": {"activeMin": 5}}
+      {
+        "section": "Roast potatoes",
+        "image": "",
+        "steps": [
+          "Preheat oven to 210 °C / 410 °F.",
+          "Toss cubed potatoes with 15 g olive oil, salt, black pepper, and smoked paprika.",
+          "Spread on a lined baking sheet in a single layer.",
+          "Roast 25–30 minutes, flipping once halfway, until golden and crispy."
+        ],
+        "timing": { "ovenC": 210, "minutes": 30 }
+      },
+      {
+        "section": "Cook beef & bell pepper",
+        "image": "",
+        "steps": [
+          "Heat remaining 10 g olive oil in a large skillet over medium-high heat.",
+          "Add diced bell pepper and sauté 3 minutes until slightly softened.",
+          "Add ground beef, break apart with a spatula.",
+          "Cook 7–8 minutes until browned through.",
+          "Season with salt, pepper, garlic powder, and cumin."
+        ],
+        "timing": { "activeMin": 12 }
+      },
+      {
+        "section": "Assemble & store",
+        "image": "",
+        "steps": [
+          "Divide roasted potatoes among 5 containers (~300 g each).",
+          "Top with beef & bell pepper mixture (~220 g each).",
+          "Let cool completely before sealing.",
+          "Refrigerate up to 5 days."
+        ],
+        "timing": { "activeMin": 5 }
+      }
     ],
-    "mealPrep": {"fridgeDays": 5, "freezerDays": 20, "reheatNotes": "Microwave with lid slightly open."},
-    "nutritionTotals": {"perServing": {"kcal": 320, "protein": 12, "carbs": 55, "fat": 6}, "perRecipe": {"kcal": 1600, "protein": 60, "carbs": 275, "fat": 30}},
+    "mealPrep": { "fridgeDays": 5, "freezerDays": 25, "reheatNotes": "Microwave 2–3 min with lid cracked. For crispier potatoes, reheat in air fryer at 180 °C for 3–4 min." },
+    "nutritionTotals": {
+      "perServing": { "kcal": 510, "protein": 40, "carbs": 55, "fat": 12 },
+      "perRecipe":   { "kcal": 2550, "protein": 201, "carbs": 273, "fat": 59 }
+    },
     "status": "published",
     "createdBy": null,
-    "createdAt": "2025-12-22T10:00:00.000+0000",
-    "updatedAt": "2025-12-22T10:00:00.000+0000"
+    "createdAt": "2026-02-27T10:00:00.000+0000",
+    "updatedAt": "2026-02-27T10:00:00.000+0000"
   },
   {
-    "_id": "694193661e7363a2e3ba79b1",
-    "title": "Tuna & Couscous Salad",
-    "description": "Canned tuna with couscous, cherry tomatoes, and arugula.",
-    "tags": ["meal-prep", "tuna", "couscous", "cherry tomatoes", "arugula"],
-    "slug": "tuna-couscous-salad",
+    "_id": "694193661e7363a2e3ba79c4",
+    "title": "Chicken with Tomatoes & Bell Pepper",
+    "description": "Grilled chicken breast served with sautéed tomatoes and bell pepper — lean, simple, high-protein.",
+    "tags": ["meal-prep", "lunch", "chicken", "tomato", "bell-pepper"],
+    "slug": "chicken-tomatoes-bell-pepper",
     "cookingPostLink": "",
     "mealPrepPostLink": "",
-    "imageUrl": "https://images.unsplash.com/photo-1467003937334-80c7a4e4b1c7?auto=format&fit=crop&w=400&q=80",
-    "servings": 3,
+    "imageUrl": "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=400&q=80",
+    "servings": 5,
     "servingUnit": "container",
     "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879304", "quantity": 150, "unit": "g", "grams": 150, "note": "canned tuna"},
-      {"ingredientId": "694193652fb4d1c021879305", "quantity": 120, "unit": "g", "grams": 120, "note": "cooked couscous"},
-      {"ingredientId": "694193652fb4d1c021879306", "quantity": 80, "unit": "g", "grams": 80, "note": "cherry tomatoes"},
-      {"ingredientId": "694193652fb4d1c021879307", "quantity": 40, "unit": "g", "grams": 40, "note": "arugula"}
+      { "ingredientId": "1",  "quantity": 1000, "unit": "g", "grams": 1000, "note": "raw, boneless skinless" },
+      { "ingredientId": "29", "quantity": 600,  "unit": "g", "grams": 600,  "note": "diced" },
+      { "ingredientId": "14", "quantity": 300,  "unit": "g", "grams": 300,  "note": "diced" },
+      { "ingredientId": "15", "quantity": 25,   "unit": "g", "grams": 25,   "note": null }
     ],
     "instructions": [
-      {"section": "Prepare salad", "image": "", "steps": ["Mix tuna, couscous, tomatoes, and arugula in containers."], "timing": {"activeMin": 5}},
-      {"section": "Cool & store", "image": "", "steps": ["Let cool before storing in containers."], "timing": {"activeMin": 5}}
+      {
+        "section": "Cook chicken",
+        "image": "",
+        "steps": [
+          "Season chicken breasts with salt, pepper, garlic powder, and paprika.",
+          "Heat a grill pan or skillet over medium-high heat with 10 g olive oil.",
+          "Cook chicken 5–6 minutes per side until internal temp reaches 74 °C / 165 °F.",
+          "Rest 5 minutes, then slice into strips."
+        ],
+        "timing": { "activeMin": 15 }
+      },
+      {
+        "section": "Cook vegetables",
+        "image": "",
+        "steps": [
+          "In the same pan, add remaining 15 g olive oil.",
+          "Add diced bell pepper and cook 3 minutes.",
+          "Add diced tomatoes, season with salt, pepper, and oregano.",
+          "Cook 4–5 minutes until tomatoes soften and release juices."
+        ],
+        "timing": { "activeMin": 8 }
+      },
+      {
+        "section": "Assemble & store",
+        "image": "",
+        "steps": [
+          "Divide vegetable mixture among 5 containers.",
+          "Top each with sliced chicken (~200 g raw weight per box).",
+          "Let cool completely before sealing.",
+          "Refrigerate up to 5 days."
+        ],
+        "timing": { "activeMin": 5 }
+      }
     ],
-    "mealPrep": {"fridgeDays": 3, "freezerDays": 10, "reheatNotes": "Best served cold."},
-    "nutritionTotals": {"perServing": {"kcal": 250, "protein": 18, "carbs": 30, "fat": 5}, "perRecipe": {"kcal": 750, "protein": 54, "carbs": 90, "fat": 15}},
+    "mealPrep": { "fridgeDays": 5, "freezerDays": 30, "reheatNotes": "Microwave 2–3 min with lid cracked. Drizzle a bit of water over chicken to keep it moist." },
+    "nutritionTotals": {
+      "perServing": { "kcal": 301, "protein": 48, "carbs": 8, "fat": 8 },
+      "perRecipe":   { "kcal": 1507, "protein": 238, "carbs": 42, "fat": 39 }
+    },
     "status": "published",
     "createdBy": null,
-    "createdAt": "2025-12-23T10:00:00.000+0000",
-    "updatedAt": "2025-12-23T10:00:00.000+0000"
+    "createdAt": "2026-02-27T10:00:00.000+0000",
+    "updatedAt": "2026-02-27T10:00:00.000+0000"
   },
   {
-    "_id": "694193661e7363a2e3ba79b2",
-    "title": "Shrimp & Vegetable Stir Fry",
-    "description": "Shrimp stir-fried with bell peppers, snap peas, and carrots, served with rice.",
-    "tags": ["meal-prep", "shrimp", "vegetable", "rice", "bell peppers", "snap peas", "carrots"],
-    "slug": "shrimp-vegetable-stir-fry",
+    "_id": "694193661e7363a2e3ba79c5",
+    "title": "Sweet Potato with Turkey Kotletes",
+    "description": "Juicy extra-lean turkey cutlets (kotletes) served with baked sweet potato — a clean, satisfying dinner.",
+    "tags": ["meal-prep", "dinner", "turkey", "sweet-potato", "cutlets"],
+    "slug": "sweet-potato-turkey-kotletes",
     "cookingPostLink": "",
     "mealPrepPostLink": "",
     "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
-    "servings": 4,
+    "servings": 5,
     "servingUnit": "container",
     "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879308", "quantity": 300, "unit": "g", "grams": 300, "note": "shrimp"},
-      {"ingredientId": "694193652fb4d1c021879309", "quantity": 150, "unit": "g", "grams": 150, "note": "bell peppers"},
-      {"ingredientId": "694193652fb4d1c021879310", "quantity": 100, "unit": "g", "grams": 100, "note": "snap peas"},
-      {"ingredientId": "694193652fb4d1c021879311", "quantity": 100, "unit": "g", "grams": 100, "note": "carrots"},
-      {"ingredientId": "694193652fb4d1c021879312", "quantity": 200, "unit": "g", "grams": 200, "note": "rice"}
+      { "ingredientId": "1002", "quantity": 800,  "unit": "g", "grams": 800,  "note": "extra lean" },
+      { "ingredientId": "4",    "quantity": 1500, "unit": "g", "grams": 1500, "note": "peeled, cubed 2 cm" },
+      { "ingredientId": "15",   "quantity": 25,   "unit": "g", "grams": 25,   "note": null }
     ],
     "instructions": [
-      {"section": "Stir fry vegetables", "image": "", "steps": ["Stir fry bell peppers, snap peas, and carrots."], "timing": {"activeMin": 10}},
-      {"section": "Cook shrimp", "image": "", "steps": ["Add shrimp and cook until pink."], "timing": {"activeMin": 5}},
-      {"section": "Serve with rice", "image": "", "steps": ["Serve stir fry over rice in containers."], "timing": {"activeMin": 5}}
+      {
+        "section": "Bake sweet potatoes",
+        "image": "",
+        "steps": [
+          "Preheat oven to 200 °C / 400 °F.",
+          "Toss cubed sweet potato with 10 g olive oil, salt, and pepper.",
+          "Spread on a lined baking sheet in a single layer.",
+          "Bake 25–30 minutes, flipping once, until tender and lightly caramelized."
+        ],
+        "timing": { "ovenC": 200, "minutes": 30 }
+      },
+      {
+        "section": "Form & cook turkey kotletes",
+        "image": "",
+        "steps": [
+          "Season ground turkey with salt, pepper, garlic powder, onion powder, and a pinch of paprika.",
+          "Mix well and form into 10 oval patties (~80 g each).",
+          "Heat 15 g olive oil in a large non-stick skillet over medium heat.",
+          "Cook patties 4–5 minutes per side until golden and cooked through (internal temp 74 °C / 165 °F).",
+          "Place on a paper-towel-lined plate to drain."
+        ],
+        "timing": { "activeMin": 15 }
+      },
+      {
+        "section": "Assemble & store",
+        "image": "",
+        "steps": [
+          "Divide baked sweet potato among 5 containers (~300 g each).",
+          "Add 2 turkey kotletes per container.",
+          "Let cool completely before sealing.",
+          "Refrigerate up to 5 days."
+        ],
+        "timing": { "activeMin": 5 }
+      }
     ],
-    "mealPrep": {"fridgeDays": 4, "freezerDays": 15, "reheatNotes": "Microwave with lid slightly open."},
-    "nutritionTotals": {"perServing": {"kcal": 340, "protein": 28, "carbs": 45, "fat": 6}, "perRecipe": {"kcal": 1360, "protein": 112, "carbs": 180, "fat": 24}},
+    "mealPrep": { "fridgeDays": 5, "freezerDays": 20, "reheatNotes": "Microwave 2–3 min. Kotletes crisp nicely if reheated in an air fryer at 180 °C for 3 min." },
+    "nutritionTotals": {
+      "perServing": { "kcal": 473, "protein": 42, "carbs": 60, "fat": 7 },
+      "perRecipe":   { "kcal": 2367, "protein": 208, "carbs": 300, "fat": 36 }
+    },
     "status": "published",
     "createdBy": null,
-    "createdAt": "2025-12-24T10:00:00.000+0000",
-    "updatedAt": "2025-12-24T10:00:00.000+0000"
-  },
-  {
-    "_id": "694193661e7363a2e3ba79b3",
-    "title": "Breakfast Oatmeal Cups",
-    "description": "Baked oatmeal cups with blueberries, bananas, and walnuts.",
-    "tags": ["meal-prep", "breakfast", "oatmeal", "blueberries", "bananas", "walnuts"],
-    "slug": "breakfast-oatmeal-cups",
-    "cookingPostLink": "",
-    "mealPrepPostLink": "",
-    "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
-    "servings": 6,
-    "servingUnit": "cup",
-    "ingredients": [
-      {"ingredientId": "694193642fb4d1c021879313", "quantity": 120, "unit": "g", "grams": 120, "note": "oats"},
-      {"ingredientId": "694193652fb4d1c021879314", "quantity": 80, "unit": "g", "grams": 80, "note": "blueberries"},
-      {"ingredientId": "694193652fb4d1c021879315", "quantity": 60, "unit": "g", "grams": 60, "note": "bananas"},
-      {"ingredientId": "694193652fb4d1c021879316", "quantity": 40, "unit": "g", "grams": 40, "note": "walnuts"}
-    ],
-    "instructions": [
-      {"section": "Prepare oatmeal cups", "image": "", "steps": ["Mix oats, blueberries, bananas, and walnuts.", "Pour into muffin tins and bake at 180°C for 25 minutes."], "timing": {"ovenC": 180, "minutes": 25}},
-      {"section": "Cool & store", "image": "", "steps": ["Let cool before storing in containers."], "timing": {"activeMin": 5}}
-    ],
-    "mealPrep": {"fridgeDays": 5, "freezerDays": 20, "reheatNotes": "Microwave for 30 seconds."},
-    "nutritionTotals": {"perServing": {"kcal": 180, "protein": 6, "carbs": 30, "fat": 7}, "perRecipe": {"kcal": 1080, "protein": 36, "carbs": 180, "fat": 42}},
-    "status": "published",
-    "createdBy": null,
-    "createdAt": "2025-12-25T10:00:00.000+0000",
-    "updatedAt": "2025-12-25T10:00:00.000+0000"
+    "createdAt": "2026-02-27T10:00:00.000+0000",
+    "updatedAt": "2026-02-27T10:00:00.000+0000"
   }
 ]
