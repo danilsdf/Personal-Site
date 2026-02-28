@@ -121,7 +121,7 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
                                                 <img
                                                     src={recipe.imageUrl || "/home-page/results/meal-prep.jpg"}
                                                     alt={recipe.title}
-                                                    className="h-36 w-full rounded-xl border border-slate-700 bg-slate-900 object-cover transition-transform duration-200 group-hover:scale-105 sm:h-20 sm:w-20"
+                                                    className="h-44 w-full rounded-xl border border-slate-700 bg-slate-900 object-cover transition-transform duration-200 group-hover:scale-105 sm:h-20 sm:w-20"
                                                 />
                                                 <div className="flex-1 min-w-0">
                                                     <div className="text-base font-semibold text-white sm:text-lg">{recipe.title}</div>

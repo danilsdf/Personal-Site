@@ -66,10 +66,10 @@ export function RecipeDetailBody({ recipe, onBack }: RecipeDetailBodyProps) {
           <img
             src={recipe.imageUrl}
             alt={recipe.title}
-            className="h-56 w-full rounded-2xl border border-slate-700 object-cover shadow-lg sm:h-72 md:h-96"
+            className="h-60 w-full rounded-2xl border border-slate-700 object-cover shadow-lg sm:h-72 md:h-96"
           />
         ) : (
-          <div className="h-56 w-full rounded-2xl border border-slate-700 bg-slate-900 shadow-lg sm:h-72 md:h-96" />
+          <div className="h-60 w-full rounded-2xl border border-slate-700 bg-slate-900 shadow-lg sm:h-72 md:h-96" />
         )}
       </section>
 
