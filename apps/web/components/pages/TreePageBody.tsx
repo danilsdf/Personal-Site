@@ -71,18 +71,18 @@ export default function TreePageBody() {
 
         {/* Links */}
         <div className="mt-6 space-y-4">
-          <LinkButton label="Current meal prep" link="/meal-prep-plan/high-protein-cut" blank={false} />
+          {/* <LinkButton label="Current meal prep" link="/meal-prep-plan/high-protein-cut" blank={false} />
           <div className="flex items-center gap-3 py-1">
             <div className="flex-1 border-t border-primary/15" />
             <span className="text-xs text-primary/40 uppercase tracking-widest select-none"></span>
             <div className="flex-1 border-t border-primary/15" />
-          </div>
+          </div> */}
           <LinkButton label="Meal prep helper" link="/tool/meal-prep-helper" blank={false} />
           <LinkButton label="Strava" link="https://www.strava.com/athletes/66921238" blank={true} />
           <LinkButton label="Instagram" link="https://instagram.com/danilkravafit" blank={true} />
           <LinkButton label="TikTok" link="https://tiktok.com/@danilkravafit" blank={true} />
           <LinkButton label="Calories calculator" link="/tool/calories-calculator" blank={false} />
-          <LinkButton label="About me" link="/about-me" blank={false} />
+          <LinkButton label="About me" link="/about" blank={false} />
         </div>
       </div>
     </main>

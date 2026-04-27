@@ -40,7 +40,7 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
     const getRecipe = (id: string) => (allRecipes as any[]).find((r) => r._id === id);
 
     return (
-        <main className="min-h-dvh from-slate-100 via-slate-100 to-slate-200">
+        <main className="min-h-dvh from-slate-100 via-slate-100 to-slate-200 pt-16">
             <div className="mx-auto max-w-3xl px-4 pb-12 pt-10 sm:px-6">
                 <Link
                     href={backHref}

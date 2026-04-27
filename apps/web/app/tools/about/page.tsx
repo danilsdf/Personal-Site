@@ -24,32 +24,50 @@ export default function ToolsAboutPage() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 pb-20 pt-10 text-black dark:text-white">
-      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-[#d2a852] dark:text-[#f0c46a] mb-8">About the Tools</h1>
-      <p className="mb-8 text-neutral-500 dark:text-neutral-300">Learn what each tool does and how to get the most out of it. Click on a tool to expand details and usage instructions.</p>
-      <div className="flex flex-col gap-4">
-        {TOOLS.map((tool, idx) => (
-          <div key={tool.title} className="rounded-2xl border border-neutral-200 dark:border-[#23232a] bg-neutral-100 dark:bg-[#23232a]">
-            <button
-              className="w-full text-left px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#d2a852] dark:focus:ring-[#f0c46a] flex items-center justify-between"
-              onClick={() => setOpen(open === idx ? null : idx)}
-              aria-expanded={open === idx}
-              aria-controls={`tool-body-${idx}`}
-            >
-              <span className="text-lg font-semibold text-[#d2a852] dark:text-[#f0c46a]">{tool.title}</span>
-              <span className="ml-4 text-[#d2a852] dark:text-[#f0c46a] text-xl">{open === idx ? "−" : "+"}</span>
-            </button>
-            <div
-              id={`tool-body-${idx}`}
-              className={`px-6 pb-4 text-neutral-700 dark:text-neutral-200 text-sm transition-all duration-300 ease-in-out ${open === idx ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
-              aria-hidden={open !== idx}
-            >
-              <div className="mb-2 font-medium text-neutral-900 dark:text-neutral-100">{tool.summary}</div>
-              <div>{tool.body}</div>
+    <main className="mx-auto max-w-5xl px-4 pb-20 pt-24 text-neutral-900 dark:text-neutral-100">
+
+      {/* TITLE */}
+      <section className="text-center">
+        <h1 className="text-3xl font-black tracking-tight md:text-5xl">
+          About the Tools
+        </h1>
+        <p className="mt-4 text-sm leading-relaxed text-white/60">
+          Learn what each tool does and how to get the most out of it. Click on a tool to expand details and usage instructions.
+        </p>
+      </section>
+
+      {/* ACCORDION */}
+      <section className="px-5 py-14 md:px-10 md:py-20 lg:px-24">
+        <div className="flex flex-col divide-y divide-white/10 border-y border-white/10">
+          {TOOLS.map((tool, idx) => (
+            <div key={tool.title}>
+              <button
+                className="flex w-full items-center justify-between py-6 text-left transition hover:text-white/80"
+                onClick={() => setOpen(open === idx ? null : idx)}
+                aria-expanded={open === idx}
+                aria-controls={`tool-body-${idx}`}
+              >
+                <span className="text-sm font-black uppercase tracking-widest text-white">
+                  {tool.title}
+                </span>
+                <span className="ml-4 text-lg leading-none text-white/40 transition">
+                  {open === idx ? "−" : "+"}
+                </span>
+              </button>
+              <div
+                id={`tool-body-${idx}`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${open === idx ? "max-h-96 pb-6 opacity-100" : "max-h-0 opacity-0"}`}
+                aria-hidden={open !== idx}
+              >
+                <p className="mb-2 text-sm font-bold text-white/70">{tool.summary}</p>
+                <p className="text-sm leading-relaxed text-white/50">{tool.body}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
+          ))}
+        </div>
+      </section>
+
+    </main>
   );
 }
+

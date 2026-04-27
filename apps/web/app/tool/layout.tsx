@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     description: "Explore fitness, nutrition, and training tools for hybrid athletes and busy professionals at Hybrid Athlete Hub.",
   },
 };
-import MainHeader from "@/components/headers/MainHeader";
 import MainFooter from "@/components/footer/MainFooter";
+import HomeHeader from "@/components/headers/HomeHeader";
 
 export default function MainLayout({
   children,
@@ -26,7 +26,7 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <MainHeader />
+      <HomeHeader />
       {children}
       <MainFooter />
     </>

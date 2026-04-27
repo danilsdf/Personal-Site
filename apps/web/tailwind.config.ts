@@ -7,7 +7,11 @@ const config: Config = {
     "./components/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        wide: "1450px",
+      },
+    },
   },
   plugins: [],
 };

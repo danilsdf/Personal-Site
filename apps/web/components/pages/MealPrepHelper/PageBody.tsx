@@ -61,9 +61,9 @@ export default function MealPrepHelperPageBody() {
   }
 
   return (
-    <div className="sm:mx-auto sm:w-4xl px-4 pt-12 text-neutral-900 dark:text-neutral-100">
+    <div className="sm:mx-auto sm:w-4xl px-4 pt-24 text-neutral-900 dark:text-neutral-100">
       {step === 'calories' && (<section className="mb-10 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-yellow-600 dark:text-yellow-400">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Meal Prep Helper
         </h1>
       </section>)}

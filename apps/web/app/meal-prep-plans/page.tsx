@@ -35,7 +35,7 @@ function MealPrepPlansContent() {
   return (
 
     <main className="min-h-dvh text-slate-900 dark:text-[#F3F4F6]">
-      <div className="mx-auto w-full max-w-6xl px-2 pb-16 pt-8 sm:px-6">
+      <div className="mx-auto w-full max-w-6xl px-2 pb-16 pt-24 sm:px-6">
         <header className="mb-1 flex flex-col items-center text-center">
           <h1 className="text-[42px] font-bold tracking-tight mb-2" style={{ letterSpacing: '-0.02em' }}>
             Meal Prep Plans

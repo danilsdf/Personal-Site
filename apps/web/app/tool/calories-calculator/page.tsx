@@ -226,10 +226,10 @@
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-4 pt-12 text-black dark:text-white">
+    <div className="mx-auto max-w-4xl px-4 pb-4 pt-24 text-black dark:text-white">
       {/* TITLE */}
       <section className="mb-10 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-[#d2a852] dark:text-[#f0c46a]">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Calorie Calculator
         </h1>
         <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-100">
