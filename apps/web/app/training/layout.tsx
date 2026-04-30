@@ -1,5 +1,5 @@
-import MainHeader from "@/components/headers/MainHeader";
 import MainFooter from "@/components/footer/MainFooter";
+import HomeHeader from "@/components/headers/HomeHeader";
 
 export default function TrainingLayout({
   children,
@@ -8,7 +8,7 @@ export default function TrainingLayout({
 }) {
   return (
     <>
-      <MainHeader />
+      <HomeHeader showTraining={false} />
       {children}
       <MainFooter />
     </>

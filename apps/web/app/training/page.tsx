@@ -175,7 +175,6 @@ export default function TrainingPage() {
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-white/10 px-5 pt-24 pb-10 md:px-10 lg:px-20">
         <div className="absolute inset-0 bg-[url('/home-page/home-background.png')] bg-cover bg-[75%_center] opacity-45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
 
         <div className="relative z-10 max-w-7xl">
           <h1 className="max-w-2xl text-6xl font-black uppercase leading-none tracking-tight md:text-8xl">
@@ -208,7 +207,7 @@ export default function TrainingPage() {
       <section className="grid gap-6 px-5 py-8 md:px-10 lg:grid-cols-[260px_1fr] lg:px-20">
         {/* SIDEBAR — horizontal scroll on mobile, sticky sidebar on lg */}
         <aside className="lg:sticky lg:top-24 lg:h-fit">
-          <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:rounded-xl lg:border lg:border-white/10 lg:bg-white/[0.03] lg:p-3 lg:pb-3">
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 lg:flex lg:flex-col lg:overflow-visible lg:rounded-xl lg:border lg:border-white/10 lg:bg-white/[0.03] lg:p-3 lg:pb-3">
             {WEEKS.map((week, index) => {
               const isActive = index === activeIndex;
               const isCurrent =
@@ -217,13 +216,13 @@ export default function TrainingPage() {
                 <button
                   key={week.title}
                   onClick={() => setActiveIndex(index)}
-                  className={`shrink-0 rounded-lg p-3 text-left transition lg:w-full lg:p-4 ${
+                  className={`rounded-lg p-3 text-left transition w-full lg:p-4 ${
                     isActive
                       ? "bg-white/10 ring-1 ring-white/20"
                       : "bg-white/[0.04] hover:bg-white/[0.08]"
                   }`}
                 >
-                  <p className="text-sm font-black uppercase tracking-widest whitespace-nowrap lg:whitespace-normal">
+                  <p className="text-sm font-black uppercase tracking-widest">
                     {week.title}
                     {isCurrent && (
                       <span className="ml-2 text-[9px] font-black uppercase tracking-widest text-white/50">

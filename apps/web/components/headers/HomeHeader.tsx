@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function HomeHeader() {
+export default function HomeHeader({showTraining = true}: {showTraining?: boolean}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -63,12 +63,14 @@ export default function HomeHeader() {
 
         {/* CTA */}
         <div className="hidden md:block">
-          <Link
-            href="/training"
-            className="border border-white px-5 py-2 text-xs font-extrabold uppercase tracking-widest transition hover:bg-white hover:text-black whitespace-nowrap bg-[#00000073]"
-          >
-            Training Program
-          </Link>
+          {showTraining ? (
+            <Link
+              href="/training"
+              className="border border-white px-5 py-2 text-xs font-extrabold uppercase tracking-widest transition hover:bg-white hover:text-black whitespace-nowrap bg-[#00000073]"
+            >
+              Training Program
+            </Link>
+          ) : <div className="px-5 py-2 w-[185px]" />} {/* Placeholder to keep spacing consistent when the button is hidden */}
         </div>
 
         {/* MOBILE BUTTON */}
@@ -108,13 +110,13 @@ export default function HomeHeader() {
             );
           })}
 
-          <Link
+          {showTraining && (<Link
             href="/training"
             onClick={() => setOpen(false)}
             className="block border border-white px-5 py-3 text-center font-extrabold whitespace-nowrap"
           >
             Training Program
-          </Link>
+          </Link>)}
         </div>
       )}
     </header>
