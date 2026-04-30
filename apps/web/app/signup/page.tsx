@@ -1,0 +1,146 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+export default function SignupPage() {
+  const router = useRouter();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullName, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong.");
+        return;
+      }
+
+      router.push("/");
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-neutral-950 px-4">
+      <div className="w-full max-w-md">
+        <div className="mb-8 text-center">
+          <Link
+            href="/"
+            className="text-sm font-extrabold tracking-widest uppercase text-white"
+          >
+            DANILKRAVAFIT
+          </Link>
+          <h1 className="mt-6 text-2xl font-bold tracking-tight text-white">
+            Create an account
+          </h1>
+          <p className="mt-2 text-sm text-white/50">
+            Already have one?{" "}
+            <Link
+              href="/login"
+              className="text-white underline underline-offset-4 hover:text-white/80 transition"
+            >
+              Log in
+            </Link>
+          </p>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-8"
+        >
+          <div>
+            <label
+              htmlFor="fullName"
+              className="block text-xs font-semibold uppercase tracking-widest text-white/60 mb-1.5"
+            >
+              Full name
+            </label>
+            <input
+              id="fullName"
+              type="text"
+              autoComplete="name"
+              required
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Danil Kravchenko"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none focus:ring-0 transition"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-xs font-semibold uppercase tracking-widest text-white/60 mb-1.5"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none focus:ring-0 transition"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-xs font-semibold uppercase tracking-widest text-white/60 mb-1.5"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="At least 8 characters"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none focus:ring-0 transition"
+            />
+          </div>
+
+          {error && (
+            <p className="rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-2.5 text-sm text-red-400">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-white py-3 text-sm font-bold uppercase tracking-widest text-black transition hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Creating account…" : "Sign up"}
+          </button>
+        </form>
+      </div>
+    </main>
+  );
+}
