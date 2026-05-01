@@ -32,11 +32,11 @@ export default function RecipePage() {
   };
 
   if (loading) {
-    return <div className="text-center py-10 text-neutral-400">Loading...</div>;
+    return <div className="text-center py-10 mt-20 text-neutral-400">Loading...</div>;
   }
 
   if (!recipe) {
-    return <div className="text-center py-10 text-red-500">Recipe not found.</div>;
+    return <div className="text-center py-10 mt-20 text-red-500">Recipe not found.</div>;
   }
 
   return <RecipeDetailBody recipe={recipe} onBack={handleBack} />;

@@ -5,6 +5,45 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import HomeHeader from "@/components/headers/HomeHeader";
 import MainFooter from "@/components/footer/MainFooter";
+import MacroSplitSlider from "@/components/MealPrepHelper/MacroSplitSlider";
+
+type SavedPlanItem = {
+  savedAt: string;
+  plan: {
+    id: string;
+    title: string;
+    imageUrl?: string | null;
+    calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+    startDate: string;
+    endDate: string;
+    isCurrentWeek?: boolean;
+  };
+};
+
+type SavedRecipeItem = {
+  savedAt: string;
+  targetCalories?: number | null;
+  recipe: {
+    title: string;
+    slug: string;
+    imageUrl?: string | null;
+    description?: string | null;
+    tags?: string[];
+    servings: number;
+    servingUnit?: string;
+    nutritionTotals?: {
+      perServing?: { kcal: number | null; protein: number | null; carbs: number | null; fat: number | null };
+    };
+  };
+};
+
+function formatDateShort(iso: string) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
 
 type ProfileData = {
   fullName: string;
@@ -16,6 +55,7 @@ type ProfileData = {
   gender?: "male" | "female" | null;
   goal?: "maintain" | "lose" | "gain" | null;
   dailyCalories?: number | null;
+  macroSplit?: { protein: number; fat: number; carbs: number } | null;
 };
 
 function StatCard({
@@ -86,6 +126,89 @@ function getCalCardContent(
   };
 }
 
+function SavedPlansList({ loading, items }: Readonly<{ loading: boolean; items: SavedPlanItem[] }>) {
+  if (loading) return <p className="text-sm text-white/30">Loading…</p>;
+  if (items.length === 0) return <p className="text-sm text-white/30">No saved meal prep plans yet.</p>;
+  return (
+    <div className="flex flex-col gap-3">
+      {items.map((item) => (
+        <Link
+          key={item.plan.id}
+          href={`/meal-prep-plan/${item.plan.id}`}
+          className="group flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 p-3 hover:bg-white/10 transition"
+        >
+          <img
+            src={item.plan.imageUrl ?? "/home-page/results/meal-prep.jpg"}
+            alt={item.plan.title}
+            className="h-14 w-14 rounded-lg object-cover shrink-0 border border-white/10"
+          />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-sm font-semibold text-white truncate">
+                {formatDateShort(item.plan.startDate)} – {formatDateShort(item.plan.endDate)}
+              </span>
+              {item.plan.isCurrentWeek && (
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30">Current week</span>
+              )}
+            </div>
+            <div className="flex flex-wrap gap-2 mt-1">
+              <span className="text-xs text-orange-400 font-semibold">{item.plan.calories} kcal</span>
+              <span className="text-xs text-blue-400">{item.plan.protein}g P</span>
+              <span className="text-xs text-purple-400">{item.plan.fat}g F</span>
+              <span className="text-xs text-amber-400">{item.plan.carbs}g C</span>
+            </div>
+          </div>
+          <svg className="w-4 h-4 text-white/20 group-hover:text-white/50 transition shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function SavedRecipesList({ loading, items }: Readonly<{ loading: boolean; items: SavedRecipeItem[] }>) {
+  if (loading) return <p className="text-sm text-white/30">Loading…</p>;
+  if (items.length === 0) return <p className="text-sm text-white/30">No saved recipes yet.</p>;
+  return (
+    <div className="flex flex-col gap-3">
+      {items.map((item) => {
+        const macros = item.recipe.nutritionTotals?.perServing ?? null;
+        return (
+          <Link
+            key={item.recipe.slug}
+            href={`/recipe/${item.recipe.slug}`}
+            className="group flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 p-3 hover:bg-white/10 transition"
+          >
+            <img
+              src={item.recipe.imageUrl ?? "/home-page/results/meal-prep.jpg"}
+              alt={item.recipe.title}
+              className="h-14 w-14 rounded-lg object-cover shrink-0 border border-white/10"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-white truncate">{item.recipe.title}</p>
+              <div className="flex flex-wrap gap-2 mt-1">
+                {item.targetCalories != null && (
+                  <span className="text-xs text-orange-400 font-semibold">{item.targetCalories} kcal target</span>
+                )}
+                {macros?.kcal != null && item.targetCalories == null && (
+                  <span className="text-xs text-orange-400">{macros.kcal} kcal</span>
+                )}
+                {macros?.protein != null && <span className="text-xs text-blue-400">{macros.protein}g P</span>}
+                {macros?.fat != null && <span className="text-xs text-purple-400">{macros.fat}g F</span>}
+                {macros?.carbs != null && <span className="text-xs text-amber-400">{macros.carbs}g C</span>}
+              </div>
+            </div>
+            <svg className="w-4 h-4 text-white/20 group-hover:text-white/50 transition shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function ProfilePage() {
   const router = useRouter();
   const [profile, setProfile] = useState<ProfileData | null>(null);
@@ -104,8 +227,15 @@ export default function ProfilePage() {
   const [knownCalories, setKnownCalories] = useState("");
   const [caloriesSaving, setCaloriesSaving] = useState(false);
   const [caloriesSuccess, setCaloriesSuccess] = useState(false);
+  const [macroSplit, setMacroSplit] = useState({ protein: 33, fat: 30, carbs: 37 });
+  const [macroSaving, setMacroSaving] = useState(false);
+  const [macroSuccess, setMacroSuccess] = useState(false);
   const [error, setError] = useState("");
   const [formOpen, setFormOpen] = useState(false);
+  const [savedPlans, setSavedPlans] = useState<SavedPlanItem[]>([]);
+  const [savedRecipes, setSavedRecipes] = useState<SavedRecipeItem[]>([]);
+  const [savedLoading, setSavedLoading] = useState(true);
+  const [tab, setTab] = useState<"main" | "plans" | "recipes">("main");
 
   useEffect(() => {
     fetch("/api/auth/profile")
@@ -122,10 +252,20 @@ export default function ProfilePage() {
         setGender(data.gender ?? "");
         setGoal(data.goal ?? "");
         setKnownCalories(data.dailyCalories == null ? "" : String(data.dailyCalories));
+        if (data.macroSplit) setMacroSplit(data.macroSplit);
         // Open form automatically if any measurement is missing
         setFormOpen(hasMissingFields(data));
       })
       .finally(() => setLoading(false));
+
+    // Fetch saved items in parallel
+    Promise.all([
+      fetch("/api/user/saved-plans").then((r) => r.ok ? r.json() : []),
+      fetch("/api/user/saved-recipes").then((r) => r.ok ? r.json() : []),
+    ]).then(([plans, recipes]) => {
+      setSavedPlans(plans);
+      setSavedRecipes(recipes);
+    }).catch(() => {}).finally(() => setSavedLoading(false));
   }, [router]);
 
   async function handleSave(e: React.SyntheticEvent<HTMLFormElement>) {
@@ -175,6 +315,21 @@ export default function ProfilePage() {
       setShowCaloriesCalculator(false);
       setCaloriesSuccess(true);
       setTimeout(() => setCaloriesSuccess(false), 3000);
+    }
+  }
+
+  async function handleSaveMacros() {
+    setMacroSaving(true);
+    const res = await fetch("/api/auth/profile", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ macroSplit }),
+    });
+    setMacroSaving(false);
+    if (res.ok) {
+      setProfile((p) => (p ? { ...p, macroSplit } : p));
+      setMacroSuccess(true);
+      setTimeout(() => setMacroSuccess(false), 3000);
     }
   }
 
@@ -230,7 +385,30 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Stats overview */}
+          {/* Tabs */}
+          <div className="flex gap-1 mb-8 border-b border-white/10">
+            {(["main", "plans", "recipes"] as const).map((t) => {
+              const labels = { main: "Main", plans: "Saved Meal Plans", recipes: "Saved Recipes" };
+              return (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setTab(t)}
+                  className={[
+                    "px-4 py-2.5 text-sm font-semibold transition-all border-b-2 -mb-px",
+                    tab === t
+                      ? "border-white text-white"
+                      : "border-transparent text-white/40 hover:text-white/70",
+                  ].join(" ")}
+                >
+                  {labels[t]}
+                </button>
+              );
+            })}
+          </div>
+
+          {tab === "main" && (
+            <>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
             <StatCard label="Weight" value={profile.weight} unit="kg" />
             <StatCard label="Height" value={profile.height} unit="cm" />
@@ -516,6 +694,46 @@ export default function ProfilePage() {
                 </div>
               )}
             </div>
+          )}
+
+          {/* Macro Split section — only when daily calories are saved */}
+          {profile.dailyCalories != null && (
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] py-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold pl-8">Macro Split</h2>
+                {macroSuccess && (
+                  <p className="text-xs text-green-400">Saved!</p>
+                )}
+              </div>
+              <MacroSplitSlider
+                key={profile.dailyCalories}
+                totalProteinG={profile.dailyCalories / 4}
+                totalFatG={profile.dailyCalories / 9}
+                totalCarbsG={profile.dailyCalories / 4}
+                initial={macroSplit}
+                onChange={setMacroSplit}
+              />
+              <div className="mt-4 mr-8 flex justify-end">
+                <button
+                  type="button"
+                  disabled={macroSaving}
+                  onClick={handleSaveMacros}
+                  className="px-6 py-2.5 bg-white text-black text-sm font-bold rounded-xl hover:bg-white/90 disabled:opacity-50 transition"
+                >
+                  {macroSaving ? "Saving…" : "Save macro split"}
+                </button>
+              </div>
+            </div>
+          )}
+          </>
+          )}
+
+          {tab === "plans" && (
+            <SavedPlansList loading={savedLoading} items={savedPlans} />
+          )}
+
+          {tab === "recipes" && (
+            <SavedRecipesList loading={savedLoading} items={savedRecipes} />
           )}
         </div>
       </main>

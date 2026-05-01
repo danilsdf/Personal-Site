@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import CaloriesScreen from "./screens/CaloriesScreen";
 import InventoryScreen from "./screens/InventoryScreen";
 import SummaryScreen from "./screens/SummaryScreen";
+import { useCurrentUser } from "@/lib/useCurrentUser";
 
 export default function MealPrepHelperPageBody() {
+  const { user } = useCurrentUser();
   const [macros, setMacros] = useState({ protein: 35, fat: 30, carbs: 35 });
   const [calorieGoal, setCalorieGoal] = useState(2300);
   const [days, setDays] = useState(5);
@@ -12,6 +14,20 @@ export default function MealPrepHelperPageBody() {
   const [ingredients, setIngredients] = useState<{ name: string; amount: string; unit: string }[]>([]);
   const [nutritionSummary, setNutritionSummary] = useState<any>(null);
   const [ingredientDB, setIngredientDB] = useState<any[]>([]);
+  const [profileLoading, setProfileLoading] = useState(false);
+
+  const handleLoadFromProfile = async () => {
+    setProfileLoading(true);
+    try {
+      const res = await fetch('/api/auth/profile');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.dailyCalories) setCalorieGoal(data.dailyCalories);
+      if (data.macroSplit) setMacros(data.macroSplit);
+    } finally {
+      setProfileLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetch("/api/ingredients")
@@ -72,6 +88,18 @@ export default function MealPrepHelperPageBody() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Meal Prep Helper
         </h1>
+        {user && (
+          <div className="mt-4 flex justify-center">
+            <button
+              type="button"
+              onClick={handleLoadFromProfile}
+              disabled={profileLoading}
+              className="flex items-center gap-1.5 rounded-full border border-[#d2a852] dark:border-[#f0c46a] px-4 py-1.5 text-xs font-semibold text-[#d2a852] dark:text-[#f0c46a] transition hover:bg-[#d2a852] hover:text-black dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] disabled:opacity-50"
+            >
+              {profileLoading ? 'Loading…' : 'Use saved data'}
+            </button>
+          </div>
+        )}
       </section>)}
       {step === 'calories' && (
         <CaloriesScreen

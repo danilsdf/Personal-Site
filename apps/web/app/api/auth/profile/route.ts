@@ -25,7 +25,7 @@ export async function GET() {
       .collection("Users")
       .findOne(
         { _id: new ObjectId(user.userId) },
-        { projection: { fullName: 1, email: 1, role: 1, weight: 1, height: 1, age: 1, gender: 1, goal: 1, dailyCalories: 1 } }
+        { projection: { fullName: 1, email: 1, role: 1, weight: 1, height: 1, age: 1, gender: 1, goal: 1, dailyCalories: 1, macroSplit: 1 } }
       );
     if (!doc) return NextResponse.json({ error: "User not found." }, { status: 404 });
     return NextResponse.json(doc);
@@ -90,6 +90,21 @@ function buildProfileUpdate(body: Record<string, unknown>): UpdateResult {
   return { ok: true, data };
 }
 
+function parseMacroSplit(
+  value: unknown
+): { ok: true; val: { protein: number; fat: number; carbs: number } | null } | { ok: false; error: string } {
+  if (value === null || value === undefined) return { ok: true, val: null };
+  if (typeof value !== "object" || Array.isArray(value)) return { ok: false, error: "Invalid macroSplit." };
+  const { protein, fat, carbs } = value as Record<string, unknown>;
+  const p = Number(protein);
+  const f = Number(fat);
+  const c = Number(carbs);
+  if (!Number.isFinite(p) || !Number.isFinite(f) || !Number.isFinite(c)) return { ok: false, error: "Invalid macroSplit values." };
+  if (p < 5 || f < 5 || c < 5 || p > 90 || f > 90 || c > 90) return { ok: false, error: "Each macro must be between 5 and 90%." };
+  if (Math.round(p + f + c) !== 100) return { ok: false, error: "Macro split must sum to 100%." };
+  return { ok: true, val: { protein: Math.round(p), fat: Math.round(f), carbs: Math.round(c) } };
+}
+
 export async function PATCH(req: NextRequest) {
   const user = await getAuthUser();
   if (!user) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
@@ -99,12 +114,20 @@ export async function PATCH(req: NextRequest) {
     const result = buildProfileUpdate(body);
     if (!result.ok) return NextResponse.json({ error: result.error }, { status: 400 });
 
+    const updateData: Record<string, unknown> = { ...result.data, updatedAt: new Date() };
+
+    if (body.macroSplit !== undefined) {
+      const macroResult = parseMacroSplit(body.macroSplit);
+      if (!macroResult.ok) return NextResponse.json({ error: macroResult.error }, { status: 400 });
+      updateData.macroSplit = macroResult.val;
+    }
+
     const db = await getDb();
     await db
       .collection("Users")
       .updateOne(
         { _id: new ObjectId(user.userId) },
-        { $set: { ...result.data, updatedAt: new Date() } }
+        { $set: updateData }
       );
 
     return NextResponse.json({ success: true });

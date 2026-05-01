@@ -28,7 +28,7 @@ export default function HomeHeader({showTraining = true}: Readonly<{showTraining
           : "bg-transparent"
       }`}
     >
-      <div className="flex items-center justify-between px-6 md:px-16 lg:px-28 h-20">
+      <div className="flex items-center justify-between px-6 md:px-14 lg:px-18 h-20">
         {/* LOGO */}
         <Link
           href="/"
@@ -38,7 +38,7 @@ export default function HomeHeader({showTraining = true}: Readonly<{showTraining
         </Link>
 
         {/* DESKTOP NAV */}
-        <nav className="hidden md:flex items-center gap-10 text-sm uppercase tracking-wide">
+        <nav className="hidden md:flex items-center gap-10 text-sm uppercase tracking-wide mx-1">
           {[
             { href: "/", label: "Home" },
             { href: "/about", label: "About" },
@@ -75,15 +75,18 @@ export default function HomeHeader({showTraining = true}: Readonly<{showTraining
           <UserAvatar />
         </div>
 
-        {/* MOBILE BUTTON */}
-        <button
-          className="md:hidden flex flex-col gap-1"
-          onClick={() => setOpen(!open)}
-        >
-          <span className="w-6 h-[2px] bg-white" />
-          <span className="w-6 h-[2px] bg-white" />
-          <span className="w-6 h-[2px] bg-white" />
-        </button>
+        <div className="md:hidden flex items-center gap-4">
+          {/* MOBILE BUTTON */}
+          <button
+            className="md:hidden flex flex-col gap-1"
+            onClick={() => setOpen(!open)}
+          >
+            <span className="w-6 h-[2px] bg-white" />
+            <span className="w-6 h-[2px] bg-white" />
+            <span className="w-6 h-[2px] bg-white" />
+          </button>
+          <UserAvatar />
+        </div>
       </div>
 
       {/* MOBILE MENU */}

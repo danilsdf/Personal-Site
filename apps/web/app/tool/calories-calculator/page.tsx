@@ -4,6 +4,7 @@
   import { useSearchParams } from "next/navigation";
   import { Listbox } from "@headlessui/react";
   import { useCurrentUser } from "@/lib/useCurrentUser";
+  import MacroSplitSlider from "@/components/MealPrepHelper/MacroSplitSlider";
 
   function renderMarkdownText(text: string): React.ReactNode[] {
     return text.split(/\n/).flatMap((line, lineIdx, lines) => {
@@ -191,6 +192,23 @@
   const [aiError, setAiError] = useState('');
 
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [profileLoading, setProfileLoading] = useState(false);
+
+  const handleLoadFromProfile = async () => {
+    setProfileLoading(true);
+    try {
+      const res = await fetch('/api/auth/profile');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.age) setAge(data.age);
+      if (data.height) { setHeightCm(data.height); setUnits('metric'); }
+      if (data.weight) { setWeightKg(data.weight); setUnits('metric'); }
+      if (data.gender === 'male' || data.gender === 'female') setSex(data.gender);
+      if (data.goal === 'lose' || data.goal === 'gain' || data.goal === 'maintain') setGoal(data.goal);
+    } finally {
+      setProfileLoading(false);
+    }
+  };
 
   const handleSaveToProfile = async () => {
     if (!result) return;
@@ -346,6 +364,18 @@
 
       {/* CALCULATOR FORM */}
       <section className="mx-auto mb-4 max-w-xl">
+        {user && (
+          <div className="mb-4 flex justify-end">
+            <button
+              type="button"
+              onClick={handleLoadFromProfile}
+              disabled={profileLoading}
+              className="flex items-center gap-1.5 rounded-full border border-[#d2a852] dark:border-[#f0c46a] px-4 py-1.5 text-xs font-semibold text-[#d2a852] dark:text-[#f0c46a] transition hover:bg-[#d2a852] hover:text-black dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] disabled:opacity-50"
+            >
+              {profileLoading ? 'Loading…' : 'Use saved data'}
+            </button>
+          </div>
+        )}
         <div>
           <label className="block text-sm font-medium mb-1">Formula</label>
           <Listbox value={formula} onChange={setFormula}>
@@ -529,6 +559,16 @@
             </h4>
             <p className="mt-2 text-2xl font-bold">{result} kcal</p>
             <p className="mt-1 text-sm text-neutral-700 dark:text-neutral-200">This is the estimated number of calories you need per day based on your answers.</p>
+            {/* Macro Split Slider */}
+            <div className="mt-8">
+              <h5 className="text-sm font-semibold mb-3">Macro Split</h5>
+              <MacroSplitSlider
+                key={result}
+                totalProteinG={result / 4}
+                totalFatG={result / 9}
+                totalCarbsG={result / 4}
+              />
+            </div>
             {user && (
               <div className="mt-4">
                 {saveStatus === 'saved' ? (

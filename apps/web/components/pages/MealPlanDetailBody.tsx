@@ -1,6 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { MealPrepPlan } from "@/app/data/models/meal-prep-plan";
+import { useCurrentUser } from "@/lib/useCurrentUser";
 
 function formatDate(iso: string) {
     const date = new Date(iso);
@@ -19,6 +23,34 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
     backHref,
     focusIngredients = false,
 }) => {
+    const router = useRouter();
+    const { user, loading: userLoading } = useCurrentUser();
+    const [saved, setSaved] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        if (userLoading || !user) return;
+        fetch(`/api/meal-prep-plans/${plan.id}/save`)
+            .then((r) => r.json())
+            .then((data) => setSaved(!!data?.saved))
+            .catch(() => {});
+    }, [user, userLoading, plan.id]);
+
+    async function handleSave() {
+        if (!user) {
+            router.push(`/login?redirect=/meal-prep-plan/${plan.id}`);
+            return;
+        }
+        setSaving(true);
+        try {
+            const method = saved ? "DELETE" : "POST";
+            const res = await fetch(`/api/meal-prep-plans/${plan.id}/save`, { method });
+            if (res.ok) setSaved(!saved);
+        } finally {
+            setSaving(false);
+        }
+    }
+
     const dateRange = `${formatDate(plan.startDate)} – ${formatDate(plan.endDate)}`;
 
     const planRecipes = (plan.recipes ?? []).slice().sort((a, b) => a.order - b.order);
@@ -34,13 +66,32 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
     return (
         <main className="min-h-dvh from-slate-100 via-slate-100 to-slate-200 pt-16">
             <div className="mx-auto max-w-3xl px-4 pb-12 pt-10 sm:px-6">
-                <Link
-                    href={backHref}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-sky-400 hover:text-sky-300 transition group mb-4"
-                >
-                    <svg className="w-4 h-4 text-sky-400 group-hover:text-sky-300 transition" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                    Back to plans
-                </Link>
+                <div className="flex items-center justify-between mb-4">
+                    <Link
+                        href={backHref}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-sky-400 hover:text-sky-300 transition group"
+                    >
+                        <svg className="w-4 h-4 text-sky-400 group-hover:text-sky-300 transition" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        Back to plans
+                    </Link>
+                    <button
+                        onClick={handleSave}
+                        disabled={saving}
+                        title={saved ? "Remove from saved" : "Save plan"}
+                        className={[
+                            "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-200 border",
+                            saved
+                                ? "bg-sky-500 border-sky-500 text-white hover:bg-sky-600 hover:border-sky-600"
+                                : "bg-transparent border-sky-400 text-sky-400 hover:bg-sky-400/10",
+                            saving ? "opacity-60 cursor-not-allowed" : "",
+                        ].join(" ")}
+                    >
+                        <svg className="w-4 h-4" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                        {saved ? "Saved" : "Save plan"}
+                    </button>
+                </div>
 
                 {/* Meal Prep Image and Details */}
                 <header
