@@ -47,7 +47,7 @@ export default function SignupPage() {
             href="/"
             className="text-sm font-extrabold tracking-widest uppercase text-white"
           >
-            DANILKRAVAFIT
+            DK
           </Link>
           <h1 className="mt-6 text-2xl font-bold tracking-tight text-white">
             Create an account
@@ -82,7 +82,7 @@ export default function SignupPage() {
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="Danil Kravchenko"
+              placeholder="Full Name"
               className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none focus:ring-0 transition"
             />
           </div>

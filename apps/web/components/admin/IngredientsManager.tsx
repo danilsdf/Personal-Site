@@ -1,19 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-
-type Ingredient = {
-  _id: string;
-  name: string;
-  brand?: string | null;
-  category?: string | null;
-  nutritionBasis: string;
-  kcalPer1g: number;
-  proteinPer1g: number;
-  carbsPer1g: number;
-  fatPer1g: number;
-  isActive: boolean;
-};
+import { useEffect, useState, useCallback, useRef } from "react";
+import type { IngredientRecord as Ingredient, NutritionBasis, UnitConversion } from "@/app/data/models/ingredient";
 
 type FormState = Omit<Ingredient, "_id">;
 
@@ -27,6 +15,7 @@ const defaultForm = (): FormState => ({
   carbsPer1g: 0,
   fatPer1g: 0,
   isActive: true,
+  unitConversions: [{ unit: "g", grams: 1 }],
 });
 
 function Field({
@@ -59,6 +48,85 @@ function Field({
   );
 }
 
+function UnitConversionRow({
+  uc,
+  ucKey,
+  onChange,
+  onRemove,
+}: Readonly<{
+  uc: UnitConversion;
+  ucKey: number;
+  onChange: (updated: UnitConversion) => void;
+  onRemove: () => void;
+}>) {
+  return (
+    <div key={ucKey} className="flex items-center gap-2">
+      <input
+        type="text"
+        value={uc.unit}
+        onChange={(e) => onChange({ ...uc, unit: e.target.value })}
+        placeholder="unit (e.g. tbsp)"
+        className="flex-1 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-white/30 focus:outline-none transition"
+      />
+      <input
+        type="number"
+        step="0.01"
+        value={uc.grams}
+        onChange={(e) => onChange({ ...uc, grams: Number.parseFloat(e.target.value) || 0 })}
+        placeholder="grams"
+        className="w-24 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-white/30 focus:outline-none transition"
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        className="px-2.5 py-2 text-xs border border-red-500/25 text-red-400/70 rounded-lg hover:border-red-500/50 hover:text-red-400 transition"
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
+function UnitConversionsList({
+  conversions,
+  ucKeys,
+  onAdd,
+  onChange,
+  onRemove,
+}: Readonly<{
+  conversions: UnitConversion[];
+  ucKeys: number[];
+  onAdd: () => void;
+  onChange: (idx: number, updated: UnitConversion) => void;
+  onRemove: (idx: number) => void;
+}>) {
+  return (
+    <div>
+      <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">
+        Unit Conversions
+      </p>
+      <div className="space-y-2">
+        {conversions.map((uc, idx) => (
+          <UnitConversionRow
+            key={ucKeys[idx]}
+            uc={uc}
+            ucKey={ucKeys[idx]}
+            onChange={(updated) => onChange(idx, updated)}
+            onRemove={() => onRemove(idx)}
+          />
+        ))}
+        <button
+          type="button"
+          onClick={onAdd}
+          className="mt-1 text-xs text-white/40 hover:text-white border border-white/10 hover:border-white/25 px-3 py-1.5 rounded-lg transition"
+        >
+          + Add conversion
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function IngredientsManager() {
   const [items, setItems] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,6 +138,10 @@ export default function IngredientsManager() {
   const [formError, setFormError] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [togglingId, setTogglingId] = useState<string | null>(null);
+  const ucKeyCounter = useRef(0);
+  const [ucKeys, setUcKeys] = useState<number[]>([]);
+
+  function nextUcKey() { return ++ucKeyCounter.current; }
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -89,12 +161,15 @@ export default function IngredientsManager() {
 
   function openCreate() {
     setForm(defaultForm());
+    setUcKeys([]);
     setEditItem(null);
     setFormError("");
     setModal("create");
   }
 
   function openEdit(item: Ingredient) {
+    const keys = (item.unitConversions ?? []).map(() => nextUcKey());
+    setUcKeys(keys);
     setForm({
       name: item.name,
       brand: item.brand ?? "",
@@ -105,6 +180,7 @@ export default function IngredientsManager() {
       carbsPer1g: item.carbsPer1g,
       fatPer1g: item.fatPer1g,
       isActive: item.isActive,
+      unitConversions: item.unitConversions ?? [],
     });
     setEditItem(item);
     setFormError("");
@@ -377,7 +453,7 @@ export default function IngredientsManager() {
                 <select
                   id="ingredient-basis"
                   value={form.nutritionBasis}
-                  onChange={(e) => setField("nutritionBasis", e.target.value)}
+                  onChange={(e) => setField("nutritionBasis", e.target.value as NutritionBasis)}
                   className="w-full rounded-lg bg-white/5 border border-white/10 px-4 py-2.5 text-sm text-white focus:border-white/30 focus:outline-none transition"
                 >
                   <option value="raw">Raw</option>
@@ -415,6 +491,25 @@ export default function IngredientsManager() {
                   onChange={(v) => setField("fatPer1g", Number.parseFloat(v) || 0)}
                 />
               </div>
+
+              {/* Unit Conversions */}
+              <UnitConversionsList
+                conversions={form.unitConversions ?? []}
+                ucKeys={ucKeys}
+                onAdd={() => {
+                  setField("unitConversions", [...(form.unitConversions ?? []), { unit: "", grams: 0 }]);
+                  setUcKeys((ks) => [...ks, nextUcKey()]);
+                }}
+                onChange={(idx, updated) => {
+                  const next = [...(form.unitConversions ?? [])];
+                  next[idx] = updated;
+                  setField("unitConversions", next);
+                }}
+                onRemove={(idx) => {
+                  setField("unitConversions", (form.unitConversions ?? []).filter((_, i) => i !== idx));
+                  setUcKeys((ks) => ks.filter((_, i) => i !== idx));
+                }}
+              />
 
               <div className="flex items-center gap-3">
                 <button

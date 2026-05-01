@@ -1,7 +1,9 @@
   "use client"
 
   import { useState, useRef } from "react";
+  import { useSearchParams } from "next/navigation";
   import { Listbox } from "@headlessui/react";
+  import { useCurrentUser } from "@/lib/useCurrentUser";
 
   function renderMarkdownText(text: string): React.ReactNode[] {
     return text.split(/\n/).flatMap((line, lineIdx, lines) => {
@@ -20,15 +22,28 @@
   }
 
   export default function MacrosPage() {
+  const searchParams = useSearchParams();
+  const { user } = useCurrentUser();
+
+  function qNum(key: string, fallback: number, min: number, max: number): number {
+    const raw = searchParams.get(key);
+    if (!raw) return fallback;
+    const n = Number(raw);
+    return Number.isFinite(n) && n >= min && n <= max ? n : fallback;
+  }
+
   // React state for unit switch and form fields
   const [units, setUnits] = useState<'imperial' | 'metric'>('metric');
-  const [age, setAge] = useState(25);
+  const [age, setAge] = useState(() => qNum('age', 25, 10, 120));
   const [heightFt, setHeightFt] = useState(5);
   const [heightIn, setHeightIn] = useState(8);
-  const [heightCm, setHeightCm] = useState(180);
+  const [heightCm, setHeightCm] = useState(() => qNum('height', 180, 90, 250));
   const [weightLbs, setWeightLbs] = useState(170);
-  const [weightKg, setWeightKg] = useState(75);
-  const [sex, setSex] = useState<'male' | 'female'>('male');
+  const [weightKg, setWeightKg] = useState(() => qNum('weight', 75, 20, 320));
+  const [sex, setSex] = useState<'male' | 'female'>(() => {
+    const g = searchParams.get('gender');
+    return g === 'female' ? 'female' : 'male';
+  });
   const activityOptions = [
     {
       value: 'basal',
@@ -133,7 +148,10 @@
   const [lbm, setLBM] = useState<number | null>(null);
 
   const [activity, setActivity] = useState(activityOptions[2]);
-  const [goal, setGoal] = useState('maintain');
+  const [goal, setGoal] = useState(() => {
+    const g = searchParams.get('goal');
+    return g === 'lose' || g === 'gain' ? g : 'maintain';
+  });
   const [lastCalculatedGoal, setLastCalculatedGoal] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   
@@ -171,6 +189,26 @@
   const [aiAdvice, setAiAdvice] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState('');
+
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+
+  const handleSaveToProfile = async () => {
+    if (!result) return;
+    setSaveStatus('saving');
+    try {
+      const weight = units === 'imperial' ? Math.round(weightLbs * 0.453592) : weightKg;
+      const height = units === 'imperial' ? Math.round((heightFt * 12 + heightIn) * 2.54) : heightCm;
+      const res = await fetch('/api/auth/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ age, weight, height, gender: sex, goal, dailyCalories: result }),
+      });
+      if (!res.ok) throw new Error('Failed to save');
+      setSaveStatus('saved');
+    } catch {
+      setSaveStatus('error');
+    }
+  };
 
   const fetchAiAdvice = async (calories: number) => {
     setAiAdvice('');
@@ -263,6 +301,7 @@
     let calories = bmr * activityFactor;
 
     setLastCalculatedGoal(goal);
+    setSaveStatus('idle');
     if (goal === 'lose') {
       setResult(Math.round(calories * 0.88));
       setLossResults({
@@ -490,6 +529,23 @@
             </h4>
             <p className="mt-2 text-2xl font-bold">{result} kcal</p>
             <p className="mt-1 text-sm text-neutral-700 dark:text-neutral-200">This is the estimated number of calories you need per day based on your answers.</p>
+            {user && (
+              <div className="mt-4">
+                {saveStatus === 'saved' ? (
+                  <p className="text-xs text-green-500">Saved to your profile!</p>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleSaveToProfile}
+                    disabled={saveStatus === 'saving'}
+                    className="rounded-full border border-[#d2a852] dark:border-[#f0c46a] px-5 py-1.5 text-xs font-semibold text-[#d2a852] dark:text-[#f0c46a] transition hover:bg-[#d2a852] hover:text-black dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] disabled:opacity-50"
+                  >
+                    {saveStatus === 'saving' ? 'Saving…' : 'Save to Profile'}
+                  </button>
+                )}
+                {saveStatus === 'error' && <p className="text-xs text-red-500 mt-1">Failed to save. Please try again.</p>}
+              </div>
+            )}
             {lastCalculatedGoal === 'lose' && lossResults && (
               <div className="mt-6 space-y-2 text-left max-w-md mx-auto">
                 <div>

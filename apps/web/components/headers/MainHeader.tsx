@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 
-import { use, useState } from "react";
+import { useState } from "react";
+import UserAvatar from "@/components/UserAvatar";
 
 export default function MainHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,9 +22,11 @@ export default function MainHeader() {
           <Link href="/tools" className="hover:text-blue-600 dark:hover:text-blue-400 text-black dark:text-white">Tools</Link>
           <Link href="/about-me" className="hover:text-blue-600 dark:hover:text-blue-400 text-black dark:text-white">About me</Link>
           {/* <Link href="/book-appointment" className="bg-[#e5ae51] hover:bg-[#c4943f] text-black font-semibold px-3 py-1 rounded transition-colors">Book an appointment</Link> */}
+          <UserAvatar />
         </nav>
         {/* Mobile nav: only Book and menu icon */}
         <div className="flex md:hidden items-center gap-2">
+          <UserAvatar />
           {/* <Link href="/book-appointment" className="bg-[#e5ae51] hover:bg-[#c4943f] text-black font-semibold px-3 py-1 rounded transition-colors">Book an appointment</Link> */}
           <button
             aria-label="Open menu"

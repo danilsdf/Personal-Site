@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import UserAvatar from "@/components/UserAvatar";
 
-export default function HomeHeader({showTraining = true}: {showTraining?: boolean}) {
+export default function HomeHeader({showTraining = true}: Readonly<{showTraining?: boolean}>) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -31,9 +32,9 @@ export default function HomeHeader({showTraining = true}: {showTraining?: boolea
         {/* LOGO */}
         <Link
           href="/"
-          className="text-sm font-extrabold tracking-widest uppercase"
+          className="text-md font-extrabold tracking-widest uppercase w-[230px]"
         >
-          DANILKRAVAFIT
+          DK
         </Link>
 
         {/* DESKTOP NAV */}
@@ -62,7 +63,7 @@ export default function HomeHeader({showTraining = true}: {showTraining?: boolea
         </nav>
 
         {/* CTA */}
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4">
           {showTraining ? (
             <Link
               href="/training"
@@ -70,7 +71,8 @@ export default function HomeHeader({showTraining = true}: {showTraining?: boolea
             >
               Training Program
             </Link>
-          ) : <div className="px-5 py-2 w-[185px]" />} {/* Placeholder to keep spacing consistent when the button is hidden */}
+          ) : <div className="px-5 py-2 w-[185px]" />}
+          <UserAvatar />
         </div>
 
         {/* MOBILE BUTTON */}

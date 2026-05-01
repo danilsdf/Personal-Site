@@ -53,7 +53,7 @@ export default function AdminSidebar({ email }: Readonly<{ email: string }>) {
           href="/"
           className="text-xs font-extrabold uppercase tracking-widest text-white/90 hover:text-white transition"
         >
-          DanilKravaFit
+          DK
         </Link>
         <p className="mt-1 text-[10px] font-semibold uppercase tracking-widest text-white/30">
           Admin Panel

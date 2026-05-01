@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { Ingredient, RecipeStatus } from "./ingredient";
+export type { RecipeStatus } from "./ingredient";
 
 /** Recipes */
 export type QuantityUnit =
@@ -59,6 +60,7 @@ export interface Recipe {
   _id: ObjectId;
 
   title: string;
+  slug: string;
   imageUrl?: string | null;
   description?: string | null;
   tags?: string[];
@@ -99,3 +101,12 @@ export type RecipeCreateInput = Omit<
   Recipe,
   "_id" | "createdAt" | "updatedAt"
 >;
+
+/** Serialized ingredient line as returned by API (ingredientId as string) */
+export type RecipeIngredientLineRecord = Omit<RecipeIngredientLine, "ingredientId"> & { ingredientId: string };
+
+/** Serialized Recipe as returned by the API (client-safe) */
+export type RecipeRecord = Omit<Recipe, "_id" | "createdAt" | "updatedAt" | "createdBy" | "ingredients"> & {
+  _id: string;
+  ingredients: RecipeIngredientLineRecord[];
+};

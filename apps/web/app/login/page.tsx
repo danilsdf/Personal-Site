@@ -46,7 +46,7 @@ export default function LoginPage() {
             href="/"
             className="text-sm font-extrabold tracking-widest uppercase text-white"
           >
-            DANILKRAVAFIT
+            DK
           </Link>
           <h1 className="mt-6 text-2xl font-bold tracking-tight text-white">
             Welcome back

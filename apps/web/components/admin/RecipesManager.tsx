@@ -1,20 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-
-type RecipeStatus = "draft" | "published" | "archived";
-
-type Recipe = {
-  _id: string;
-  title: string;
-  slug: string;
-  description?: string | null;
-  imageUrl?: string | null;
-  tags?: string[];
-  servings: number;
-  servingUnit?: string | null;
-  status: RecipeStatus;
-};
+import { useEffect, useState, useCallback, useRef } from "react";
+import type { RecipeRecord as Recipe, RecipeIngredientLineRecord, RecipeStatus, InstructionBlock } from "@/app/data/models/recipe";
+import type { IngredientRecord } from "@/app/data/models/ingredient";
 
 type FormState = {
   title: string;
@@ -25,6 +13,8 @@ type FormState = {
   servings: number;
   servingUnit: string;
   status: RecipeStatus;
+  ingredients: RecipeIngredientLineRecord[];
+  instructions: InstructionBlock[];
 };
 
 const defaultForm = (): FormState => ({
@@ -36,9 +26,11 @@ const defaultForm = (): FormState => ({
   servings: 1,
   servingUnit: "",
   status: "draft",
+  ingredients: [],
+  instructions: [],
 });
 
-const STATUS_STYLES: Record<RecipeStatus, string> = {
+const STATUS_STYLES: Record<string, string> = {
   published: "bg-green-500/10 text-green-400 border-green-500/20",
   draft: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
   archived: "bg-white/5 text-white/30 border-white/10",
@@ -84,6 +76,140 @@ function Field({
   );
 }
 
+function IngredientLineRow({
+  line,
+  allIngredients,
+  onChange,
+  onRemove,
+}: Readonly<{
+  line: RecipeIngredientLineRecord;
+  allIngredients: IngredientRecord[];
+  onChange: (updated: RecipeIngredientLineRecord) => void;
+  onRemove: () => void;
+}>) {
+  return (
+    <div className="flex items-center gap-2">
+      <select
+        value={line.ingredientId}
+        onChange={(e) => onChange({ ...line, ingredientId: e.target.value })}
+        className="flex-1 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none transition"
+      >
+        <option value="">Select ingredient…</option>
+        {allIngredients.map((ing) => (
+          <option key={ing._id} value={ing._id}>{ing.name}{ing.brand ? ` (${ing.brand})` : ""}</option>
+        ))}
+      </select>
+      <input
+        type="number"
+        step="0.1"
+        value={line.quantity ?? ""}
+        onChange={(e) => onChange({ ...line, quantity: e.target.value === "" ? null : Number.parseFloat(e.target.value) })}
+        placeholder="qty"
+        className="w-20 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-white/30 focus:outline-none transition"
+      />
+      <input
+        type="text"
+        value={line.unit}
+        onChange={(e) => onChange({ ...line, unit: e.target.value })}
+        placeholder="unit"
+        className="w-20 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-white/30 focus:outline-none transition"
+      />
+      <input
+        type="text"
+        value={line.note ?? ""}
+        onChange={(e) => onChange({ ...line, note: e.target.value || null })}
+        placeholder="note"
+        className="w-28 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-white/30 focus:outline-none transition"
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        className="px-2.5 py-2 text-xs border border-red-500/25 text-red-400/70 rounded-lg hover:border-red-500/50 hover:text-red-400 transition"
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
+function InstructionBlockEditor({
+  block,
+  onChange,
+  onRemove,
+}: Readonly<{
+  block: InstructionBlock;
+  onChange: (updated: InstructionBlock) => void;
+  onRemove: () => void;
+}>) {
+  const stepKeyCounter = useRef(block.steps.length);
+  const [stepKeys, setStepKeys] = useState<number[]>(() => block.steps.map((_, i) => i));
+
+  function updateStep(stepIdx: number, value: string) {
+    const steps = [...block.steps];
+    steps[stepIdx] = value;
+    onChange({ ...block, steps });
+  }
+
+  function addStep() {
+    onChange({ ...block, steps: [...block.steps, ""] });
+    setStepKeys((ks) => [...ks, ++stepKeyCounter.current]);
+  }
+
+  function removeStep(stepIdx: number) {
+    onChange({ ...block, steps: block.steps.filter((_, i) => i !== stepIdx) });
+    setStepKeys((ks) => ks.filter((_, i) => i !== stepIdx));
+  }
+
+  return (
+    <div className="rounded-xl border border-white/10 p-4 space-y-3">
+      <div className="flex items-center gap-2">
+        <input
+          type="text"
+          value={block.section}
+          onChange={(e) => onChange({ ...block, section: e.target.value })}
+          placeholder="Section name (e.g. Prep, Cook)"
+          className="flex-1 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm font-semibold text-white placeholder:text-white/20 focus:border-white/30 focus:outline-none transition"
+        />
+        <button
+          type="button"
+          onClick={onRemove}
+          className="px-2.5 py-2 text-xs border border-red-500/25 text-red-400/70 rounded-lg hover:border-red-500/50 hover:text-red-400 transition"
+        >
+          ✕
+        </button>
+      </div>
+      <div className="space-y-2 pl-2">
+        {block.steps.map((step, stepIdx) => (
+          <div key={stepKeys[stepIdx]} className="flex items-start gap-2">
+            <span className="text-xs text-white/30 mt-2.5 w-4 shrink-0">{stepIdx + 1}.</span>
+            <textarea
+              value={step}
+              onChange={(e) => updateStep(stepIdx, e.target.value)}
+              placeholder="Step description…"
+              rows={2}
+              className="flex-1 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-white/30 focus:outline-none transition resize-none"
+            />
+            <button
+              type="button"
+              onClick={() => removeStep(stepIdx)}
+              className="mt-1 px-2 py-1.5 text-xs border border-white/10 text-white/30 rounded-lg hover:border-red-500/40 hover:text-red-400 transition"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addStep}
+          className="text-xs text-white/35 hover:text-white border border-white/10 hover:border-white/25 px-3 py-1 rounded-lg transition"
+        >
+          + Add step
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function RecipesManager() {
   const [items, setItems] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
@@ -95,6 +221,14 @@ export default function RecipesManager() {
   const [formError, setFormError] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [togglingId, setTogglingId] = useState<string | null>(null);
+  const [allIngredients, setAllIngredients] = useState<IngredientRecord[]>([]);
+  const ingKeyCounter = useRef(0);
+  const [ingKeys, setIngKeys] = useState<number[]>([]);
+  const blockKeyCounter = useRef(0);
+  const [blockKeys, setBlockKeys] = useState<number[]>([]);
+
+  function nextIngKey() { return ++ingKeyCounter.current; }
+  function nextBlockKey() { return ++blockKeyCounter.current; }
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -108,18 +242,31 @@ export default function RecipesManager() {
 
   useEffect(() => { load(); }, [load]);
 
+  useEffect(() => {
+    fetch("/api/admin/ingredients")
+      .then((r) => r.json())
+      .then(setAllIngredients)
+      .catch(() => {});
+  }, []);
+
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
   function openCreate() {
     setForm(defaultForm());
+    setIngKeys([]);
+    setBlockKeys([]);
     setEditItem(null);
     setFormError("");
     setModal("create");
   }
 
   function openEdit(item: Recipe) {
+    const iKeys = (item.ingredients ?? []).map(() => nextIngKey());
+    const bKeys = (item.instructions ?? []).map(() => nextBlockKey());
+    setIngKeys(iKeys);
+    setBlockKeys(bKeys);
     setForm({
       title: item.title,
       slug: item.slug,
@@ -129,6 +276,8 @@ export default function RecipesManager() {
       servings: item.servings,
       servingUnit: item.servingUnit ?? "",
       status: item.status,
+      ingredients: item.ingredients ?? [],
+      instructions: item.instructions ?? [],
     });
     setEditItem(item);
     setFormError("");
@@ -195,6 +344,41 @@ export default function RecipesManager() {
     await fetch(`/api/admin/recipes/${id}`, { method: "DELETE" });
     setConfirmDelete(null);
     load();
+  }
+
+  function addIngredientLine() {
+    setField("ingredients", [
+      ...form.ingredients,
+      { ingredientId: "", quantity: null, unit: "g" },
+    ]);
+    setIngKeys((ks) => [...ks, nextIngKey()]);
+  }
+
+  function updateIngredientLine(idx: number, updated: RecipeIngredientLineRecord) {
+    const next = [...form.ingredients];
+    next[idx] = updated;
+    setField("ingredients", next);
+  }
+
+  function removeIngredientLine(idx: number) {
+    setField("ingredients", form.ingredients.filter((_, i) => i !== idx));
+    setIngKeys((ks) => ks.filter((_, i) => i !== idx));
+  }
+
+  function addInstructionBlock() {
+    setField("instructions", [...form.instructions, { section: "", steps: [""] }]);
+    setBlockKeys((ks) => [...ks, nextBlockKey()]);
+  }
+
+  function updateInstructionBlock(idx: number, updated: InstructionBlock) {
+    const next = [...form.instructions];
+    next[idx] = updated;
+    setField("instructions", next);
+  }
+
+  function removeInstructionBlock(idx: number) {
+    setField("instructions", form.instructions.filter((_, i) => i !== idx));
+    setBlockKeys((ks) => ks.filter((_, i) => i !== idx));
   }
 
   const filtered = items.filter(
@@ -380,7 +564,7 @@ export default function RecipesManager() {
       {/* Modal */}
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-neutral-900 border border-white/10 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+          <div className="bg-neutral-900 border border-white/10 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl">
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 sticky top-0 bg-neutral-900 z-10">
               <h2 className="font-bold text-base">
                 {modal === "create" ? "New Recipe" : `Edit: ${editItem?.title}`}
@@ -470,6 +654,51 @@ export default function RecipesManager() {
                   <option value="published">Published</option>
                   <option value="archived">Archived</option>
                 </select>
+              </div>
+
+              {/* Ingredients */}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Ingredients</p>
+                <div className="space-y-2">
+                  {form.ingredients.map((line, idx) => (
+                    <IngredientLineRow
+                      key={ingKeys[idx]}
+                      line={line}
+                      allIngredients={allIngredients}
+                      onChange={(updated) => updateIngredientLine(idx, updated)}
+                      onRemove={() => removeIngredientLine(idx)}
+                    />
+                  ))}
+                  <button
+                    type="button"
+                    onClick={addIngredientLine}
+                    className="text-xs text-white/40 hover:text-white border border-white/10 hover:border-white/25 px-3 py-1.5 rounded-lg transition"
+                  >
+                    + Add ingredient
+                  </button>
+                </div>
+              </div>
+
+              {/* Instructions */}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Instructions</p>
+                <div className="space-y-3">
+                  {form.instructions.map((block, idx) => (
+                    <InstructionBlockEditor
+                      key={blockKeys[idx]}
+                      block={block}
+                      onChange={(updated) => updateInstructionBlock(idx, updated)}
+                      onRemove={() => removeInstructionBlock(idx)}
+                    />
+                  ))}
+                  <button
+                    type="button"
+                    onClick={addInstructionBlock}
+                    className="text-xs text-white/40 hover:text-white border border-white/10 hover:border-white/25 px-3 py-1.5 rounded-lg transition"
+                  >
+                    + Add section
+                  </button>
+                </div>
               </div>
 
               {formError && (

@@ -14,8 +14,14 @@ export async function GET(
       {
         $lookup: {
           from: "Ingredients",
-          localField: "ingredients.ingredientId",
-          foreignField: "_id",
+          let: { ingIds: "$ingredients.ingredientId" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $in: [{ $toString: "$_id" }, "$$ingIds"] },
+              },
+            },
+          ],
           as: "ingredientDocs",
         },
       },
@@ -37,7 +43,7 @@ export async function GET(
                             as: "ingDoc",
                             cond: {
                               $eq: [
-                                "$$ingDoc._id",
+                                { $toString: "$$ingDoc._id" },
                                 "$$ingLine.ingredientId",
                               ],
                             },

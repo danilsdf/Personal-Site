@@ -11,7 +11,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
     const { id } = await params;
     const body = await req.json();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { _id, createdAt, ingredients, instructions, ...update } = body;
+    const { _id, createdAt, ...update } = body;
     const db = await getDb();
     await db
       .collection("Recipes")
