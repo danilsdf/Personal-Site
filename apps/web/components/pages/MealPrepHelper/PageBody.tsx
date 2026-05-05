@@ -64,6 +64,15 @@ export default function MealPrepHelperPageBody() {
     const nutrition = calculateNutrition();
     setNutritionSummary(nutrition);
     setStep('summary');
+
+    const ingredientList = ingredients.map((i) => `  • ${i.amount} ${i.unit} ${i.name}`).join('\n');
+    fetch('/api/notifications/telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: `🥗 <b>Meal Prep Helper used</b>\n👤 ${user?.email ?? 'Guest'}\n📅 ${days} days · 🎯 ${calorieGoal} kcal/day\n🥩 P ${macros.protein}% · 🧈 F ${macros.fat}% · 🍚 C ${macros.carbs}%\n🛒 Ingredients:\n${ingredientList}\n🔥 Total: ${Math.round(nutrition.totalKcal)} kcal | P ${Math.round(nutrition.totalProtein)}g | F ${Math.round(nutrition.totalFat)}g | C ${Math.round(nutrition.totalCarbs)}g`,
+      }),
+    }).catch(() => {});
   };
 
   // Calculate daily goals
