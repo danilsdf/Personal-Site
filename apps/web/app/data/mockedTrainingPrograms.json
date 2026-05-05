@@ -1,0 +1,136 @@
+[
+  {
+    "slug": "toronto-marathon-2026",
+    "title": "Toronto Marathon 2026",
+    "description": "8-week hybrid training block combining strength work with marathon-specific running. Targeting sub-3:20 at the May 3, 2026 race.",
+    "startDate": "2026-03-09",
+    "endDate": "2026-05-03",
+    "duration": "8 weeks",
+    "totalKm": "~440 km",
+    "goal": "3:20:00",
+    "targetRace": "May 3, 2026",
+    "tags": ["marathon", "running"],
+    "weeks": [
+      {
+        "id": 1,
+        "title": "Week 1",
+        "subtitle": "Base Rebuild",
+        "volume": "~63 km",
+        "days": [
+          { "day": "Mon", "iso": "2026-03-09", "dateLabel": "Mar 9",  "training": "Chest + 6 km easy",                             "run": "6"  },
+          { "day": "Tue", "iso": "2026-03-10", "dateLabel": "Mar 10", "training": "10 km run: 6 easy + 4 @ 4:35–4:40",             "run": "10" },
+          { "day": "Wed", "iso": "2026-03-11", "dateLabel": "Mar 11", "training": "Back + 6 km recovery",                          "run": "6"  },
+          { "day": "Thu", "iso": "2026-03-12", "dateLabel": "Mar 12", "training": "12 km aerobic",                                 "run": "12" },
+          { "day": "Fri", "iso": "2026-03-13", "dateLabel": "Mar 13", "training": "Shoulders + 6 km easy",                         "run": "6"  },
+          { "day": "Sat", "iso": "2026-03-14", "dateLabel": "Mar 14", "training": "Long Run: 18 km easy",                          "run": "18", "bold": true },
+          { "day": "Sun", "iso": "2026-03-15", "dateLabel": "Mar 15", "training": "Legs + 5 km recovery",                          "run": "5"  }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Week 2",
+        "subtitle": "Pre-Trip Stimulus",
+        "volume": "~40 km",
+        "days": [
+          { "day": "Mon", "iso": "2026-03-16", "dateLabel": "Mar 16", "training": "Chest + 8 km easy",                             "run": "8"  },
+          { "day": "Tue", "iso": "2026-03-17", "dateLabel": "Mar 17", "training": "12 km run (3 easy + 6 @ MP + 3 easy)",          "run": "12" },
+          { "day": "Wed", "iso": "2026-03-18", "dateLabel": "Mar 18", "training": "Back + 6 km recovery",                          "run": "6"  },
+          { "day": "Thu", "iso": "2026-03-19", "dateLabel": "Mar 19", "training": "14 km aerobic",                                 "run": "14" },
+          { "day": "Fri", "iso": "2026-03-20", "dateLabel": "Mar 20", "training": "Travel",                                        "run": "—"  }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Week 3",
+        "subtitle": "Costa Rica",
+        "volume": "~14 km running",
+        "days": [
+          { "day": "Sat", "iso": "2026-03-21", "dateLabel": "Mar 21", "training": "Costa Rica — travel",                           "run": "—"  },
+          { "day": "Sun", "iso": "2026-03-22", "dateLabel": "Mar 22", "training": "Costa Rica",                                    "run": "—"  },
+          { "day": "Mon", "iso": "2026-03-23", "dateLabel": "Mar 23", "training": "Travel",                                        "run": "—"  },
+          { "day": "Tue", "iso": "2026-03-24", "dateLabel": "Mar 24", "training": "6–8 km beach run",                              "run": "7"  },
+          { "day": "Wed", "iso": "2026-03-25", "dateLabel": "Mar 25", "training": "30 km hike (2500 m elevation)",                 "run": "—", "bold": true },
+          { "day": "Thu", "iso": "2026-03-26", "dateLabel": "Mar 26", "training": "Recovery swim / walk",                          "run": "—"  },
+          { "day": "Fri", "iso": "2026-03-27", "dateLabel": "Mar 27", "training": "30 km hike",                                    "run": "—", "bold": true },
+          { "day": "Sat", "iso": "2026-03-28", "dateLabel": "Mar 28", "training": "6 km beach run",                                "run": "6"  },
+          { "day": "Sun", "iso": "2026-03-29", "dateLabel": "Mar 29", "training": "Rest",                                          "run": "—"  },
+          { "day": "Mon", "iso": "2026-03-30", "dateLabel": "Mar 30", "training": "Travel + evening easy 6 km run",                "run": "6"  }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Week 4",
+        "subtitle": "Return to Running",
+        "volume": "~67 km",
+        "days": [
+          { "day": "Tue", "iso": "2026-03-31", "dateLabel": "Mar 31", "training": "12 km (7 easy + 5 @ MP)",                      "run": "12" },
+          { "day": "Wed", "iso": "2026-04-01", "dateLabel": "Apr 1",  "training": "Back + 6 km recovery",                         "run": "6"  },
+          { "day": "Thu", "iso": "2026-04-02", "dateLabel": "Apr 2",  "training": "14 km aerobic",                                "run": "14" },
+          { "day": "Fri", "iso": "2026-04-03", "dateLabel": "Apr 3",  "training": "6 km recovery",                                "run": "6"  },
+          { "day": "Sat", "iso": "2026-04-04", "dateLabel": "Apr 4",  "training": "Long Run: 22 km (last 5 @ MP)",                "run": "22", "bold": true },
+          { "day": "Sun", "iso": "2026-04-05", "dateLabel": "Apr 5",  "training": "Rest or 5 km jog",                             "run": "5"  }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Week 5",
+        "subtitle": "Peak Training Week",
+        "volume": "~87 km",
+        "days": [
+          { "day": "Mon", "iso": "2026-04-06", "dateLabel": "Apr 6",  "training": "Chest + 8 km easy",                            "run": "8"  },
+          { "day": "Tue", "iso": "2026-04-07", "dateLabel": "Apr 7",  "training": "14 km (3 easy + 6 @ threshold + 5 easy)",      "run": "14" },
+          { "day": "Wed", "iso": "2026-04-08", "dateLabel": "Apr 8",  "training": "Back + 8 km recovery",                         "run": "8"  },
+          { "day": "Thu", "iso": "2026-04-09", "dateLabel": "Apr 9",  "training": "16 km aerobic",                                "run": "16" },
+          { "day": "Fri", "iso": "2026-04-10", "dateLabel": "Apr 10", "training": "6 km recovery",                                "run": "6"  },
+          { "day": "Sat", "iso": "2026-04-11", "dateLabel": "Apr 11", "training": "Long Run: 30 km (10 easy + 15 @ MP + 5 easy)", "run": "30", "bold": true },
+          { "day": "Sun", "iso": "2026-04-12", "dateLabel": "Apr 12", "training": "Legs + 5 km recovery",                         "run": "5"  }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Week 6",
+        "subtitle": "10K Race Week",
+        "volume": "~60 km",
+        "days": [
+          { "day": "Mon", "iso": "2026-04-13", "dateLabel": "Apr 13", "training": "8 km easy",                                    "run": "8"  },
+          { "day": "Tue", "iso": "2026-04-14", "dateLabel": "Apr 14", "training": "10 km (4 km @ MP inside run)",                 "run": "10" },
+          { "day": "Wed", "iso": "2026-04-15", "dateLabel": "Apr 15", "training": "6 km recovery",                                "run": "6"  },
+          { "day": "Thu", "iso": "2026-04-16", "dateLabel": "Apr 16", "training": "10 km aerobic",                                "run": "10" },
+          { "day": "Fri", "iso": "2026-04-17", "dateLabel": "Apr 17", "training": "5 km shakeout",                                "run": "5"  },
+          { "day": "Sat", "iso": "2026-04-18", "dateLabel": "Apr 18", "training": "Toronto 10K Race — target 42–44 min",          "run": "10", "bold": true },
+          { "day": "Sun", "iso": "2026-04-19", "dateLabel": "Apr 19", "training": "Long Run: 24 km easy",                         "run": "24", "bold": true }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Week 7",
+        "subtitle": "Taper + Halifax",
+        "volume": "~52 km",
+        "days": [
+          { "day": "Mon", "iso": "2026-04-20", "dateLabel": "Apr 20", "training": "8 km easy (Halifax)",                          "run": "8"  },
+          { "day": "Tue", "iso": "2026-04-21", "dateLabel": "Apr 21", "training": "12 km (4 km @ MP)",                            "run": "12" },
+          { "day": "Wed", "iso": "2026-04-22", "dateLabel": "Apr 22", "training": "Rest",                                         "run": "—"  },
+          { "day": "Thu", "iso": "2026-04-23", "dateLabel": "Apr 23", "training": "10 km aerobic",                                "run": "10" },
+          { "day": "Fri", "iso": "2026-04-24", "dateLabel": "Apr 24", "training": "6 km recovery",                                "run": "6"  },
+          { "day": "Sat", "iso": "2026-04-25", "dateLabel": "Apr 25", "training": "Long Run: 16 km (last 6 @ MP)",                "run": "16", "bold": true },
+          { "day": "Sun", "iso": "2026-04-26", "dateLabel": "Apr 26", "training": "Rest",                                         "run": "—"  }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Race Week",
+        "subtitle": "Marathon",
+        "volume": "May 3, 2026",
+        "days": [
+          { "day": "Mon", "iso": "2026-04-27", "dateLabel": "Apr 27", "training": "8 km easy",                                    "run": "8"  },
+          { "day": "Tue", "iso": "2026-04-28", "dateLabel": "Apr 28", "training": "6 km (2 km @ MP)",                             "run": "6"  },
+          { "day": "Wed", "iso": "2026-04-29", "dateLabel": "Apr 29", "training": "10 km aerobic",                                "run": "10" },
+          { "day": "Thu", "iso": "2026-04-30", "dateLabel": "Apr 30", "training": "Rest",                                         "run": "—"  },
+          { "day": "Fri", "iso": "2026-05-01", "dateLabel": "May 1",  "training": "5 km easy",                                    "run": "5"  },
+          { "day": "Sat", "iso": "2026-05-02", "dateLabel": "May 2",  "training": "Rest",                                         "run": "—"  },
+          { "day": "Sun", "iso": "2026-05-03", "dateLabel": "May 3",  "training": "MARATHON — Goal 3:20 (4:30/km)",               "run": "42", "bold": true }
+        ]
+      }
+    ]
+  }
+]
