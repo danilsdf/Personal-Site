@@ -1,8 +1,10 @@
-import React from "react";
-import mealPlanRecipes from "@/mocked/mockedMealPlanRecipe.json";
-import allRecipes from "@/mocked/mockedRecipes.json";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { MealPrepPlan } from "@/app/data/models/meal-prep-plan";
+import { useCurrentUser } from "@/lib/useCurrentUser";
 
 function formatDate(iso: string) {
     const date = new Date(iso);
@@ -21,34 +23,75 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
     backHref,
     focusIngredients = false,
 }) => {
+    const router = useRouter();
+    const { user, loading: userLoading } = useCurrentUser();
+    const [saved, setSaved] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        if (userLoading || !user) return;
+        fetch(`/api/meal-prep-plans/${plan.id}/save`)
+            .then((r) => r.json())
+            .then((data) => setSaved(!!data?.saved))
+            .catch(() => {});
+    }, [user, userLoading, plan.id]);
+
+    async function handleSave() {
+        if (!user) {
+            router.push(`/login?redirect=/meal-prep-plan/${plan.id}`);
+            return;
+        }
+        setSaving(true);
+        try {
+            const method = saved ? "DELETE" : "POST";
+            const res = await fetch(`/api/meal-prep-plans/${plan.id}/save`, { method });
+            if (res.ok) setSaved(!saved);
+        } finally {
+            setSaving(false);
+        }
+    }
+
     const dateRange = `${formatDate(plan.startDate)} – ${formatDate(plan.endDate)}`;
 
-    // Find all recipe connections for this plan
-    const planRecipes = (mealPlanRecipes as any[])
-        .filter((x) => x.mealPrepId === plan.id)
-        .sort((a, b) => a.order - b.order);
+    const planRecipes = (plan.recipes ?? []).slice().sort((a, b) => a.order - b.order);
 
     // Group recipes by type
     const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snack"] as const;
 
-    const recipesByType: Record<string, any[]> = {};
+    const recipesByType: Record<string, typeof planRecipes> = {};
     mealTypes.forEach((type) => {
         recipesByType[type] = planRecipes.filter((x) => x.type === type);
     });
 
-    // Helper to get recipe details by _id
-    const getRecipe = (id: string) => (allRecipes as any[]).find((r) => r._id === id);
-
     return (
-        <main className="min-h-dvh from-slate-100 via-slate-100 to-slate-200">
+        <main className="min-h-dvh from-slate-100 via-slate-100 to-slate-200 pt-16">
             <div className="mx-auto max-w-3xl px-4 pb-12 pt-10 sm:px-6">
-                <Link
-                    href={backHref}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-sky-400 hover:text-sky-300 transition group mb-4"
-                >
-                    <svg className="w-4 h-4 text-sky-400 group-hover:text-sky-300 transition" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                    Back to plans
-                </Link>
+                <div className="flex items-center justify-between mb-4">
+                    <Link
+                        href={backHref}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-sky-400 hover:text-sky-300 transition group"
+                    >
+                        <svg className="w-4 h-4 text-sky-400 group-hover:text-sky-300 transition" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        Back to plans
+                    </Link>
+                    <button
+                        onClick={handleSave}
+                        disabled={saving}
+                        title={saved ? "Remove from saved" : "Save plan"}
+                        className={[
+                            "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-200 border",
+                            saved
+                                ? "bg-sky-500 border-sky-500 text-white hover:bg-sky-600 hover:border-sky-600"
+                                : "bg-transparent border-sky-400 text-sky-400 hover:bg-sky-400/10",
+                            saving ? "opacity-60 cursor-not-allowed" : "",
+                        ].join(" ")}
+                    >
+                        <svg className="w-4 h-4" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                        {saved ? "Saved" : "Save plan"}
+                    </button>
+                </div>
 
                 {/* Meal Prep Image and Details */}
                 <header
@@ -109,7 +152,7 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
                                 </div>
                                 <div className="space-y-3">
                                     {recipesByType[type].map((conn) => {
-                                        const recipe = getRecipe(conn.recipeId);
+                                        const recipe = conn.recipe;
                                         if (!recipe) return null;
                                         return (
                                             <Link
@@ -133,18 +176,18 @@ const MealPlanDetailBody: React.FC<MealPlanDetailBodyProps> = ({
                                                     </span>
                                                     
                                                     {/* Macro preview per serving */}
-                                                    {recipe.nutritionTotals.perServing && (
+                                                    {recipe.nutritionTotals?.perServing && (
                                                         <div className="flex flex-wrap items-center gap-2">
-                                                            {recipe.nutritionTotals.perServing.calories !== undefined && (
-                                                                <span className="text-xs text-sky-600 dark:text-sky-300 mt-1">{recipe.nutritionTotals.perServing.calories} kcal</span>
+                                                            {recipe.nutritionTotals.perServing.kcal != null && (
+                                                                <span className="text-xs text-sky-600 dark:text-sky-300 mt-1">{recipe.nutritionTotals.perServing.kcal} kcal</span>
                                                             )}
-                                                            {recipe.nutritionTotals.perServing.protein !== undefined && (
+                                                            {recipe.nutritionTotals.perServing.protein != null && (
                                                                 <span className="text-xs text-blue-600 dark:text-blue-200 mt-1">P {recipe.nutritionTotals.perServing.protein}g</span>
                                                             )}
-                                                            {recipe.nutritionTotals.perServing.fat !== undefined && (
+                                                            {recipe.nutritionTotals.perServing.fat != null && (
                                                                 <span className="text-xs text-purple-600 dark:text-purple-200 mt-1">F {recipe.nutritionTotals.perServing.fat}g</span>
                                                             )}
-                                                            {recipe.nutritionTotals.perServing.carbs !== undefined && (
+                                                            {recipe.nutritionTotals.perServing.carbs != null && (
                                                                 <span className="text-xs text-amber-600 dark:text-amber-200 mt-1">C {recipe.nutritionTotals.perServing.carbs}g</span>
                                                             )}
                                                         </div>

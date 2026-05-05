@@ -1,13 +1,13 @@
 export default function FitnessToolsPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 pb-20 pt-10 text-neutral-900 dark:text-neutral-100">
+    <div className="mx-auto max-w-5xl px-4 pb-20 pt-24 text-neutral-900 dark:text-neutral-100">
 
       {/* TITLE */}
-      <section className="text-center mb-12">
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl text-yellow-600 dark:text-yellow-400">
+      <section className="text-center mb-16">
+        <h1 className="text-3xl font-black tracking-tight md:text-5xl">
           Hybrid Athlete Tools
         </h1>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="mt-4 text-sm leading-relaxed text-white/60">
           A toolkit for hybrid athletes
         </p>
       </section>
@@ -32,7 +32,7 @@ export default function FitnessToolsPage() {
 
       {/* CTA BLOCK */}
       <section className="text-center">
-        <h2 className="text-lg font-semibold text-yellow-600 dark:text-yellow-400">
+        <h2 className="text-lg font-semibold">
           Start using tools
         </h2>
         <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300 max-w-md mx-auto">
@@ -40,9 +40,10 @@ export default function FitnessToolsPage() {
         </p>
         <a
           href="/tools/about"
-          className="mt-5 inline-block rounded-full bg-yellow-600 dark:bg-yellow-400 px-6 py-2 text-xs font-semibold text-white dark:text-black shadow-sm transition hover:bg-yellow-700 dark:hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-600 dark:focus:ring-yellow-400"
+          className="mt-5 inline-flex items-center gap-3 border border-white/20 px-6 py-4 text-xs font-black uppercase tracking-wide text-white transition hover:border-white/50 hover:bg-white/[0.06]"
         >
           About the Tools
+          <span className="text-lg leading-none">→</span>
         </a>
       </section>
 

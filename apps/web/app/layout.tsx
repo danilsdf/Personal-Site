@@ -31,7 +31,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-white text-black dark:bg-[#0f1418] dark:text-white transition-colors">
+      <body className="min-h-screen bg-white text-black dark:bg-neutral-950 dark:text-white transition-colors">
         <SpeedInsights/>
         <Analytics/>
         <ThemeProvider
@@ -39,7 +39,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
         >
-          <div className="min-h-screen bg-white text-black dark:bg-[#0f1418] dark:text-white transition-colors">
+          <div className="min-h-screen bg-white text-black dark:bg-neutral-950 dark:text-white transition-colors">
             <div className="mx-auto flex min-h-screen flex-col pb-16">
               {children}
             </div>

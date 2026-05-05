@@ -1,22 +1,27 @@
-// app/layout.tsx
 export default function MainFooter() {
   return (
-    <footer className="mt-12 border-t border-black/10 dark:border-white/10 p-4 text-[10px] text-black/40 dark:text-white/40 flex flex-col items-center gap-2">
-        <div className="flex gap-4 mb-1">
-            <a href="https://instagram.com/danilkravafit" target="_blank" rel="noopener" aria-label="Instagram">
-                <img src="/social/instagram.png" alt="Instagram" className="h-5 w-5 opacity-70 hover:opacity-100 transition" />
-            </a>
-            <a href="https://www.strava.com/athletes/66921238" target="_blank" rel="noopener" aria-label="Strava">
-                <img src="/social/strava.png" alt="Strava" className="h-5 w-5 opacity-70 hover:opacity-100 transition" />
-            </a>
-            <a href="https://tiktok.com/@danilkravafit" target="_blank" rel="noopener" aria-label="TikTok">
-                <img src="/social/tiktok.png" alt="TikTok" className="h-5 w-5 opacity-70 hover:opacity-100 transition" />
-            </a>
-            <a href="https://www.linkedin.com/in/kravchenkodanil/" target="_blank" rel="noopener" aria-label="LinkedIn">
-                <img src="/social/linkedin.png" alt="LinkedIn" className="h-5 w-5 opacity-70 hover:opacity-100 transition" />
-            </a>
+    <footer className="border-t border-white/10 bg-neutral-950 px-5 py-10 text-white md:px-10 lg:px-24">
+      <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
+        <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/40">
+          Hybrid Athlete Hub · Built for strength &amp; endurance.
+        </p>
+
+        <div className="flex gap-5">
+          <a href="https://instagram.com/danilkravafit" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <img src="/social/instagram.png" alt="Instagram" className="h-5 w-5 opacity-40 transition hover:opacity-100" />
+          </a>
+          <a href="https://www.strava.com/athletes/66921238" target="_blank" rel="noopener noreferrer" aria-label="Strava">
+            <img src="/social/strava.png" alt="Strava" className="h-5 w-5 opacity-40 transition hover:opacity-100" />
+          </a>
+          <a href="https://tiktok.com/@danilkravafit" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <img src="/social/tiktok.png" alt="TikTok" className="h-5 w-5 opacity-40 transition hover:opacity-100" />
+          </a>
+          <a href="https://www.linkedin.com/in/kravchenkodanil/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img src="/social/linkedin.png" alt="LinkedIn" className="h-5 w-5 opacity-40 transition hover:opacity-100" />
+          </a>
         </div>
-        <span>Hybrid Athlete Hub · Built for strength & endurance.</span>
+      </div>
     </footer>
   );
 }
+

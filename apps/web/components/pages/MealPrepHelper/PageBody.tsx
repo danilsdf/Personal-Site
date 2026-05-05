@@ -1,23 +1,45 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CaloriesScreen from "./screens/CaloriesScreen";
 import InventoryScreen from "./screens/InventoryScreen";
 import SummaryScreen from "./screens/SummaryScreen";
-import mockedIngredients from "@/mocked/mockedIngredients.json";
+import { useCurrentUser } from "@/lib/useCurrentUser";
 
 export default function MealPrepHelperPageBody() {
+  const { user } = useCurrentUser();
   const [macros, setMacros] = useState({ protein: 35, fat: 30, carbs: 35 });
   const [calorieGoal, setCalorieGoal] = useState(2300);
   const [days, setDays] = useState(5);
   const [step, setStep] = useState<'calories' | 'inventory' | 'summary'>('calories');
   const [ingredients, setIngredients] = useState<{ name: string; amount: string; unit: string }[]>([]);
   const [nutritionSummary, setNutritionSummary] = useState<any>(null);
+  const [ingredientDB, setIngredientDB] = useState<any[]>([]);
+  const [profileLoading, setProfileLoading] = useState(false);
+
+  const handleLoadFromProfile = async () => {
+    setProfileLoading(true);
+    try {
+      const res = await fetch('/api/auth/profile');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.dailyCalories) setCalorieGoal(data.dailyCalories);
+      if (data.macroSplit) setMacros(data.macroSplit);
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetch("/api/ingredients")
+      .then((res) => res.json())
+      .then((data) => setIngredientDB(Array.isArray(data) ? data : []));
+  }, []);
 
   // Calculate nutrition for all ingredients
   function calculateNutrition() {
     let totalKcal = 0, totalProtein = 0, totalCarbs = 0, totalFat = 0;
     for (const ing of ingredients) {
-      const db = mockedIngredients.find((i: any) => i.name === ing.name);
+      const db = ingredientDB.find((i: any) => i.name === ing.name);
       if (!db) continue;
       const conv = db.unitConversions.find((u: any) => u.unit === ing.unit);
       if (!conv) continue;
@@ -61,11 +83,23 @@ export default function MealPrepHelperPageBody() {
   }
 
   return (
-    <div className="sm:mx-auto sm:w-4xl px-4 pt-12 text-neutral-900 dark:text-neutral-100">
+    <div className="sm:mx-auto sm:w-4xl px-4 pt-24 text-neutral-900 dark:text-neutral-100">
       {step === 'calories' && (<section className="mb-10 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-yellow-600 dark:text-yellow-400">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Meal Prep Helper
         </h1>
+        {user && (
+          <div className="mt-4 flex justify-center">
+            <button
+              type="button"
+              onClick={handleLoadFromProfile}
+              disabled={profileLoading}
+              className="flex items-center gap-1.5 rounded-full border border-[#d2a852] dark:border-[#f0c46a] px-4 py-1.5 text-xs font-semibold text-[#d2a852] dark:text-[#f0c46a] transition hover:bg-[#d2a852] hover:text-black dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] disabled:opacity-50"
+            >
+              {profileLoading ? 'Loading…' : 'Use saved data'}
+            </button>
+          </div>
+        )}
       </section>)}
       {step === 'calories' && (
         <CaloriesScreen
@@ -82,6 +116,7 @@ export default function MealPrepHelperPageBody() {
         <InventoryScreen
           ingredients={ingredients}
           setIngredients={setIngredients}
+          ingredientDB={ingredientDB}
           onContinue={handleContinueInventory}
         />
       )}
@@ -94,6 +129,7 @@ export default function MealPrepHelperPageBody() {
           nutritionSummary={nutritionSummary}
           totalGoal={totalGoal}
           isWithinGoal={isWithinGoal}
+          ingredientDB={ingredientDB}
           onBack={() => setStep('inventory')}
           onBackCalories={() => setStep('calories')}
         />

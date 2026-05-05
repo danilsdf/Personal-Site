@@ -1,18 +1,58 @@
   "use client"
 
-  import { useState, useRef } from "react";
+  import { useState, useRef, Suspense } from "react";
+  import { useSearchParams } from "next/navigation";
   import { Listbox } from "@headlessui/react";
+  import { useCurrentUser } from "@/lib/useCurrentUser";
+  import MacroSplitSlider from "@/components/MealPrepHelper/MacroSplitSlider";
+
+  function renderMarkdownText(text: string): React.ReactNode[] {
+    return text.split(/\n/).flatMap((line, lineIdx, lines) => {
+      const parts: React.ReactNode[] = [];
+      const segments = line.split(/(\*\*[^*]+\*\*)/);
+      segments.forEach((seg, i) => {
+        if (seg.startsWith('**') && seg.endsWith('**')) {
+          parts.push(<strong key={`${lineIdx}-b${i}`}>{seg.slice(2, -2)}</strong>);
+        } else {
+          parts.push(seg);
+        }
+      });
+      if (lineIdx < lines.length - 1) parts.push(<br key={`br-${lineIdx}`} />);
+      return parts;
+    });
+  }
 
   export default function MacrosPage() {
+    return (
+      <Suspense>
+        <MacrosPageContent />
+      </Suspense>
+    );
+  }
+
+  function MacrosPageContent() {
+  const searchParams = useSearchParams();
+  const { user } = useCurrentUser();
+
+  function qNum(key: string, fallback: number, min: number, max: number): number {
+    const raw = searchParams.get(key);
+    if (!raw) return fallback;
+    const n = Number(raw);
+    return Number.isFinite(n) && n >= min && n <= max ? n : fallback;
+  }
+
   // React state for unit switch and form fields
   const [units, setUnits] = useState<'imperial' | 'metric'>('metric');
-  const [age, setAge] = useState(25);
+  const [age, setAge] = useState(() => qNum('age', 25, 10, 120));
   const [heightFt, setHeightFt] = useState(5);
   const [heightIn, setHeightIn] = useState(8);
-  const [heightCm, setHeightCm] = useState(180);
+  const [heightCm, setHeightCm] = useState(() => qNum('height', 180, 90, 250));
   const [weightLbs, setWeightLbs] = useState(170);
-  const [weightKg, setWeightKg] = useState(75);
-  const [sex, setSex] = useState<'male' | 'female'>('male');
+  const [weightKg, setWeightKg] = useState(() => qNum('weight', 75, 20, 320));
+  const [sex, setSex] = useState<'male' | 'female'>(() => {
+    const g = searchParams.get('gender');
+    return g === 'female' ? 'female' : 'male';
+  });
   const activityOptions = [
     {
       value: 'basal',
@@ -117,7 +157,10 @@
   const [lbm, setLBM] = useState<number | null>(null);
 
   const [activity, setActivity] = useState(activityOptions[2]);
-  const [goal, setGoal] = useState('maintain');
+  const [goal, setGoal] = useState(() => {
+    const g = searchParams.get('goal');
+    return g === 'lose' || g === 'gain' ? g : 'maintain';
+  });
   const [lastCalculatedGoal, setLastCalculatedGoal] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   
@@ -151,6 +194,95 @@
   const [result, setResult] = useState<number | null>(null);
   const [lossResults, setLossResults] = useState<{ mild: number, normal: number, extreme: number } | null>(null);
   const [gainResults, setGainResults] = useState<{ mild: number, normal: number, extreme: number } | null>(null);
+
+  const [aiAdvice, setAiAdvice] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
+
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [profileLoading, setProfileLoading] = useState(false);
+
+  const handleLoadFromProfile = async () => {
+    setProfileLoading(true);
+    try {
+      const res = await fetch('/api/auth/profile');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.age) setAge(data.age);
+      if (data.height) { setHeightCm(data.height); setUnits('metric'); }
+      if (data.weight) { setWeightKg(data.weight); setUnits('metric'); }
+      if (data.gender === 'male' || data.gender === 'female') setSex(data.gender);
+      if (data.goal === 'lose' || data.goal === 'gain' || data.goal === 'maintain') setGoal(data.goal);
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
+  const handleSaveToProfile = async () => {
+    if (!result) return;
+    setSaveStatus('saving');
+    try {
+      const weight = units === 'imperial' ? Math.round(weightLbs * 0.453592) : weightKg;
+      const height = units === 'imperial' ? Math.round((heightFt * 12 + heightIn) * 2.54) : heightCm;
+      const res = await fetch('/api/auth/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ age, weight, height, gender: sex, goal, dailyCalories: result }),
+      });
+      if (!res.ok) throw new Error('Failed to save');
+      setSaveStatus('saved');
+    } catch {
+      setSaveStatus('error');
+    }
+  };
+
+  const fetchAiAdvice = async (calories: number) => {
+    setAiAdvice('');
+    setAiError('');
+    setAiLoading(true);
+
+    const heightLabel = units === 'imperial'
+      ? `${heightFt} ft ${heightIn} in`
+      : `${heightCm} cm`;
+    const weightLabel = units === 'imperial' ? `${weightLbs} lbs` : `${weightKg} kg`;
+
+    try {
+      const res = await fetch('/api/ai/nutrition-advice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          age,
+          sex,
+          weight: units === 'imperial' ? weightLbs : weightKg,
+          height: heightLabel,
+          units,
+          activity: activity.label,
+          goal,
+          calories,
+          formula: formula.label,
+        }),
+      });
+
+      if (!res.ok || !res.body) {
+        setAiError('Failed to get AI advice. Check your OpenAI API key.');
+        setAiLoading(false);
+        return;
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        if (value) setAiAdvice(prev => prev + decoder.decode(value));
+      }
+    } catch {
+      setAiError('Something went wrong. Please try again.');
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleCalculate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -195,6 +327,7 @@
     let calories = bmr * activityFactor;
 
     setLastCalculatedGoal(goal);
+    setSaveStatus('idle');
     if (goal === 'lose') {
       setResult(Math.round(calories * 0.88));
       setLossResults({
@@ -226,10 +359,10 @@
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-4 pt-12 text-black dark:text-white">
+    <div className="mx-auto max-w-4xl px-4 pb-4 pt-24 text-black dark:text-white">
       {/* TITLE */}
       <section className="mb-10 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-[#d2a852] dark:text-[#f0c46a]">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Calorie Calculator
         </h1>
         <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-100">
@@ -239,6 +372,18 @@
 
       {/* CALCULATOR FORM */}
       <section className="mx-auto mb-4 max-w-xl">
+        {user && (
+          <div className="mb-4 flex justify-end">
+            <button
+              type="button"
+              onClick={handleLoadFromProfile}
+              disabled={profileLoading}
+              className="flex items-center gap-1.5 rounded-full border border-[#d2a852] dark:border-[#f0c46a] px-4 py-1.5 text-xs font-semibold text-[#d2a852] dark:text-[#f0c46a] transition hover:bg-[#d2a852] hover:text-black dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] disabled:opacity-50"
+            >
+              {profileLoading ? 'Loading…' : 'Use saved data'}
+            </button>
+          </div>
+        )}
         <div>
           <label className="block text-sm font-medium mb-1">Formula</label>
           <Listbox value={formula} onChange={setFormula}>
@@ -422,6 +567,33 @@
             </h4>
             <p className="mt-2 text-2xl font-bold">{result} kcal</p>
             <p className="mt-1 text-sm text-neutral-700 dark:text-neutral-200">This is the estimated number of calories you need per day based on your answers.</p>
+            {/* Macro Split Slider */}
+            <div className="mt-8">
+              <h5 className="text-sm font-semibold mb-3">Macro Split</h5>
+              <MacroSplitSlider
+                key={result}
+                totalProteinG={result / 4}
+                totalFatG={result / 9}
+                totalCarbsG={result / 4}
+              />
+            </div>
+            {user && (
+              <div className="mt-4">
+                {saveStatus === 'saved' ? (
+                  <p className="text-xs text-green-500">Saved to your profile!</p>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleSaveToProfile}
+                    disabled={saveStatus === 'saving'}
+                    className="rounded-full border border-[#d2a852] dark:border-[#f0c46a] px-5 py-1.5 text-xs font-semibold text-[#d2a852] dark:text-[#f0c46a] transition hover:bg-[#d2a852] hover:text-black dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a] disabled:opacity-50"
+                  >
+                    {saveStatus === 'saving' ? 'Saving…' : 'Save to Profile'}
+                  </button>
+                )}
+                {saveStatus === 'error' && <p className="text-xs text-red-500 mt-1">Failed to save. Please try again.</p>}
+              </div>
+            )}
             {lastCalculatedGoal === 'lose' && lossResults && (
               <div className="mt-6 space-y-2 text-left max-w-md mx-auto">
                 <div>
@@ -493,6 +665,42 @@
                   GET the FREE Week of Program
                 </a>
               </div> */}
+            </div>
+            {/* AI Nutrition Advice */}
+            <div className="mt-10">
+              {!aiAdvice && !aiLoading && (
+                <button
+                  type="button"
+                  onClick={() => fetchAiAdvice(result)}
+                  className="rounded-full border border-[#d2a852] dark:border-[#f0c46a] px-6 py-2 text-xs font-semibold text-[#d2a852] dark:text-[#f0c46a] transition hover:bg-[#d2a852] hover:text-black dark:hover:bg-[#f0c46a] dark:hover:text-[#23232a]"
+                >
+                  Get AI Nutrition Advice
+                </button>
+              )}
+              {aiLoading && !aiAdvice && (
+                <p className="text-sm text-neutral-500 animate-pulse">Generating advice…</p>
+              )}
+              {aiError && (
+                <p className="text-xs text-red-500 mt-2">{aiError}</p>
+              )}
+              {aiAdvice && (
+                <div className="mt-4 text-left max-w-md mx-auto rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h5 className="text-sm font-semibold text-[#d2a852] dark:text-[#f0c46a]">AI Nutrition Advice</h5>
+                    <button
+                      type="button"
+                      onClick={() => fetchAiAdvice(result)}
+                      className="text-xs text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 underline"
+                    >
+                      Regenerate
+                    </button>
+                  </div>
+                  <p className="text-sm text-neutral-800 dark:text-neutral-100 leading-relaxed">
+                    {renderMarkdownText(aiAdvice)}
+                    {aiLoading && <span className="animate-pulse">▍</span>}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}

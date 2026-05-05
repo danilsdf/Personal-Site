@@ -41,3 +41,6 @@ export interface Ingredient {
   createdAt: Date;
   updatedAt: Date;
 }
+
+/** Serialized Ingredient as returned by the API (client-safe, `_id` as string) */
+export type IngredientRecord = Omit<Ingredient, "_id" | "createdAt" | "updatedAt"> & { _id: string };

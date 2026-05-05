@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     description: "Discover meal prep, hybrid athlete recipes, and practical nutrition for busy people by Danil Kravchenko.",
   },
 };
-import MainHeader from "@/components/headers/MainHeader";
 import MainFooter from "@/components/footer/MainFooter";
+import HomeHeader from "@/components/headers/HomeHeader";
 
 export default function MainLayout({
   children,
@@ -26,7 +26,7 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <MainHeader />
+      <HomeHeader />
       {children}
       <MainFooter />
     </>
