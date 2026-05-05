@@ -97,6 +97,7 @@ export default function HomeHeader({showTraining = true}: Readonly<{showTraining
             { href: "/about", label: "About" },
             { href: "/meal-prep-plans", label: "Meal prep" },
             { href: "/tools", label: "Tools" },
+            { href: "/training-programs", label: "Training programs" },
           ].map(({ href, label }) => {
             const active = pathname === href;
             return (
