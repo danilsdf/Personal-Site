@@ -6,7 +6,7 @@ const records = [
   { title: "5K", time: "18:41", pace: "3:50 /km", date: "Apr 2026" },
   { title: "10K", time: "39:09", pace: "3:50 /km", date: "Apr 2026" },
   { title: "Half Marathon", time: "1:33:07", pace: "4:25 /km", date: "Nov 2025" },
-  { title: "Marathon", time: "- - -", pace: "Coming soon", date: "May 3rd 2026" },
+  { title: "Marathon", time: "3:22:46", pace: "4:46 /km", date: "May 2026" },
 ];
 
 const pillars = [
@@ -54,8 +54,7 @@ export default function HomePage() {
                 </h1>
 
                 <p className="mb-7 max-w-md text-sm leading-relaxed text-white/75 md:text-base lg:text-lg">
-                  Balancing the demands of a 9–5 with elite training. Every day is
-                  a step forward.
+                  Balancing the demands of a 9–5 with hybrid training. Run faster, get stronger, and stay consistent — all while navigating the challenges of a busy schedule.
                 </p>
 
                 <div className="mb-8 grid grid-cols-2 border-y border-white/15 py-5">
@@ -129,6 +128,18 @@ export default function HomePage() {
                 </p>
               </article>
             ))}
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <a
+              href="https://www.strava.com/athletes/66921238"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 border border-white/20 px-6 py-4 text-xs font-black uppercase tracking-wide text-white transition hover:border-white/50 hover:bg-white/[0.06]"
+            >
+              See on Strava
+              <span className="text-lg leading-none">→</span>
+            </a>
           </div>
         </section>
 

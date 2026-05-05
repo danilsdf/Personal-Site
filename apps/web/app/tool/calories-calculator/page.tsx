@@ -1,6 +1,6 @@
   "use client"
 
-  import { useState, useRef } from "react";
+  import { useState, useRef, Suspense } from "react";
   import { useSearchParams } from "next/navigation";
   import { Listbox } from "@headlessui/react";
   import { useCurrentUser } from "@/lib/useCurrentUser";
@@ -23,6 +23,14 @@
   }
 
   export default function MacrosPage() {
+    return (
+      <Suspense>
+        <MacrosPageContent />
+      </Suspense>
+    );
+  }
+
+  function MacrosPageContent() {
   const searchParams = useSearchParams();
   const { user } = useCurrentUser();
 
