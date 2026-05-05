@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 import { verifyPassword, signToken } from "@/lib/auth";
+import { sendTelegramMessage } from "@/lib/telegram";
 
 export async function POST(req: NextRequest) {
   try {
@@ -57,6 +58,10 @@ export async function POST(req: NextRequest) {
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
+
+    sendTelegramMessage(
+      `🔐 <b>New login</b>\n👤 ${user.fullName} (${user.email})\n🕐 ${new Date().toUTCString()}`
+    ).catch((err) => console.error("[telegram] notification error:", err));
 
     return response;
   } catch (err) {

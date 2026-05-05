@@ -39,8 +39,7 @@ export default function UserAvatar() {
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/");
-    router.refresh();
+    window.location.href = "/";
   }
 
   return (

@@ -350,6 +350,21 @@
       setGainResults(null);
     }
 
+    const finalCalories = goal === 'lose'
+      ? Math.round(calories * 0.88)
+      : goal === 'gain'
+        ? Math.round(calories * 1.12)
+        : Math.round(calories);
+    const heightLabel = units === 'imperial' ? `${heightFt}ft ${heightIn}in` : `${heightCm} cm`;
+    const weightLabel = units === 'imperial' ? `${weightLbs} lbs` : `${weightKg} kg`;
+    fetch('/api/notifications/telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: `🔢 <b>Calories Calculator used</b>\n👤 ${user?.email ?? 'Guest'}\n⚧ ${sex}, ${age} yo\n📏 ${heightLabel}, ${weightLabel}\n🏃 ${activity.short}\n🎯 Goal: ${goal}\n📊 Formula: ${formula.label}\n🔥 Result: <b>${finalCalories} kcal/day</b>`,
+      }),
+    }).catch(() => {});
+
     setTimeout(() => {
       if (resultRef.current) {
         const y = resultRef.current.getBoundingClientRect().top + window.scrollY - 80;
