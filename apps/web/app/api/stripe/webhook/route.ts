@@ -55,8 +55,10 @@ async function handleSubscriptionUpsert(
   db: Awaited<ReturnType<typeof import("@/lib/mongodb").getDb>>,
   subscription: Stripe.Subscription
 ) {
-  const tier = (subscription.metadata?.tier ?? "Basic") as MembershipTier;
+  const tier = (subscription.metadata?.tier ?? "Runner") as MembershipTier;
   const interval = (subscription.metadata?.interval ?? "month") as BillingInterval;
+  const item = subscription.items.data[0];
+  const periodEnd = item ? new Date(item.current_period_end * 1000) : null;
 
   await db.collection("Users").updateOne(
     { stripeCustomerId: subscription.customer as string },
@@ -66,7 +68,7 @@ async function handleSubscriptionUpsert(
           tier,
           status: subscription.status,
           stripeSubscriptionId: subscription.id,
-          currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+          currentPeriodEnd: periodEnd,
           cancelAtPeriodEnd: subscription.cancel_at_period_end,
           interval,
         },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { MEMBERSHIP_TIERS, MembershipTier, BillingInterval } from "@/lib/membership-config";
@@ -180,11 +180,29 @@ function PricingCard({
   );
 }
 
-export default function MembershipPage() {
+function StatusBanners() {
   const searchParams = useSearchParams();
   const success = searchParams.get("success") === "1";
   const canceled = searchParams.get("canceled") === "1";
+  return (
+    <>
+      {success && (
+        <div className="px-5 py-4 bg-green-500/10 border-b border-green-500/20 text-center">
+          <p className="text-sm font-semibold text-green-400">
+            🎉 Welcome! Your membership is now active. Check your profile for details.
+          </p>
+        </div>
+      )}
+      {canceled && (
+        <div className="px-5 py-4 bg-white/5 border-b border-white/10 text-center">
+          <p className="text-sm text-white/50">Checkout was canceled. No charge was made.</p>
+        </div>
+      )}
+    </>
+  );
+}
 
+export default function MembershipPage() {
   const [interval, setInterval] = useState<BillingInterval>("month");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentTier, setCurrentTier] = useState<string | null>(null);
@@ -246,21 +264,9 @@ export default function MembershipPage() {
       </section>
 
       {/* SUCCESS / CANCELED BANNERS */}
-      {success && (
-        <div className="px-5 py-4 bg-green-500/10 border-b border-green-500/20 text-center">
-          <p className="text-sm font-semibold text-green-400">
-            🎉 Welcome! Your membership is now active. Check your profile for
-            details.
-          </p>
-        </div>
-      )}
-      {canceled && (
-        <div className="px-5 py-4 bg-white/5 border-b border-white/10 text-center">
-          <p className="text-sm text-white/50">
-            Checkout was canceled. No charge was made.
-          </p>
-        </div>
-      )}
+      <Suspense fallback={null}>
+        <StatusBanners />
+      </Suspense>
 
       {/* PRICING */}
       <section className="px-5 py-16 md:px-10 lg:px-20">
