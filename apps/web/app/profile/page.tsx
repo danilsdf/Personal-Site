@@ -6,6 +6,7 @@ import Link from "next/link";
 import HomeHeader from "@/components/headers/HomeHeader";
 import MainFooter from "@/components/footer/MainFooter";
 import MacroSplitSlider from "@/components/MealPrepHelper/MacroSplitSlider";
+import { TIER_DISPLAY_NAMES } from "@/lib/membership-config";
 
 type SavedPlanItem = {
   savedAt: string;
@@ -46,6 +47,14 @@ function formatDateShort(iso: string) {
   return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
+type MembershipInfo = {
+  tier: "Runner" | "HybridAthlete" | "EliteSupporter";
+  status: "active" | "trialing" | "canceled" | "past_due" | "unpaid";
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+  interval: "month" | "year";
+};
+
 type ProfileData = {
   fullName: string;
   email: string;
@@ -57,6 +66,7 @@ type ProfileData = {
   goal?: "maintain" | "lose" | "gain" | null;
   dailyCalories?: number | null;
   macroSplit?: { protein: number; fat: number; carbs: number } | null;
+  membership?: MembershipInfo | null;
 };
 
 function StatCard({
@@ -210,12 +220,101 @@ function SavedRecipesList({ loading, items }: Readonly<{ loading: boolean; items
   );
 }
 
+const TIER_BADGE_CLASS: Record<MembershipInfo["tier"], string> = {
+  EliteSupporter: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
+  HybridAthlete:  "bg-purple-500/15 text-purple-400 border-purple-500/30",
+  Runner:         "bg-sky-500/15 text-sky-400 border-sky-500/30",
+};
+
+function MembershipBadge({ tier }: Readonly<{ tier: MembershipInfo["tier"] }>) {
+  return (
+    <span className={`inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${TIER_BADGE_CLASS[tier]}`}>
+      {TIER_DISPLAY_NAMES[tier]}
+    </span>
+  );
+}
+
+function MembershipCard({ membership }: Readonly<{ membership: MembershipInfo | null }>) {
+  const [portalLoading, setPortalLoading] = useState(false);
+
+  async function openPortal() {
+    setPortalLoading(true);
+    try {
+      const res = await fetch("/api/stripe/portal", { method: "POST" });
+      const data = await res.json();
+      if (data.url) globalThis.location.href = data.url;
+    } catch {
+      // silently fail
+    } finally {
+      setPortalLoading(false);
+    }
+  }
+
+  const isActive = membership?.status === "active" || membership?.status === "trialing";
+
+  if (!isActive) {
+    return (
+      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-white/30 mb-2">Membership</p>
+          <p className="text-base font-bold mb-1">No active membership</p>
+          <p className="text-sm text-white/40">Support my journey and unlock exclusive content &amp; tools.</p>
+        </div>
+        <Link
+          href="/membership"
+          className="shrink-0 px-6 py-3 bg-white text-black text-sm font-black uppercase tracking-widest rounded-xl hover:bg-white/90 transition whitespace-nowrap"
+        >
+          View Plans
+        </Link>
+      </div>
+    );
+  }
+
+  // membership is guaranteed non-null here since isActive checked membership?.status
+  const m = membership ?? ({ tier: "Runner" } as MembershipInfo);
+  const periodEnd = new Date(m.currentPeriodEnd).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const tierColor = {
+    EliteSupporter: { border: "border-yellow-500/20", bg: "bg-yellow-500/5", label: "text-yellow-400/70", badge: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30" },
+    HybridAthlete:  { border: "border-purple-500/20", bg: "bg-purple-500/5", label: "text-purple-400/70", badge: "bg-purple-500/15 text-purple-400 border-purple-500/30" },
+    Runner:         { border: "border-sky-500/20",    bg: "bg-sky-500/5",    label: "text-sky-400/70",    badge: "bg-sky-500/15 text-sky-400 border-sky-500/30" },
+  } as const;
+  const colors = tierColor[m.tier] ?? tierColor.Runner;
+
+  const tierDisplayName = TIER_DISPLAY_NAMES[m.tier] ?? "Member";
+
+  return (
+    <div className={`mt-6 rounded-2xl border p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 ${colors.border} ${colors.bg}`}>
+      <div>
+        <p className={`text-xs font-bold uppercase tracking-widest mb-2 ${colors.label}`}>Membership</p>
+        <div className="flex items-center gap-2 mb-1">
+          <p className="text-base font-black">{tierDisplayName} Plan</p>
+          <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${colors.badge}`}>Active</span>
+        </div>
+        <p className="text-sm text-white/40">
+          Billed {m.interval === "year" ? "yearly" : "monthly"} · {m.cancelAtPeriodEnd ? `Cancels on ${periodEnd}` : `Renews ${periodEnd}`}
+        </p>
+      </div>
+      <button
+        type="button"
+        disabled={portalLoading}
+        onClick={openPortal}
+        className="shrink-0 px-6 py-3 border border-white/15 text-white text-sm font-bold rounded-xl hover:border-white/40 transition disabled:opacity-50 whitespace-nowrap"
+      >
+        {portalLoading ? "Loading…" : "Manage Subscription"}
+      </button>
+    </div>
+  );
+}
+
 export default function ProfilePage() {
   const router = useRouter();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
-
-  // form state
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [age, setAge] = useState("");
@@ -373,15 +472,20 @@ export default function ProfilePage() {
               <div>
                 <h1 className="text-2xl font-extrabold tracking-tight">{profile.fullName}</h1>
                 <p className="text-sm text-white/40">{profile.email}</p>
-                <span
-                  className={`inline-block mt-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
-                    profile.role === "Admin"
-                      ? "bg-green-500/10 text-green-400 border-green-500/20"
-                      : "bg-white/5 text-white/30 border-white/10"
-                  }`}
-                >
-                  {profile.role}
-                </span>
+                <div className="flex flex-wrap items-center gap-2 mt-1">
+                  <span
+                    className={`inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
+                      profile.role === "Admin"
+                        ? "bg-green-500/10 text-green-400 border-green-500/20"
+                        : "bg-white/5 text-white/30 border-white/10"
+                    }`}
+                  >
+                    {profile.role}
+                  </span>
+                  {profile.membership?.status === "active" || profile.membership?.status === "trialing" ? (
+                    <MembershipBadge tier={profile.membership.tier} />
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
@@ -726,6 +830,9 @@ export default function ProfilePage() {
               </div>
             </div>
           )}
+
+          {/* Membership section */}
+          <MembershipCard membership={profile.membership ?? null} />
           </>
           )}
 

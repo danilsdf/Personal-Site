@@ -44,6 +44,7 @@ export default function HomeHeader({showTraining = true}: Readonly<{showTraining
             { href: "/about", label: "About" },
             { href: "/meal-prep-plans", label: "Meal prep" },
             { href: "/tools", label: "Tools" },
+            // { href: "/membership", label: "Membership" },
           ].map(({ href, label }) => {
             const active = pathname === href;
             return (
@@ -97,6 +98,7 @@ export default function HomeHeader({showTraining = true}: Readonly<{showTraining
             { href: "/about", label: "About" },
             { href: "/meal-prep-plans", label: "Meal prep" },
             { href: "/tools", label: "Tools" },
+            // { href: "/membership", label: "Membership" },
             { href: "/training-programs", label: "Training programs" },
           ].map(({ href, label }) => {
             const active = pathname === href;

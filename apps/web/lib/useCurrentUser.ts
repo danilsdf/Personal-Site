@@ -2,10 +2,19 @@
 
 import { useEffect, useState } from "react";
 
+export type MembershipInfo = {
+  tier: "Basic" | "Pro";
+  status: "active" | "trialing" | "canceled" | "past_due" | "unpaid";
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+  interval: "month" | "year";
+};
+
 export type AuthUser = {
   email: string;
   role: "Admin" | "User";
   userId: string;
+  membership?: MembershipInfo | null;
 };
 
 export function useCurrentUser() {
