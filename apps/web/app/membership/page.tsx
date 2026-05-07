@@ -3,13 +3,23 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { MEMBERSHIP_TIERS, MembershipTier, BillingInterval } from "@/lib/stripe";
+import { MEMBERSHIP_TIERS, MembershipTier, BillingInterval } from "@/lib/membership-config";
 
-const BASIC = MEMBERSHIP_TIERS.Basic;
-const PRO = MEMBERSHIP_TIERS.Pro;
+const RUNNER = MEMBERSHIP_TIERS.Runner;
+const HYBRID = MEMBERSHIP_TIERS.HybridAthlete;
+const ELITE = MEMBERSHIP_TIERS.EliteSupporter;
 
 function formatPrice(cents: number) {
-  return `$${(cents / 100).toFixed(0)}`;
+  return `CA$${(cents / 100).toFixed(0)}`;
+}
+
+function FeatureCheck({ on }: Readonly<{ on: boolean }>) {
+  if (!on) return <span className="text-white/20">—</span>;
+  return (
+    <svg className="w-4 h-4 text-white/70 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
 }
 
 function PricingCard({
@@ -142,7 +152,7 @@ function PricingCard({
         <button
           type="button"
           disabled={loading}
-          onClick={() => onSubscribe(tier.name as MembershipTier, interval)}
+          onClick={() => onSubscribe(tier.key, interval)}
           className={[
             "w-full py-3.5 text-sm font-black uppercase tracking-widest rounded-xl transition disabled:opacity-50",
             isHighlighted
@@ -254,7 +264,7 @@ export default function MembershipPage() {
 
       {/* PRICING */}
       <section className="px-5 py-16 md:px-10 lg:px-20">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Interval toggle */}
           <div className="flex items-center justify-center mb-10">
             <div className="flex gap-1 rounded-xl border border-white/10 bg-white/5 p-1">
@@ -282,9 +292,9 @@ export default function MembershipPage() {
           </div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <PricingCard
-              tier={BASIC}
+              tier={RUNNER}
               interval={interval}
               isHighlighted={false}
               isLoggedIn={isLoggedIn}
@@ -293,9 +303,18 @@ export default function MembershipPage() {
               onSubscribe={handleSubscribe}
             />
             <PricingCard
-              tier={PRO}
+              tier={HYBRID}
               interval={interval}
               isHighlighted={true}
+              isLoggedIn={isLoggedIn}
+              currentTier={currentTier}
+              loading={loading}
+              onSubscribe={handleSubscribe}
+            />
+            <PricingCard
+              tier={ELITE}
+              interval={interval}
+              isHighlighted={false}
               isLoggedIn={isLoggedIn}
               currentTier={currentTier}
               loading={loading}
@@ -312,69 +331,47 @@ export default function MembershipPage() {
       </section>
 
       {/* BENEFITS COMPARISON */}
-      <section className="px-5 pb-20 md:px-10 lg:px-20">
-        <div className="max-w-4xl mx-auto">
+      <section className="px-5 pb-20 md:px-10 lg:px-20">        <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-black uppercase tracking-tight mb-8 text-center">
             What&apos;s Included
           </h2>
 
           <div className="rounded-2xl border border-white/10 overflow-hidden">
             {[
-              { label: "Member badge on profile", basic: true, pro: true },
-              { label: "Exclusive training programs", basic: true, pro: true },
-              { label: "Exclusive posts & updates", basic: true, pro: true },
-              { label: "Private Discord channel", basic: true, pro: true },
-              { label: "All meal prep plans & recipes", basic: false, pro: true },
-              { label: "AI workout generator", basic: false, pro: true },
-              { label: "AI meal prep helper", basic: false, pro: true },
-              { label: "Priority support & direct contact", basic: false, pro: true },
+              { label: "Member badge on profile",                      runner: true,  hybrid: true,  elite: true },
+              { label: "Access to private Discord",                    runner: true,  hybrid: true,  elite: true },
+              { label: "Community chats, race discussions & Q&A",      runner: true,  hybrid: true,  elite: true },
+              { label: "Exclusive posts & training updates",            runner: true,  hybrid: true,  elite: true },
+              { label: "Supporter role in Discord",                    runner: true,  hybrid: true,  elite: true },
+              { label: "All meal prep plans & recipes",                runner: false, hybrid: true,  elite: true },
+              { label: "AI workout generator & meal prep helper",      runner: false, hybrid: true,  elite: true },
+              { label: "Training structure breakdowns",                runner: false, hybrid: true,  elite: true },
+              { label: "Recovery & mobility routines",                 runner: false, hybrid: true,  elite: true },
+              { label: "Meal prep systems & nutrition tips",           runner: false, hybrid: true,  elite: true },
+              { label: "Highest supporter role in Discord",            runner: false, hybrid: false, elite: true },
+              { label: "Direct support for races & travel content",    runner: false, hybrid: false, elite: true },
+              { label: "Huge THANK YOU + exclusive future rewards",    runner: false, hybrid: false, elite: true },
             ].map((row, i) => (
               <div
                 key={row.label}
                 className={[
-                  "grid grid-cols-3 px-6 py-4 text-sm",
+                  "grid grid-cols-4 px-6 py-4 text-sm",
                   i % 2 === 0 ? "bg-white/[0.02]" : "",
                 ].join(" ")}
               >
                 <span className="text-white/70 col-span-1">{row.label}</span>
-                <span className="text-center">
-                  {row.basic ? (
-                    <svg
-                      className="w-4 h-4 text-white/60 mx-auto"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  ) : (
-                    <span className="text-white/20">—</span>
-                  )}
-                </span>
-                <span className="text-center">
-                  <svg
-                    className="w-4 h-4 text-white mx-auto"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
+                <span className="text-center"><FeatureCheck on={row.runner} /></span>
+                <span className="text-center"><FeatureCheck on={row.hybrid} /></span>
+                <span className="text-center"><FeatureCheck on={row.elite} /></span>
               </div>
             ))}
 
             {/* Header row */}
-            <div className="grid grid-cols-3 px-6 py-3 border-t border-white/10 bg-white/5">
+            <div className="grid grid-cols-4 px-6 py-3 border-t border-white/10 bg-white/5">
               <span />
-              <span className="text-center text-xs font-black uppercase tracking-widest text-white/40">
-                Basic
-              </span>
-              <span className="text-center text-xs font-black uppercase tracking-widest text-white">
-                Pro
-              </span>
+              <span className="text-center text-xs font-black uppercase tracking-widest text-white/40">Runner</span>
+              <span className="text-center text-xs font-black uppercase tracking-widest text-white">Hybrid</span>
+              <span className="text-center text-xs font-black uppercase tracking-widest text-white/40">Elite</span>
             </div>
           </div>
         </div>

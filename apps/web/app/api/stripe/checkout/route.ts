@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/auth";
 import { getDb } from "@/lib/mongodb";
-import { stripe, MEMBERSHIP_TIERS, MembershipTier, BillingInterval } from "@/lib/stripe";
+import { stripe, STRIPE_PRICE_IDS, MembershipTier, BillingInterval } from "@/lib/stripe";
+import { MEMBERSHIP_TIERS } from "@/lib/membership-config";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,8 +26,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid billing interval." }, { status: 400 });
     }
 
-    const tierConfig = MEMBERSHIP_TIERS[tier as MembershipTier];
-    const priceId = tierConfig.prices[interval as BillingInterval];
+    const priceId = STRIPE_PRICE_IDS[tier as MembershipTier][interval as BillingInterval];
 
     if (!priceId) {
       return NextResponse.json(

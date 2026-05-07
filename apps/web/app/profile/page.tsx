@@ -6,6 +6,7 @@ import Link from "next/link";
 import HomeHeader from "@/components/headers/HomeHeader";
 import MainFooter from "@/components/footer/MainFooter";
 import MacroSplitSlider from "@/components/MealPrepHelper/MacroSplitSlider";
+import { TIER_DISPLAY_NAMES } from "@/lib/membership-config";
 
 type SavedPlanItem = {
   savedAt: string;
@@ -47,7 +48,7 @@ function formatDateShort(iso: string) {
 }
 
 type MembershipInfo = {
-  tier: "Basic" | "Pro";
+  tier: "Runner" | "HybridAthlete" | "EliteSupporter";
   status: "active" | "trialing" | "canceled" | "past_due" | "unpaid";
   currentPeriodEnd: string;
   cancelAtPeriodEnd: boolean;
@@ -219,6 +220,20 @@ function SavedRecipesList({ loading, items }: Readonly<{ loading: boolean; items
   );
 }
 
+const TIER_BADGE_CLASS: Record<MembershipInfo["tier"], string> = {
+  EliteSupporter: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
+  HybridAthlete:  "bg-purple-500/15 text-purple-400 border-purple-500/30",
+  Runner:         "bg-sky-500/15 text-sky-400 border-sky-500/30",
+};
+
+function MembershipBadge({ tier }: Readonly<{ tier: MembershipInfo["tier"] }>) {
+  return (
+    <span className={`inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${TIER_BADGE_CLASS[tier]}`}>
+      {TIER_DISPLAY_NAMES[tier]}
+    </span>
+  );
+}
+
 function MembershipCard({ membership }: Readonly<{ membership: MembershipInfo | null }>) {
   const [portalLoading, setPortalLoading] = useState(false);
 
@@ -256,30 +271,29 @@ function MembershipCard({ membership }: Readonly<{ membership: MembershipInfo | 
   }
 
   // membership is guaranteed non-null here since isActive checked membership?.status
-  const m = membership ?? ({ tier: "Basic" } as MembershipInfo);
+  const m = membership ?? ({ tier: "Runner" } as MembershipInfo);
   const periodEnd = new Date(m.currentPeriodEnd).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
 
+  const tierColor = {
+    EliteSupporter: { border: "border-yellow-500/20", bg: "bg-yellow-500/5", label: "text-yellow-400/70", badge: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30" },
+    HybridAthlete:  { border: "border-purple-500/20", bg: "bg-purple-500/5", label: "text-purple-400/70", badge: "bg-purple-500/15 text-purple-400 border-purple-500/30" },
+    Runner:         { border: "border-sky-500/20",    bg: "bg-sky-500/5",    label: "text-sky-400/70",    badge: "bg-sky-500/15 text-sky-400 border-sky-500/30" },
+  } as const;
+  const colors = tierColor[m.tier] ?? tierColor.Runner;
+
+  const tierDisplayName = TIER_DISPLAY_NAMES[m.tier] ?? "Member";
+
   return (
-    <div className={`mt-6 rounded-2xl border p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 ${
-      m.tier === "Pro"
-        ? "border-yellow-500/20 bg-yellow-500/5"
-        : "border-sky-500/20 bg-sky-500/5"
-    }`}>
+    <div className={`mt-6 rounded-2xl border p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 ${colors.border} ${colors.bg}`}>
       <div>
-        <p className={`text-xs font-bold uppercase tracking-widest mb-2 ${
-          m.tier === "Pro" ? "text-yellow-400/70" : "text-sky-400/70"
-        }`}>Membership</p>
+        <p className={`text-xs font-bold uppercase tracking-widest mb-2 ${colors.label}`}>Membership</p>
         <div className="flex items-center gap-2 mb-1">
-          <p className="text-base font-black">{m.tier} Plan</p>
-          <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
-            m.tier === "Pro"
-              ? "bg-yellow-500/15 text-yellow-400 border-yellow-500/30"
-              : "bg-sky-500/15 text-sky-400 border-sky-500/30"
-          }`}>Active</span>
+          <p className="text-base font-black">{tierDisplayName} Plan</p>
+          <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${colors.badge}`}>Active</span>
         </div>
         <p className="text-sm text-white/40">
           Billed {m.interval === "year" ? "yearly" : "monthly"} · {m.cancelAtPeriodEnd ? `Cancels on ${periodEnd}` : `Renews ${periodEnd}`}
@@ -469,13 +483,7 @@ export default function ProfilePage() {
                     {profile.role}
                   </span>
                   {profile.membership?.status === "active" || profile.membership?.status === "trialing" ? (
-                    <span className={`inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
-                      profile.membership.tier === "Pro"
-                        ? "bg-yellow-500/15 text-yellow-400 border-yellow-500/30"
-                        : "bg-sky-500/15 text-sky-400 border-sky-500/30"
-                    }`}>
-                      {profile.membership.tier} Member
-                    </span>
+                    <MembershipBadge tier={profile.membership.tier} />
                   ) : null}
                 </div>
               </div>
