@@ -6,7 +6,20 @@ export default function MainFooter() {
           Hybrid Athlete Hub · Built for strength &amp; endurance.
         </p>
 
-        <div className="flex gap-5">
+        <div className="flex items-center gap-5">
+          <a
+            href="https://buymeacoffee.com/danilkravafit"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Buy me a coffee"
+            className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-white/40 transition hover:text-[#FFDD00]"
+          >
+            <span className="text-sm leading-none">☕</span>
+            <span>Support</span>
+          </a>
+
+          <div className="h-4 w-px bg-white/15" />
+
           <a href="https://instagram.com/danilkravafit" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <img src="/social/instagram.png" alt="Instagram" className="h-5 w-5 opacity-40 transition hover:opacity-100" />
           </a>

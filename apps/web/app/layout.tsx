@@ -3,6 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import type { Metadata } from "next";
+import BuyMeACoffee from "@/components/BuyMeACoffee";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default function RootLayout({
               {children}
             </div>
           </div>
+          <BuyMeACoffee />
         </ThemeProvider>
       </body>
     </html>

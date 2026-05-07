@@ -17,11 +17,13 @@ function MealPrepPlansContent() {
       : "date";
 
   const [plans, setPlans] = useState<MealPrepPlan[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/meal-prep-plans")
       .then((res) => res.json())
-      .then((data) => setPlans(Array.isArray(data) ? data : []));
+      .then((data) => setPlans(Array.isArray(data) ? data : []))
+      .finally(() => setLoading(false));
   }, []);
 
   const sortedPlans = useMemo(() => {
@@ -59,11 +61,22 @@ function MealPrepPlansContent() {
 
         {/* Cards Grid */}
         <section className="mt-4">
-          <div className="grid gap-6 grid-cols-1">
-            {sortedPlans.map((plan) => (
-              <PlanCard key={plan.id} plan={plan} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid gap-6 grid-cols-1">
+            {Array.from({ length: 3 }, (_, i) => `skeleton-${i}`).map((key) => (
+                <div
+                  key={key}
+                  className="h-32 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 animate-pulse"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid gap-6 grid-cols-1">
+              {sortedPlans.map((plan) => (
+                <PlanCard key={plan.id} plan={plan} />
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </main>
