@@ -46,6 +46,14 @@ function formatDateShort(iso: string) {
   return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
+type MembershipInfo = {
+  tier: "Basic" | "Pro";
+  status: "active" | "trialing" | "canceled" | "past_due" | "unpaid";
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+  interval: "month" | "year";
+};
+
 type ProfileData = {
   fullName: string;
   email: string;
@@ -57,6 +65,7 @@ type ProfileData = {
   goal?: "maintain" | "lose" | "gain" | null;
   dailyCalories?: number | null;
   macroSplit?: { protein: number; fat: number; carbs: number } | null;
+  membership?: MembershipInfo | null;
 };
 
 function StatCard({
@@ -210,12 +219,88 @@ function SavedRecipesList({ loading, items }: Readonly<{ loading: boolean; items
   );
 }
 
+function MembershipCard({ membership }: Readonly<{ membership: MembershipInfo | null }>) {
+  const [portalLoading, setPortalLoading] = useState(false);
+
+  async function openPortal() {
+    setPortalLoading(true);
+    try {
+      const res = await fetch("/api/stripe/portal", { method: "POST" });
+      const data = await res.json();
+      if (data.url) globalThis.location.href = data.url;
+    } catch {
+      // silently fail
+    } finally {
+      setPortalLoading(false);
+    }
+  }
+
+  const isActive = membership?.status === "active" || membership?.status === "trialing";
+
+  if (!isActive) {
+    return (
+      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-white/30 mb-2">Membership</p>
+          <p className="text-base font-bold mb-1">No active membership</p>
+          <p className="text-sm text-white/40">Support my journey and unlock exclusive content &amp; tools.</p>
+        </div>
+        <Link
+          href="/membership"
+          className="shrink-0 px-6 py-3 bg-white text-black text-sm font-black uppercase tracking-widest rounded-xl hover:bg-white/90 transition whitespace-nowrap"
+        >
+          View Plans
+        </Link>
+      </div>
+    );
+  }
+
+  // membership is guaranteed non-null here since isActive checked membership?.status
+  const m = membership ?? ({ tier: "Basic" } as MembershipInfo);
+  const periodEnd = new Date(m.currentPeriodEnd).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  return (
+    <div className={`mt-6 rounded-2xl border p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 ${
+      m.tier === "Pro"
+        ? "border-yellow-500/20 bg-yellow-500/5"
+        : "border-sky-500/20 bg-sky-500/5"
+    }`}>
+      <div>
+        <p className={`text-xs font-bold uppercase tracking-widest mb-2 ${
+          m.tier === "Pro" ? "text-yellow-400/70" : "text-sky-400/70"
+        }`}>Membership</p>
+        <div className="flex items-center gap-2 mb-1">
+          <p className="text-base font-black">{m.tier} Plan</p>
+          <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
+            m.tier === "Pro"
+              ? "bg-yellow-500/15 text-yellow-400 border-yellow-500/30"
+              : "bg-sky-500/15 text-sky-400 border-sky-500/30"
+          }`}>Active</span>
+        </div>
+        <p className="text-sm text-white/40">
+          Billed {m.interval === "year" ? "yearly" : "monthly"} · {m.cancelAtPeriodEnd ? `Cancels on ${periodEnd}` : `Renews ${periodEnd}`}
+        </p>
+      </div>
+      <button
+        type="button"
+        disabled={portalLoading}
+        onClick={openPortal}
+        className="shrink-0 px-6 py-3 border border-white/15 text-white text-sm font-bold rounded-xl hover:border-white/40 transition disabled:opacity-50 whitespace-nowrap"
+      >
+        {portalLoading ? "Loading…" : "Manage Subscription"}
+      </button>
+    </div>
+  );
+}
+
 export default function ProfilePage() {
   const router = useRouter();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
-
-  // form state
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [age, setAge] = useState("");
@@ -373,15 +458,26 @@ export default function ProfilePage() {
               <div>
                 <h1 className="text-2xl font-extrabold tracking-tight">{profile.fullName}</h1>
                 <p className="text-sm text-white/40">{profile.email}</p>
-                <span
-                  className={`inline-block mt-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
-                    profile.role === "Admin"
-                      ? "bg-green-500/10 text-green-400 border-green-500/20"
-                      : "bg-white/5 text-white/30 border-white/10"
-                  }`}
-                >
-                  {profile.role}
-                </span>
+                <div className="flex flex-wrap items-center gap-2 mt-1">
+                  <span
+                    className={`inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
+                      profile.role === "Admin"
+                        ? "bg-green-500/10 text-green-400 border-green-500/20"
+                        : "bg-white/5 text-white/30 border-white/10"
+                    }`}
+                  >
+                    {profile.role}
+                  </span>
+                  {profile.membership?.status === "active" || profile.membership?.status === "trialing" ? (
+                    <span className={`inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${
+                      profile.membership.tier === "Pro"
+                        ? "bg-yellow-500/15 text-yellow-400 border-yellow-500/30"
+                        : "bg-sky-500/15 text-sky-400 border-sky-500/30"
+                    }`}>
+                      {profile.membership.tier} Member
+                    </span>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
@@ -726,6 +822,9 @@ export default function ProfilePage() {
               </div>
             </div>
           )}
+
+          {/* Membership section */}
+          <MembershipCard membership={profile.membership ?? null} />
           </>
           )}
 
